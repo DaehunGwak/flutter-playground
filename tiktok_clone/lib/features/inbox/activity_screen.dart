@@ -13,7 +13,6 @@ class ActivityScreen extends StatelessWidget {
         title: const Text('All activity'),
       ),
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: Sizes.size20),
         children: [
           Gaps.v14,
           Text(
@@ -24,51 +23,78 @@ class ActivityScreen extends StatelessWidget {
             ),
           ),
           Gaps.v14,
-          ListTile(
-            contentPadding: const EdgeInsets.all(0),
-            leading: Container(
-              width: Sizes.size52,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-                border: Border.all(
-                  color: Colors.grey,
-                  width: Sizes.size1,
-                ),
-              ),
-              child: const Center(
+          Dismissible(
+            key: const Key('x'),
+            background: Container(
+              alignment: Alignment.centerLeft,
+              color: Colors.green,
+              child: const Padding(
+                padding: EdgeInsets.only(left: Sizes.size10),
                 child: FaIcon(
-                  FontAwesomeIcons.bell,
-                  color: Colors.black,
+                  FontAwesomeIcons.check,
+                  color: Colors.white,
+                  size: Sizes.size32,
                 ),
               ),
             ),
-            title: RichText(
-              text: TextSpan(
-                text: 'Account Updates:',
-                style: const TextStyle(
-                  fontSize: Sizes.size16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
+            secondaryBackground: Container(
+              padding: const EdgeInsets.only(right: Sizes.size14),
+              alignment: Alignment.centerRight,
+              color: Colors.red,
+              child: const Padding(
+                padding: EdgeInsets.only(left: Sizes.size10),
+                child: FaIcon(
+                  FontAwesomeIcons.trashCan,
+                  color: Colors.white,
+                  size: Sizes.size32,
                 ),
-                children: [
-                  const TextSpan(
-                    text: ' Upload longer videos',
-                    style: TextStyle(fontWeight: FontWeight.normal),
+              ),
+            ),
+            child: ListTile(
+              leading: Container(
+                width: Sizes.size52,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  border: Border.all(
+                    color: Colors.grey,
+                    width: Sizes.size1,
                   ),
-                  TextSpan(
-                    text: ' 1h',
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      color: Colors.grey.shade500,
+                ),
+                child: const Center(
+                  child: FaIcon(
+                    FontAwesomeIcons.bell,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              title: RichText(
+                text: TextSpan(
+                  text: 'Account Updates:',
+                  style: const TextStyle(
+                    fontSize: Sizes.size16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                  children: [
+                    const TextSpan(
+                      text: ' Upload longer videos',
+                      style: TextStyle(fontWeight: FontWeight.normal),
                     ),
-                  ),
-                ],
+                    TextSpan(
+                      text: ' 1h',
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        color: Colors.grey.shade500,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            trailing: const FaIcon(
-              FontAwesomeIcons.chevronRight,
-              size: Sizes.size16,
+              trailing: const FaIcon(
+                FontAwesomeIcons.chevronRight,
+                size: Sizes.size16,
+              ),
             ),
           ),
         ],

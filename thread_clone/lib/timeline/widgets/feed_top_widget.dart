@@ -4,7 +4,7 @@ import 'package:thread_clone/timeline/widgets/more/feed_navigation_bottom_sheet.
 
 import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
-import '../models/feed.dart';
+import '../../models/feed.dart';
 
 class FeedTopWidget extends StatelessWidget {
   const FeedTopWidget({

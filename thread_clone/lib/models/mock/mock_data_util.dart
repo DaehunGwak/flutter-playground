@@ -1,7 +1,7 @@
 import 'package:faker/faker.dart';
 
-class MockDataUtil {
-  MockDataUtil._();
+class WriteMockDataUtil {
+  WriteMockDataUtil._();
 
   static String profileImageUrl() {
     return Faker().image.image(

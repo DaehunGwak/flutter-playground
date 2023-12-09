@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thread_clone/constants/gaps.dart';
 
 import '../../constants/sizes.dart';
-import '../models/feed.dart';
+import '../../models/feed.dart';
 
 class FeedImagesWidget extends StatelessWidget {
   const FeedImagesWidget({

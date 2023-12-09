@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../constants/sizes.dart';
+import '../models/feed.dart';
+import '../models/mock/feed_mock_util.dart';
 import 'widgets/feed_widget.dart';
-import 'models/feed.dart';
-import 'models/mock/feed_mock_util.dart';
 
 // NEW: stateless widget 으로 구성하면 계속 Offstage 를 써도 계속 반복해서 위젯을 생성하는 현상 발생
 // 따라서, StatefulWidget 으로 전환한 후 const 로 생성할 수 있도록 변경

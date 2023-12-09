@@ -20,6 +20,8 @@ class TikTokApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: false,
         scaffoldBackgroundColor: Colors.white, // NEW
+        splashColor: Colors.transparent, // NEW: 터치 시 스플래시 애니메이션 off
+        highlightColor: Colors.transparent, // NEW: 터치 시 하이라이트 애니메이션 off
         appBarTheme: const AppBarTheme( // NEW
           foregroundColor: Colors.black,
           backgroundColor: Colors.white,

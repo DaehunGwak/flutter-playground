@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
+import 'package:tiktok_clone/features/main/discover/discover_screen.dart';
 import 'package:tiktok_clone/features/main/home/home_test_screen.dart';
-import 'package:tiktok_clone/features/main/navigation/stf_screen.dart';
 import 'package:tiktok_clone/features/main/navigation/widgets/navigation_tab.dart';
 import 'package:tiktok_clone/features/main/navigation/widgets/post_video_button.dart';
 
@@ -14,20 +14,21 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
+  bool _isBlackTheme = false;
 
   _onTab(int index) {
-    print(index);
     setState(() {
       _selectedIndex = index;
+      _isBlackTheme = _selectedIndex == 0;
     });
+    print('index: $index, isBlackTheme: $_isBlackTheme');
   }
 
   @override
   Widget build(BuildContext context) {
-    const postVideoButton = PostVideoButton();
-
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Offstage(
@@ -36,7 +37,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != 1,
-            child: const StfScreen(),
+            child: const DiscoverScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 3,
@@ -53,7 +54,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
+        color: _isBlackTheme ? Colors.black : Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -63,6 +64,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               text: 'Home',
               iconData: FontAwesomeIcons.house,
               isSelected: _selectedIndex == 0,
+              isBlackTheme: _isBlackTheme,
               onTap: () => _onTab(0),
             ),
             MainNavigationTab(
@@ -70,6 +72,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               iconData: FontAwesomeIcons.compass,
               selectedIconData: FontAwesomeIcons.solidCompass,
               isSelected: _selectedIndex == 1,
+              isBlackTheme: _isBlackTheme,
               onTap: () => _onTab(1),
             ),
             Gaps.h24,
@@ -77,7 +80,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               onTap: () {
                 _onPostVideoButtonTap();
               },
-              child: postVideoButton,
+              child: PostVideoButton(isBlackTheme: _isBlackTheme),
             ),
             Gaps.h24,
             MainNavigationTab(
@@ -85,6 +88,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               iconData: FontAwesomeIcons.message,
               selectedIconData: FontAwesomeIcons.solidMessage,
               isSelected: _selectedIndex == 3,
+              isBlackTheme: _isBlackTheme,
               onTap: () => _onTab(3),
             ),
             MainNavigationTab(
@@ -92,6 +96,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               iconData: FontAwesomeIcons.user,
               selectedIconData: FontAwesomeIcons.solidUser,
               isSelected: _selectedIndex == 4,
+              isBlackTheme: _isBlackTheme,
               onTap: () => _onTab(4),
             ),
             Gaps.h12,

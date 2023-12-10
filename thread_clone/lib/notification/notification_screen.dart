@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thread_clone/constants/sizes.dart';
 import 'package:thread_clone/models/mock/activity_mock_data_util.dart';
+import 'package:thread_clone/notification/widget/activity_list_tile.dart';
 import "../extension/string_extension.dart";
 
 import '../constants/gaps.dart';
@@ -42,31 +43,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
               _buildTitle(),
               Gaps.v10,
               _buildTabBar(),
-              Gaps.v10,
+              Gaps.v14,
               Expanded(
-                child: TabBarView(
-                  children: [
-                    _buildTabBarViewChild(_activities),
-                    _buildTabBarViewChild(_activities
-                        .where((e) => e.type == ActivityType.follows)
-                        .toList()),
-                    _buildTabBarViewChild(_activities
-                        .where((e) => e.type == ActivityType.replies)
-                        .toList()),
-                    _buildTabBarViewChild(_activities
-                        .where((e) => e.type == ActivityType.mentions)
-                        .toList()),
-                    _buildTabBarViewChild(_activities
-                        .where((e) => e.type == ActivityType.quotes)
-                        .toList()),
-                    _buildTabBarViewChild(_activities
-                        .where((e) => e.type == ActivityType.reposts)
-                        .toList()),
-                    _buildTabBarViewChild(_activities
-                        .where((e) => e.type == ActivityType.replies)
-                        .toList()),
-                  ],
-                ),
+                child: _buildTabBarView(),
               )
             ],
           ),
@@ -102,9 +81,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
       dividerColor: Colors.transparent,
       labelColor: Colors.white,
       labelStyle: const TextStyle(
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w700,
       ),
       unselectedLabelColor: Colors.black,
+      unselectedLabelStyle: const TextStyle(
+        fontWeight: FontWeight.w500,
+      ),
       tabs: [
         for (var type
             in ActivityType.values.where((e) => e != ActivityType.like))
@@ -114,7 +96,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
             decoration: BoxDecoration(
               color: (_selectedTabType == type) ? Colors.black : Colors.white,
               border: Border.all(
-                color: (_selectedTabType == type) ? Colors.black : Colors.grey,
+                color: (_selectedTabType == type)
+                    ? Colors.black
+                    : Colors.grey.shade300,
               ),
               borderRadius: BorderRadius.circular(Sizes.size8),
             ),
@@ -126,9 +110,47 @@ class _NotificationScreenState extends State<NotificationScreen> {
     );
   }
 
-  Widget _buildTabBarViewChild(List<Activity> activities) {
-    return Center(
-      child: Text('Nothing to see here yet'),
+  Widget _buildTabBarView() {
+    return TabBarView(
+      children: [
+        _buildTabBarViewChild(_activities),
+        _buildTabBarViewChild(
+          _activities.where((e) => e.type == ActivityType.follows).toList(),
+        ),
+        _buildTabBarViewChild(
+          _activities.where((e) => e.type == ActivityType.replies).toList(),
+        ),
+        _buildTabBarViewChild(
+          _activities.where((e) => e.type == ActivityType.mentions).toList(),
+        ),
+        _buildTabBarViewChild(
+          _activities.where((e) => e.type == ActivityType.quotes).toList(),
+        ),
+        _buildTabBarViewChild(
+          _activities.where((e) => e.type == ActivityType.reposts).toList(),
+        ),
+        _buildTabBarViewChild(
+          _activities.where((e) => e.type == ActivityType.verified).toList(),
+        ),
+      ],
     );
+  }
+
+  Widget _buildTabBarViewChild(List<Activity> activities) {
+    return (activities.isEmpty)
+        ? const Center(
+            child: Text('Nothing to see here yet'),
+          )
+        : ListView.separated(
+            itemCount: activities.length,
+            itemBuilder: (context, index) => ActivityListTile(
+              activity: activities.elementAt(index),
+            ),
+            separatorBuilder: (context, index) => const Divider(
+              height: Sizes.size14,
+              thickness: 0.3,
+              indent: Sizes.size76,
+            ),
+          );
   }
 }

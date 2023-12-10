@@ -22,6 +22,7 @@ class ActivityMockDataUtil {
         imageUrl: userImageUrl,
         title: 'john_mobbin',
         content: 'Count me in!',
+        subTitle: 'Starting out my gardening club with threads followers',
       ),
       Activity(
         type: ActivityType.follows,

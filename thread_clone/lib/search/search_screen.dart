@@ -51,7 +51,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       return SearchUserListTile(user: user);
                     },
                     separatorBuilder: (context, index) => const Divider(
-                      height: 0.5,
+                      height: Sizes.size8,
                       thickness: 0.3,
                       indent: Sizes.size56,
                     ),

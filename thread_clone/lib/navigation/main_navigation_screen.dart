@@ -59,6 +59,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Sizes.size20),
         child: NavigationBar(
+          height: Sizes.size64,
           selectedIndex: _currentIndex,
           onDestinationSelected: _onNavigationSelected,
           elevation: 0,

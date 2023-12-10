@@ -20,8 +20,8 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      onVerticalDragDown: (details) => FocusManager.instance.primaryFocus?.unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
+      onVerticalDragDown: (details) => FocusScope.of(context).unfocus(),
       child: Scaffold(
         body: SafeArea(
           child: Padding(

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:thread_clone/constants/gaps.dart';
 import 'package:thread_clone/constants/sizes.dart';
-import 'package:thread_clone/models/mock/mock_data_util.dart';
+import 'package:thread_clone/models/mock/write_mock_data_util.dart';
 
 import 'widget/write_profile_column.dart';
 

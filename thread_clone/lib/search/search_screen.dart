@@ -19,42 +19,46 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Sizes.size20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Search',
-                style: TextStyle(
-                  fontSize: Sizes.size32,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: -0.5,
-                ),
-              ),
-              Gaps.v10,
-              const CupertinoSearchTextField(
-                style: TextStyle(fontSize: Sizes.size16),
-              ),
-              Gaps.v10,
-              Expanded(
-                child: ListView.separated(
-                  padding: EdgeInsets.zero,
-                  itemCount: _users.length,
-                  itemBuilder: (context, index) {
-                    final user = _users.elementAt(index);
-                    return SearchUserListTile(user: user);
-                  },
-                  separatorBuilder: (context, index) => const Divider(
-                    height: 0.5,
-                    thickness: 0.3,
-                    indent: Sizes.size56,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      onVerticalDragDown: (details) => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: Sizes.size20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Search',
+                  style: TextStyle(
+                    fontSize: Sizes.size32,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: -0.5,
                   ),
                 ),
-              ),
-            ],
+                Gaps.v10,
+                const CupertinoSearchTextField(
+                  style: TextStyle(fontSize: Sizes.size16),
+                ),
+                Gaps.v10,
+                Expanded(
+                  child: ListView.separated(
+                    padding: EdgeInsets.zero,
+                    itemCount: _users.length,
+                    itemBuilder: (context, index) {
+                      final user = _users.elementAt(index);
+                      return SearchUserListTile(user: user);
+                    },
+                    separatorBuilder: (context, index) => const Divider(
+                      height: 0.5,
+                      thickness: 0.3,
+                      indent: Sizes.size56,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

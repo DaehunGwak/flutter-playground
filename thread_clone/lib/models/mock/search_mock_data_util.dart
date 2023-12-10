@@ -12,8 +12,10 @@ class SearchMockDataUtil {
     for (var i = 0; i < 10; i++) {
       users.add(User(
         nickname: faker.internet.userName(),
+        name: faker.person.name(),
         profileImageUrl: _profileImageUrl(faker),
         confirmed: true,
+        followerCount: faker.randomGenerator.integer(10000000),
       ));
     }
 

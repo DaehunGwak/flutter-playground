@@ -14,11 +14,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return CustomScrollView(
       slivers: [
         SliverAppBar(
-          snap: true,
+          // snap: true,
           // 조금이라도 업스크롤 시, appbar 가 나타남
-          floating: true,
+          // floating: true,
           // 업스크롤 시, appbar 가 나타남
-          // pinned: true, // 업스크롤 시, appbar 사라지지 않고 작아진채로 고정
+          // pinned: true,
+          // 업스크롤 시, appbar 사라지지 않고 작아진채로 고정
           stretch: true,
           // 다운 스크롤 하면 appbar 늘어남
           backgroundColor: Colors.teal,
@@ -36,6 +37,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             title: const Text('Hello!'),
           ),
         ),
+        SliverToBoxAdapter(
+          child: Column(
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.red,
+                radius: Sizes.size20,
+              ),
+            ],
+          ),
+        ),
         SliverFixedExtentList(
           itemExtent: 100, // 각 아이템 크기
           delegate: SliverChildBuilderDelegate(
@@ -46,6 +57,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ),
           ),
         ),
+        SliverPersistentHeader(
+          delegate: CustomDelegate(),
+          pinned: true,
+          floating: true
+        ),
         SliverGrid(
           delegate: SliverChildBuilderDelegate(
             childCount: 50,
@@ -54,7 +70,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               child: Center(child: Text("Item $index")),
             ),
           ),
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 100,
             mainAxisSpacing: Sizes.size20,
             crossAxisSpacing: Sizes.size20,
@@ -63,5 +79,38 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         ),
       ],
     );
+  }
+}
+
+class CustomDelegate extends SliverPersistentHeaderDelegate {
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: Colors.indigo,
+      child: const FractionallySizedBox(
+        heightFactor: 1.0,
+        child: Center(
+          child: Text(
+            'sliver persistent header',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // maxheight
+  @override
+  double get maxExtent => 100;
+
+  // minheight
+  @override
+  double get minExtent => 50;
+
+  //
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
   }
 }

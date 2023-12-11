@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thread_clone/constants/gaps.dart';
 import 'package:thread_clone/constants/sizes.dart';
-import 'package:thread_clone/timeline/models/feed.dart';
 
+import '../../models/feed.dart';
 import 'feed_images_widget.dart';
 import 'feed_reply_avatars.dart';
 import 'feed_top_widget.dart';

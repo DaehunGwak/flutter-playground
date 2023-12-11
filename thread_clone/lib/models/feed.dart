@@ -1,4 +1,4 @@
-import 'package:thread_clone/timeline/models/user.dart';
+import 'user.dart';
 
 class Feed {
   final User createdUser;

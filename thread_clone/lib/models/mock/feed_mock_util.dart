@@ -1,6 +1,7 @@
-import 'package:thread_clone/timeline/models/feed.dart';
 import 'package:faker/faker.dart';
-import 'package:thread_clone/timeline/models/user.dart';
+
+import '../feed.dart';
+import '../user.dart';
 
 class FeedMockUtil {
   FeedMockUtil._();

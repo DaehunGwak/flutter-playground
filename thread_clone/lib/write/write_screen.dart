@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:thread_clone/constants/gaps.dart';
 import 'package:thread_clone/constants/sizes.dart';
-import 'package:thread_clone/write/mock/mock_data_util.dart';
+import 'package:thread_clone/models/mock/write_mock_data_util.dart';
 
 import 'widget/write_profile_column.dart';
 
@@ -14,8 +14,8 @@ class WriteScreen extends StatefulWidget {
 }
 
 class _WriteScreenState extends State<WriteScreen> {
-  final username = MockDataUtil.username();
-  final profileImageUrl = MockDataUtil.profileImageUrl();
+  final username = WriteMockDataUtil.username();
+  final profileImageUrl = WriteMockDataUtil.profileImageUrl();
 
   final TextEditingController _textEditingController = TextEditingController();
 

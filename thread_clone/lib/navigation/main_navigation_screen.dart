@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thread_clone/constants/sizes.dart';
+import 'package:thread_clone/notification/notification_screen.dart';
+import 'package:thread_clone/search/search_screen.dart';
 import 'package:thread_clone/timeline/timeline_screen.dart';
 import 'package:thread_clone/navigation/widget/main_navigaion_destination.dart';
 import 'package:thread_clone/write/write_screen.dart';
@@ -43,11 +45,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _currentIndex != 1,
-            child: const Center(child: Text('dummy search')),
+            child: const SearchScreen(),
           ),
           Offstage(
             offstage: _currentIndex != 3,
-            child: const Center(child: Text('dummy notification')),
+            child: const NotificationScreen(),
           ),
           Offstage(
             offstage: _currentIndex != 4,
@@ -58,6 +60,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Sizes.size20),
         child: NavigationBar(
+          height: Sizes.size64,
           selectedIndex: _currentIndex,
           onDestinationSelected: _onNavigationSelected,
           elevation: 0,

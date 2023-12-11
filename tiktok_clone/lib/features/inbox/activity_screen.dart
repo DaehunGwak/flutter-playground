@@ -44,16 +44,21 @@ class _ActivityScreenState extends State<ActivityScreen>
     },
   ];
 
+  bool _isShowBarrier = false;
+
   late final AnimationController _animationController = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 300),
   );
   late final Animation<double> _arrowAnimation =
       Tween(begin: 0.0, end: 0.5).animate(_animationController);
-
   late final Animation<Offset> _panelAnimation = Tween(
     begin: const Offset(0.0, -1.0),
     end: const Offset(0.0, 0.0),
+  ).animate(_animationController);
+  late final Animation<Color?> _barrierAnimation = ColorTween(
+    begin: Colors.transparent,
+    end: Colors.black.withOpacity(0.5),
   ).animate(_animationController);
 
   void _onDismissed(String key) {
@@ -62,12 +67,15 @@ class _ActivityScreenState extends State<ActivityScreen>
     });
   }
 
-  void _onTitleTap() {
+  void _onTogglePanel() async {
     if (_animationController.isCompleted) {
-      _animationController.reverse();
-      return;
+      await _animationController.reverse();
+    } else {
+      _animationController.forward();
     }
-    _animationController.forward();
+    setState(() {
+      _isShowBarrier = !_isShowBarrier;
+    });
   }
 
   @override
@@ -75,7 +83,7 @@ class _ActivityScreenState extends State<ActivityScreen>
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
-          onTap: _onTitleTap,
+          onTap: _onTogglePanel,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -189,14 +197,20 @@ class _ActivityScreenState extends State<ActivityScreen>
                 ),
             ],
           ),
+          if (_isShowBarrier)
+            AnimatedModalBarrier(
+              color: _barrierAnimation,
+              dismissible: true, // 해당 영역을 선택하면 onDissmiss 콜백 호출
+              onDismiss: _onTogglePanel,
+            ),
           SlideTransition(
             position: _panelAnimation,
             child: Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(Sizes.size4),
-                  bottomRight: Radius.circular(Sizes.size4),
+                  bottomLeft: Radius.circular(Sizes.size6),
+                  bottomRight: Radius.circular(Sizes.size6),
                 ),
               ),
               child: Column(
@@ -225,7 +239,7 @@ class _ActivityScreenState extends State<ActivityScreen>
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

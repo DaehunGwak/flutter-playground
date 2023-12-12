@@ -9,32 +9,35 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
-      body: _buildBody(),
+      appBar: _buildAppBar(context),
+      body: _buildBody(context),
     );
   }
 
-  AppBar _buildAppBar() {
+  AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       elevation: 0.1,
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.white,
       shadowColor: Colors.black,
       leadingWidth: Sizes.size96,
-      leading: const Padding(
-        padding: EdgeInsets.only(top: Sizes.size6),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.chevron_left,
-              size: Sizes.size32,
-            ),
-            Text(
-              'Back',
-              style: TextStyle(fontSize: Sizes.size16),
-            )
-          ],
+      leading: Padding(
+        padding: const EdgeInsets.only(top: Sizes.size6),
+        child: GestureDetector(
+          onTap: () => Navigator.of(context).pop(),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.chevron_left,
+                size: Sizes.size32,
+              ),
+              Text(
+                'Back',
+                style: TextStyle(fontSize: Sizes.size16),
+              )
+            ],
+          ),
         ),
       ),
       title: const Text(
@@ -48,7 +51,7 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -71,17 +74,48 @@ class SettingsScreen extends StatelessWidget {
         const Divider(
           thickness: 0.3,
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: Sizes.size8,
-            horizontal: Sizes.size32,
-          ),
-          child: Text(
-            'Log out',
-            style: TextStyle(
-              color: Colors.blueAccent,
-              fontSize: Sizes.size16,
+        GestureDetector(
+          onTap: () => showAdaptiveDialog(
+            context: context,
+            builder: (context) => AlertDialog.adaptive(
+              backgroundColor: Colors.white,
+              elevation: 0,
+              title: const Text('Are you sure?'),
+              actions: [
+                IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Text(
+                    'No',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Text('Yes'),
+                ),
+              ],
             ),
+          ),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: Sizes.size8,
+                  horizontal: Sizes.size32,
+                ),
+                child: Text(
+                  'Log out',
+                  style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontSize: Sizes.size16,
+                  ),
+                ),
+              ),
+            ],
           ),
         )
       ],

@@ -13,18 +13,42 @@ class SettingsScreen extends StatelessWidget {
       body: ListView(
         children: [
           ListTile(
-            onTap: () => showAboutDialog(
-              context: context,
-              applicationVersion: '1.0',
-              applicationLegalese: "All rights reserved. Please don't copy me.",
-            ),
-            title: const Text(
-              'About',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            subtitle: const Text('About this app....'),
+            onTap: () async {
+              final date = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2010),
+                lastDate: DateTime(2030),
+              );
+              print(date);
+              final time = await showTimePicker(
+                context: context,
+                initialTime: TimeOfDay.now(),
+              );
+              print(time);
+              final booking = await showDateRangePicker(
+                context: context,
+                initialDateRange: DateTimeRange(
+                  start: DateTime.now(),
+                  end: DateTime.now().add(Duration(days: 1)),
+                ),
+                firstDate: DateTime(2010),
+                lastDate: DateTime(2030),
+                builder: (context, child) {
+                  return Theme(
+                    child: child!,
+                    data: ThemeData(
+                      appBarTheme: AppBarTheme(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.black,
+                      ),
+                    ),
+                  );
+                },
+              );
+              print(booking);
+            },
+            title: const Text('What is your birthday?'),
           ),
           const AboutListTile(),
         ],

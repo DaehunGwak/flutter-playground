@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thread_clone/constants/sizes.dart';
 import 'package:thread_clone/settings/enums/setting_type.dart';
+import 'package:thread_clone/settings/settings_privacy_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -16,11 +17,10 @@ class SettingsScreen extends StatelessWidget {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      elevation: 0.1,
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.white,
-      shadowColor: Colors.black,
       leadingWidth: Sizes.size96,
+      toolbarHeight: Sizes.size36,
       leading: Padding(
         padding: const EdgeInsets.only(top: Sizes.size6),
         child: GestureDetector(
@@ -51,23 +51,40 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  void _onListTileTap(BuildContext context, SettingType nowType) {
+    if (nowType != SettingType.privacy) {
+      return;
+    }
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const SettingsPrivacyScreen(),
+      ),
+    );
+  }
+
   Widget _buildBody(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const Divider(
+          thickness: 0.3,
+        ),
         for (var type in SettingType.values)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Sizes.size14),
-            child: ListTile(
-              leading: FaIcon(
-                type.iconData,
-                size: (type == SettingType.followAndInviteFriends)
-                    ? Sizes.size20
-                    : Sizes.size28,
-              ),
-              title: Text(
-                type.data,
-                style: const TextStyle(fontSize: Sizes.size16),
+          GestureDetector(
+            onTap: () => _onListTileTap(context, type),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Sizes.size14),
+              child: ListTile(
+                leading: FaIcon(
+                  type.iconData,
+                  size: (type == SettingType.followAndInviteFriends)
+                      ? Sizes.size20
+                      : Sizes.size28,
+                ),
+                title: Text(
+                  type.data,
+                  style: const TextStyle(fontSize: Sizes.size16),
+                ),
               ),
             ),
           ),

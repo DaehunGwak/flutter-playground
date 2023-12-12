@@ -1,8 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  bool _isNotification = false;
+
+  void _onNotificationChanged(bool? nowNotification) {
+    setState(() {
+      _isNotification = nowNotification ?? false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +25,35 @@ class SettingsScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
+          SwitchListTile.adaptive(
+            value: _isNotification,
+            onChanged: _onNotificationChanged,
+            title: const Text('Enable notification'),
+          ),
+          Switch.adaptive(
+            value: _isNotification,
+            onChanged: _onNotificationChanged,
+          ),
+          CupertinoSwitch(
+            value: _isNotification,
+            onChanged: _onNotificationChanged,
+          ),
+          SwitchListTile(
+            value: _isNotification,
+            onChanged: _onNotificationChanged,
+            title: const Text('Enable notification'),
+          ),
+          Checkbox(
+            value: _isNotification,
+            onChanged: _onNotificationChanged,
+          ),
+          CheckboxListTile(
+            value: _isNotification,
+            onChanged: _onNotificationChanged,
+            checkColor: Colors.white,
+            activeColor: Colors.black,
+            title: const Text('Enable notification'),
+          ),
           ListTile(
             onTap: () async {
               final date = await showDatePicker(

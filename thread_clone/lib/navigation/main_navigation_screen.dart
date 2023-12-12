@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thread_clone/constants/sizes.dart';
 import 'package:thread_clone/notification/notification_screen.dart';
+import 'package:thread_clone/profile/profile_screen.dart';
 import 'package:thread_clone/search/search_screen.dart';
 import 'package:thread_clone/timeline/timeline_screen.dart';
 import 'package:thread_clone/navigation/widget/main_navigaion_destination.dart';
@@ -53,7 +54,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _currentIndex != 4,
-            child: const Center(child: Text('dummy user')),
+            child: const ProfileScreen(),
           ),
         ],
       ),

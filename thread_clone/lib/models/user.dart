@@ -1,17 +1,21 @@
 class User {
+  final String? name;
   final String nickname;
   final String profileImageUrl;
+  final String? description;
   final bool confirmed;
-  final String? name;
   final int followerCount;
+  late final List<String> followerImageUrls;
 
   User({
+    this.name,
     required this.nickname,
     required this.profileImageUrl,
     required this.confirmed,
-    this.name,
+    this.description = '',
     this.followerCount = 0,
-  });
+    List<String>? followerImageUrls,
+  }) : followerImageUrls = followerImageUrls ?? List.empty();
 
   String get formattedFollowerCount {
     if (followerCount >= 1000000) {

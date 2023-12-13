@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
-import 'package:tiktok_clone/features/inbox/activity_screen.dart';
-import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 
 import 'features/main/navigation/main_navigation_screen.dart';
 
@@ -23,7 +20,8 @@ class TikTokApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white, // NEW
         splashColor: Colors.transparent, // NEW: 터치 시 스플래시 애니메이션 off
         highlightColor: Colors.transparent, // NEW: 터치 시 하이라이트 애니메이션 off
-        appBarTheme: const AppBarTheme( // NEW
+        appBarTheme: const AppBarTheme(
+          // NEW
           foregroundColor: Colors.black,
           backgroundColor: Colors.white,
           elevation: 0,
@@ -39,9 +37,10 @@ class TikTokApp extends StatelessWidget {
           background: Colors.white,
           primary: const Color(0xFFE9435A),
         ),
-        textSelectionTheme: const TextSelectionThemeData( // NEW: 전체 text input 테마에 적용
+        textSelectionTheme: const TextSelectionThemeData(
+          // NEW: 전체 text input 테마에 적용
           cursorColor: Color(0xFFE9435A),
-        )
+        ),
       ),
       // home: SignUpScreen(),
       // home: InterestsScreen(),

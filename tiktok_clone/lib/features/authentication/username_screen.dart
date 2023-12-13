@@ -62,7 +62,8 @@ class _UsernameScreenState extends State<UsernameScreen> {
                 ),
               ),
               Gaps.v32,
-              TextField( // NEW
+              TextField(
+                // NEW
                 controller: _usernameController,
                 autocorrect: false,
                 onEditingComplete: () => _onNextTap(context),

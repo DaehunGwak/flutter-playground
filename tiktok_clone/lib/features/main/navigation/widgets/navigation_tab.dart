@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 
 class MainNavigationTab extends StatelessWidget {
-
   const MainNavigationTab({
     super.key,
     required String text,
@@ -51,7 +50,7 @@ class MainNavigationTab extends StatelessWidget {
                     color: _isBlackTheme ? Colors.white : Colors.black,
                     fontWeight: FontWeight.w500,
                   ),
-                )
+                ),
               ],
             ),
           ),

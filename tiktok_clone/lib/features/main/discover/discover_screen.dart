@@ -10,11 +10,11 @@ class DiscoverScreen extends StatefulWidget {
 
   static final imageUrls = [
     for (int i = 0; i < 20; i++)
-      MockUtils.getMockImageUrl(width: 500, height: 300 * 16 ~/ 9)
+      MockUtils.getMockImageUrl(width: 500, height: 300 * 16 ~/ 9),
   ];
   static final profileImageUrls = [
     for (int i = 0; i < 20; i++)
-      MockUtils.getMockProfileImageUrl(width: 30, height: 30)
+      MockUtils.getMockProfileImageUrl(width: 30, height: 30),
   ];
 
   @override
@@ -29,12 +29,11 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     'Sounds',
     'LIVE',
     'Shopping',
-    'Brands'
+    'Brands',
   ];
   final TextEditingController _textEditingController = TextEditingController(
     text: 'Initial text',
   );
-
 
   // TODO: 왜 dispose 시 controller 도 해제해야할까? 메모리 때문에?
   @override
@@ -51,7 +50,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         resizeToAvoidBottomInset: false, // 가상 키보드가 나와도 사이즈가 줄어들지 않음
         appBar: AppBar(
           elevation: 1,
-          title: CupertinoSearchTextField( // NEW
+          title: CupertinoSearchTextField(
+            // NEW
             controller: _textEditingController,
             onChanged: _onSearchChanged,
             onSubmitted: _onSearchSubmitted,
@@ -74,7 +74,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               for (var tab in tabs)
                 Tab(
                   text: tab,
-                )
+                ),
             ],
           ),
         ),
@@ -170,7 +170,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                     style: const TextStyle(fontSize: Sizes.size28),
                   ),
                 ),
-              )
+              ),
           ],
         ),
       ),

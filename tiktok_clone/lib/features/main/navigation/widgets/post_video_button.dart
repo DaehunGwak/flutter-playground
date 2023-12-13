@@ -15,7 +15,6 @@ class PostVideoButton extends StatefulWidget {
 }
 
 class _PostVideoButtonState extends State<PostVideoButton> {
-
   // void tap() {
   //   setState(() {
   //     _isTapped = true;

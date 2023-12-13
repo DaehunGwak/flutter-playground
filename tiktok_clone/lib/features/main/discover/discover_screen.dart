@@ -88,7 +88,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 crossAxisCount: 2,
                 crossAxisSpacing: Sizes.size10,
                 mainAxisSpacing: Sizes.size10,
-                childAspectRatio: 9 / 20,
+                childAspectRatio: 9 / 21,
               ),
               itemBuilder: (context, index) => Column(
                 children: [

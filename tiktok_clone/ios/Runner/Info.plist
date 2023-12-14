@@ -49,5 +49,10 @@
     <string>This app needs access to photo library for video recording and snapshot</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>This app needs access to microphone for video and sound recording</string>
+    <key>UIApplicationSceneManifest</key>
+    <dict>
+        <key>UISceneConfigurations</key>
+        <dict/>
+    </dict>
 </dict>
 </plist>

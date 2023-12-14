@@ -13,7 +13,8 @@ class VideoRecordingScreen extends StatefulWidget {
 
 class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
   bool _hasPermission = false;
-  late final CameraController _cameraController;
+  bool _isSelfieMode = false;
+  late CameraController _cameraController;
 
   Future<void> initCamera() async {
     final cameras = await availableCameras();
@@ -24,7 +25,11 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
     }
 
     _cameraController = CameraController(
-      cameras.first,
+      _isSelfieMode
+          ? cameras
+              .firstWhere((e) => e.lensDirection == CameraLensDirection.back)
+          : cameras
+              .firstWhere((e) => e.lensDirection == CameraLensDirection.front),
       ResolutionPreset.ultraHigh,
       imageFormatGroup: ImageFormatGroup.bgra8888,
     );
@@ -44,10 +49,17 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
     if (cameraDenied || micDenied) {
       return;
     }
+
+    await initCamera();
     setState(() {
       _hasPermission = true;
     });
+  }
+
+  Future<void> _toggleSelfieMode() async {
+    _isSelfieMode = !_isSelfieMode;
     await initCamera();
+    setState(() {});
   }
 
   @override
@@ -68,6 +80,14 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
                 alignment: Alignment.center,
                 children: [
                   CameraPreview(_cameraController),
+                  Positioned(
+                    top: Sizes.size48,
+                    right: Sizes.size12,
+                    child: IconButton(
+                        onPressed: _toggleSelfieMode,
+                        color: Colors.white,
+                        icon: const Icon(Icons.cameraswitch)),
+                  ),
                 ],
               )
             : _buildPermissionRequestLoading(),

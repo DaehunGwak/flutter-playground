@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:thread_clone/constants/gaps.dart';
 import 'package:thread_clone/constants/sizes.dart';
 import 'package:thread_clone/models/mock/write_mock_data_util.dart';
+import 'package:thread_clone/write/write_photo_screen.dart';
 
 import 'widget/write_profile_column.dart';
 
@@ -20,6 +24,7 @@ class _WriteScreenState extends State<WriteScreen> {
   final TextEditingController _textEditingController = TextEditingController();
 
   bool _isPostActive = false;
+  List<XFile> _xFiles = [];
 
   @override
   void initState() {
@@ -53,6 +58,7 @@ class _WriteScreenState extends State<WriteScreen> {
     return Container(
       height: screenSize.height * 0.9,
       color: Colors.white,
+      clipBehavior: Clip.none,
       child: SafeArea(
         child: Scaffold(
           appBar: _buildAppBar(),
@@ -122,7 +128,8 @@ class _WriteScreenState extends State<WriteScreen> {
   }
 
   Widget _buildBottomPostBar(BuildContext context, Size screenSize) {
-    return SizedBox(
+    return Container(
+      color: Colors.white,
       width: screenSize.width,
       child: SingleChildScrollView(
         child: Padding(
@@ -187,12 +194,58 @@ class _WriteScreenState extends State<WriteScreen> {
               )),
         ),
         Gaps.v20,
-        const Icon(
-          CupertinoIcons.paperclip,
-          color: Colors.grey,
-          size: Sizes.size24,
+        if (_xFiles.isNotEmpty)
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            clipBehavior: Clip.none,
+            child: Row(
+              children: [
+                for (var xFile in _xFiles)
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      right: Sizes.size12,
+                      bottom: Sizes.size12,
+                    ),
+                    child: Container(
+                      constraints: const BoxConstraints(
+                        minHeight: 210,
+                        maxHeight: 210,
+                      ),
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(Sizes.size12),
+                      ),
+                      child: Image.file(File(xFile.path)),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        GestureDetector(
+          onTap: _pushPhotoScreen,
+          child: const Icon(
+            CupertinoIcons.paperclip,
+            color: Colors.grey,
+            size: Sizes.size24,
+          ),
         ),
       ],
     );
+  }
+
+  Future<void> _pushPhotoScreen() async {
+    final files = await Navigator.push(
+      context,
+      MaterialPageRoute<List<XFile>>(
+        builder: (context) => const WritePhotoScreen(),
+      ),
+    );
+    if (files == null || files.isEmpty) {
+      return;
+    }
+    setState(() {
+      _xFiles.addAll(files);
+    });
   }
 }

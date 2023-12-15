@@ -26,8 +26,7 @@ class WriteProfileColumn extends StatelessWidget {
           ),
         ),
         Gaps.v10,
-        SizedBox(
-          height: Sizes.size52,
+        Expanded(
           child: VerticalDivider(
             thickness: 3,
             color: Colors.grey.shade300,

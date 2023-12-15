@@ -21,12 +21,12 @@ class _WriteScreenState extends State<WriteScreen> {
 
   bool _isPostActive = false;
 
-
   @override
   void initState() {
+    super.initState();
     _textEditingController.addListener(() {
       final text = _textEditingController.value.text;
-      print(text);
+      debugPrint(text);
       if (text.isNotEmpty && _isPostActive == false) {
         setState(() {
           _isPostActive = true;
@@ -38,7 +38,12 @@ class _WriteScreenState extends State<WriteScreen> {
         });
       }
     });
-    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _textEditingController.dispose();
+    super.dispose();
   }
 
   @override
@@ -48,20 +53,24 @@ class _WriteScreenState extends State<WriteScreen> {
     return Container(
       height: screenSize.height * 0.9,
       color: Colors.white,
-      child: Scaffold(
-        appBar: _buildAppBar(),
-        body: SafeArea(
-          child: Column(
+      child: SafeArea(
+        child: Scaffold(
+          appBar: _buildAppBar(),
+          body: Column(
             children: [
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(Sizes.size20),
-                  child: Row(
-                    children: [
-                      WriteProfileColumn(imageUrl: profileImageUrl),
-                      Gaps.h14,
-                      Expanded(child: _buildWriteContentsColumn()),
-                    ],
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(Sizes.size20),
+                    child: IntrinsicHeight(
+                      child: Row(
+                        children: [
+                          WriteProfileColumn(imageUrl: profileImageUrl),
+                          Gaps.h14,
+                          Expanded(child: _buildWriteContentsColumn()),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -115,32 +124,34 @@ class _WriteScreenState extends State<WriteScreen> {
   Widget _buildBottomPostBar(BuildContext context, Size screenSize) {
     return SizedBox(
       width: screenSize.width,
-      child: Padding(
-        padding: const EdgeInsets.all(Sizes.size16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'Anyone can reply',
-              style: TextStyle(
-                fontSize: Sizes.size16,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey,
-              ),
-            ),
-            AnimatedOpacity(
-              opacity: _isPostActive ? 1 : 0.4,
-              duration: const Duration(milliseconds: 300),
-              child: const Text(
-                'Post',
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(Sizes.size16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Anyone can reply',
                 style: TextStyle(
-                  fontSize: Sizes.size20,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.blue,
+                  fontSize: Sizes.size16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey,
                 ),
               ),
-            ),
-          ],
+              AnimatedOpacity(
+                opacity: _isPostActive ? 1 : 0.4,
+                duration: const Duration(milliseconds: 300),
+                child: const Text(
+                  'Post',
+                  style: TextStyle(
+                    fontSize: Sizes.size20,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -161,20 +172,19 @@ class _WriteScreenState extends State<WriteScreen> {
           controller: _textEditingController,
           autofocus: true,
           textInputAction: TextInputAction.newline,
-          maxLines: 10,
+          maxLines: 100,
           minLines: 1,
           cursorColor: Colors.blue,
           style: const TextStyle(
             fontSize: Sizes.size16,
           ),
           decoration: const InputDecoration(
-            hintText: 'Start a thread...',
-            hintStyle: TextStyle(color: Colors.grey),
-            contentPadding: EdgeInsets.zero,
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-            )
-          ),
+              hintText: 'Start a thread...',
+              hintStyle: TextStyle(color: Colors.grey),
+              contentPadding: EdgeInsets.symmetric(vertical: 12),
+              border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+              )),
         ),
         Gaps.v20,
         const Icon(

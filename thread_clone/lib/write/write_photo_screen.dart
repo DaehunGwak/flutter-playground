@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:thread_clone/constants/sizes.dart';
 
@@ -150,14 +151,17 @@ class _WritePhotoScreenState extends State<WritePhotoScreen>
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: const Text(
-                      'Library',
-                      style: TextStyle(
-                        color: Colors.white38,
-                        fontSize: Sizes.size16,
-                        fontWeight: FontWeight.bold,
+                  child: GestureDetector(
+                    onTap: _pickOnLibrary,
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Library',
+                        style: TextStyle(
+                          color: Colors.white38,
+                          fontSize: Sizes.size16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -280,5 +284,12 @@ class _WritePhotoScreenState extends State<WritePhotoScreen>
 
   void _onBackButtonPressed() {
     Navigator.of(context).pop();
+  }
+
+  Future<void> _pickOnLibrary() async {
+    final xFiles = await ImagePicker().pickMultiImage();
+    if (mounted) {
+      Navigator.of(context).pop(xFiles);
+    }
   }
 }

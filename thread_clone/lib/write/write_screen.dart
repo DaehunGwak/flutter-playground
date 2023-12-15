@@ -208,15 +208,34 @@ class _WriteScreenState extends State<WriteScreen> {
                     ),
                     child: Container(
                       constraints: const BoxConstraints(
-                        minHeight: 210,
-                        maxHeight: 210,
+                        minHeight: 190,
+                        maxHeight: 190,
                       ),
                       clipBehavior: Clip.hardEdge,
                       decoration: BoxDecoration(
                         color: Colors.grey,
                         borderRadius: BorderRadius.circular(Sizes.size12),
                       ),
-                      child: Image.file(File(xFile.path)),
+                      child: Stack(
+                        children: [
+                          Image.file(
+                            File(xFile.path),
+                          ),
+                          Positioned(
+                            top: Sizes.size5,
+                            right: Sizes.size5,
+                            child: GestureDetector(
+                              onTap: () => setState(() {
+                                _xFiles.remove(xFile);
+                              }),
+                              child: const Icon(
+                                CupertinoIcons.xmark_circle_fill,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
               ],

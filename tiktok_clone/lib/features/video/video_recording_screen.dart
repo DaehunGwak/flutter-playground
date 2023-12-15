@@ -1,8 +1,10 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/video/video_preview_screen.dart';
 
 class VideoRecordingScreen extends StatefulWidget {
   const VideoRecordingScreen({super.key});
@@ -46,14 +48,17 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     _cameraController = CameraController(
       _isSelfieMode
           ? cameras
-              .firstWhere((e) => e.lensDirection == CameraLensDirection.back)
+              .firstWhere((e) => e.lensDirection == CameraLensDirection.front)
           : cameras
-              .firstWhere((e) => e.lensDirection == CameraLensDirection.front),
+              .firstWhere((e) => e.lensDirection == CameraLensDirection.back),
       ResolutionPreset.ultraHigh,
       imageFormatGroup: ImageFormatGroup.bgra8888,
     );
 
     await _cameraController.initialize();
+    await _cameraController.lockCaptureOrientation();
+    await _cameraController.prepareForVideoRecording(); // for ios
+
     _flashMode = _cameraController.value.flashMode;
   }
 
@@ -89,19 +94,45 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     });
   }
 
-  void _startRecordingOnTapDown(TapDownDetails details) {
+  Future<void> _startRecordingOnTapDown(TapDownDetails details) async {
+    if (_cameraController.value.isRecordingVideo) {
+      return;
+    }
+
+    await _cameraController.startVideoRecording();
+
     _recordAnimationController.forward();
     _progressAnimationController.forward();
   }
 
-  void _stopRecording() {
+  Future<void> _stopRecording() async {
+    if (!_cameraController.value.isRecordingVideo) {
+      return;
+    }
+
     _recordAnimationController.reverse();
     _progressAnimationController.reset();
+
+    final file = await _cameraController.stopVideoRecording();
+    debugPrint(file.path);
+    debugPrint(file.name);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => VideoPreviewScreen(video: file),
+      ),
+    );
   }
 
   @override
   void initState() {
     super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     initPermissions();
     _progressAnimationController.addListener(() {
       setState(() {});
@@ -114,17 +145,43 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   }
 
   @override
+  void dispose() {
+    _progressAnimationController.dispose();
+    _recordAnimationController.dispose();
+    _cameraController.dispose();
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final mediaSize = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: (_hasPermission && _cameraController.value.isInitialized)
             ? Stack(
-                alignment: Alignment.center,
                 children: [
-                  CameraPreview(_cameraController),
+                  ClipRect(
+                    clipper: _MediaSizeClipper(mediaSize),
+                    child: Transform.scale(
+                      scale: 1 /
+                          (_cameraController.value.aspectRatio *
+                              mediaSize.aspectRatio),
+                      alignment: Alignment.topCenter,
+                      child: CameraPreview(_cameraController),
+                    ),
+                  ),
                   Positioned(
                     top: Sizes.size48,
                     right: Sizes.size12,
@@ -170,8 +227,9 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                       ],
                     ),
                   ),
-                  Positioned(
-                    bottom: Sizes.size40,
+                  Container(
+                    alignment: Alignment.bottomCenter,
+                    padding: const EdgeInsets.only(bottom: Sizes.size40),
                     child: GestureDetector(
                       onTapDown: _startRecordingOnTapDown,
                       onTapUp: (_) => _stopRecording(),
@@ -227,5 +285,21 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
         ],
       ),
     );
+  }
+}
+
+class _MediaSizeClipper extends CustomClipper<Rect> {
+  final Size mediaSize;
+
+  const _MediaSizeClipper(this.mediaSize);
+
+  @override
+  Rect getClip(Size size) {
+    return Rect.fromLTWH(0, 0, mediaSize.width, mediaSize.height);
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Rect> oldClipper) {
+    return true;
   }
 }

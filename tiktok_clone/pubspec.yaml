@@ -43,6 +43,7 @@ dependencies:
   permission_handler: ^11.0.1
   video_player: ^2.8.1
   gal: ^2.2.0
+  image_picker: ^1.0.5
 
 dev_dependencies:
   flutter_test:

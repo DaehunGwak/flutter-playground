@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
@@ -38,7 +37,7 @@ class _VideoCommentsState extends State<VideoComments> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Container(
+    return SizedBox(
       height: size.height * 0.7,
       child: Scaffold(
         backgroundColor: Colors.grey.shade50,
@@ -114,9 +113,9 @@ class _VideoCommentsState extends State<VideoComments> {
                                 color: Colors.grey.shade500,
                                 fontSize: Sizes.size14,
                               ),
-                            )
+                            ),
                           ],
-                        )
+                        ),
                       ],
                     );
                   },
@@ -171,7 +170,8 @@ class _VideoCommentsState extends State<VideoComments> {
                                 ),
                                 suffixIcon: Padding(
                                   padding: const EdgeInsets.only(
-                                      right: Sizes.size14),
+                                    right: Sizes.size14,
+                                  ),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [

@@ -91,15 +91,16 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
           ),
         ),
         bottomNavigationBar: BottomAppBar(
-            child: SizedBox(
-          height: 300,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
-            initialDateTime: _initialDateTime,
-            maximumDate: _initialDateTime,
-            onDateTimeChanged: _setTextFieldDate,
+          child: SizedBox(
+            height: 300,
+            child: CupertinoDatePicker(
+              mode: CupertinoDatePickerMode.date,
+              initialDateTime: _initialDateTime,
+              maximumDate: _initialDateTime,
+              onDateTimeChanged: _setTextFieldDate,
+            ),
           ),
-        )),
+        ),
       ),
     );
   }

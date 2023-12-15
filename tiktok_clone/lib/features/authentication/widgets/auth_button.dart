@@ -20,11 +20,13 @@ class AuthButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(Sizes.size14),
         decoration: BoxDecoration(
-            border: Border.all(
-          color: Colors.grey.shade300,
-          width: Sizes.size2,
-        )),
-        child: Stack( // 같은 영역에 위젯을 쌓을 수 있게 해줌
+          border: Border.all(
+            color: Colors.grey.shade300,
+            width: Sizes.size2,
+          ),
+        ),
+        child: Stack(
+          // 같은 영역에 위젯을 쌓을 수 있게 해줌
           alignment: Alignment.center,
           children: [
             Align(

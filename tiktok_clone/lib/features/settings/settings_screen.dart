@@ -73,19 +73,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 context: context,
                 initialDateRange: DateTimeRange(
                   start: DateTime.now(),
-                  end: DateTime.now().add(Duration(days: 1)),
+                  end: DateTime.now().add(const Duration(days: 1)),
                 ),
                 firstDate: DateTime(2010),
                 lastDate: DateTime(2030),
                 builder: (context, child) {
                   return Theme(
-                    child: child!,
                     data: ThemeData(
-                      appBarTheme: AppBarTheme(
+                      appBarTheme: const AppBarTheme(
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.black,
                       ),
                     ),
+                    child: child!,
                   );
                 },
               );
@@ -154,12 +154,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     CupertinoActionSheetAction(
                       isDefaultAction: true,
                       onPressed: () => Navigator.of(context).pop(),
-                      child: Text('Not log out'),
+                      child: const Text('Not log out'),
                     ),
                     CupertinoActionSheetAction(
                       onPressed: () => Navigator.of(context).pop(),
                       isDestructiveAction: true,
-                      child: Text('Yes'),
+                      child: const Text('Yes'),
                     ),
                     CupertinoDialogAction(
                       onPressed: () => Navigator.of(context).pop(),

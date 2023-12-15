@@ -5,7 +5,10 @@ class MockUtils {
 
   static final _faker = Faker();
 
-  static String getMockImageUrl({required int width, required int height,}) {
+  static String getMockImageUrl({
+    required int width,
+    required int height,
+  }) {
     return _faker.image.image(
       width: width,
       height: height,
@@ -14,7 +17,10 @@ class MockUtils {
     );
   }
 
-  static String getMockProfileImageUrl({required int width, required int height,}) {
+  static String getMockProfileImageUrl({
+    required int width,
+    required int height,
+  }) {
     return _faker.image.image(
       width: width,
       height: height,

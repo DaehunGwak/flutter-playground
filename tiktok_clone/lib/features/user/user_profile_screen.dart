@@ -17,11 +17,11 @@ class UserProfileScreen extends StatefulWidget {
 class _UserProfileScreenState extends State<UserProfileScreen> {
   final imageUrls = [
     for (int i = 0; i < 20; i++)
-      MockUtils.getMockImageUrl(width: 500, height: 300 * 16 ~/ 9)
+      MockUtils.getMockImageUrl(width: 500, height: 300 * 16 ~/ 9),
   ];
   final profileImageUrls = [
     for (int i = 0; i < 20; i++)
-      MockUtils.getMockProfileImageUrl(width: 30, height: 30)
+      MockUtils.getMockProfileImageUrl(width: 30, height: 30),
   ];
 
   void _onGearPressed() {
@@ -49,7 +49,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       FontAwesomeIcons.gear,
                       size: Sizes.size20,
                     ),
-                  )
+                  ),
                 ],
               ),
               SliverToBoxAdapter(
@@ -59,7 +59,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       radius: 50,
                       foregroundColor: Colors.blue,
                       foregroundImage: NetworkImage(
-                          'https://avatars.githubusercontent.com/u/12469427?v=4'),
+                        'https://avatars.githubusercontent.com/u/12469427?v=4',
+                      ),
                       child: Text('Daehun'),
                     ),
                     Gaps.v20,
@@ -102,7 +103,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 style: TextStyle(
                                   color: Colors.grey.shade500,
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           VerticalDivider(
@@ -127,7 +128,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 style: TextStyle(
                                   color: Colors.grey.shade500,
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           VerticalDivider(
@@ -152,7 +153,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 style: TextStyle(
                                   color: Colors.grey.shade500,
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ],
@@ -165,8 +166,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         padding:
                             const EdgeInsets.symmetric(vertical: Sizes.size12),
                         decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary,
-                            borderRadius: BorderRadius.circular(Sizes.size4)),
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius: BorderRadius.circular(Sizes.size4),
+                        ),
                         child: const Text(
                           'Follow',
                           style: TextStyle(
@@ -200,7 +202,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                           ),
-                        )
+                        ),
                       ],
                     ),
                     Gaps.v20,

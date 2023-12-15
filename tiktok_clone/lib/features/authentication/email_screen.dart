@@ -41,7 +41,8 @@ class _EmailScreenState extends State<EmailScreen> {
       return false;
     }
     final regExp = RegExp(
-        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+    );
     return regExp.hasMatch(_email);
   }
 
@@ -86,7 +87,8 @@ class _EmailScreenState extends State<EmailScreen> {
                 autocorrect: false,
                 // 가상 키보드 done을 누를때 발생하는 콜백 두가지: onSubmitted & onEditingComplete
                 // onSubmitted: (value) {}, // NEW: input 값이 뭔지 모를때 value 를 사용 하여 func 호출
-                onEditingComplete: _onSubmit, // NEW: 지금은 email input 을 알고 있으므로 사용
+                onEditingComplete:
+                    _onSubmit, // NEW: 지금은 email input 을 알고 있으므로 사용
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey.shade400),

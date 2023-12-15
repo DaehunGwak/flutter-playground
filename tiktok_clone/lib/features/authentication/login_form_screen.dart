@@ -81,7 +81,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
       // NEW: 이때까지 스택된 스크린들 삭제
       context,
       MaterialPageRoute(
-        builder: (context) => InterestsScreen(),
+        builder: (context) => const InterestsScreen(),
       ),
       (route) {
         print(route);

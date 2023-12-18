@@ -45,5 +45,18 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+    <string>This app needs access to photo library for video recording and snapshot</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This app needs access to microphone for video and sound recording</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Could you grant a permission of Photo Library on this app?</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Could you grant a permission of Photo Library on this app?</string>
+    <key>UIApplicationSceneManifest</key>
+    <dict>
+        <key>UISceneConfigurations</key>
+        <dict/>
+    </dict>
 </dict>
 </plist>

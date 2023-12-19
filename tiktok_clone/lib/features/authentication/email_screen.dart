@@ -10,7 +10,9 @@ class EmailScreen extends StatefulWidget {
     required this.username,
   });
 
-  static const routeName = '/signup/email';
+  static const routeUrl = 'email';
+  static const routeName = 'email';
+
   final String username;
 
   @override

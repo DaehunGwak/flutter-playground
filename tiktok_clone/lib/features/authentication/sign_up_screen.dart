@@ -10,14 +10,15 @@ import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
-  static const routeName = '/';
+  static const routeName = 'signUp';
+  static const routeUrl = '/';
 
   _onLoginTap(BuildContext context) {
     context.push(LogInScreen.routeName);
   }
 
   _onEmailTap(BuildContext context) {
-    context.push(UsernameScreen.routeName);
+    context.pushNamed(UsernameScreen.routeName);
   }
 
   @override

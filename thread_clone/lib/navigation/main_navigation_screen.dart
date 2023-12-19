@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thread_clone/constants/sizes.dart';
+import 'package:thread_clone/models/screen_type.dart';
+import 'package:thread_clone/navigation/widget/main_navigaion_destination.dart';
 import 'package:thread_clone/notification/notification_screen.dart';
 import 'package:thread_clone/profile/profile_screen.dart';
 import 'package:thread_clone/search/search_screen.dart';
+import 'package:thread_clone/settings/settings_screen.dart';
 import 'package:thread_clone/timeline/timeline_screen.dart';
-import 'package:thread_clone/navigation/widget/main_navigaion_destination.dart';
 import 'package:thread_clone/write/write_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
-  const MainNavigationScreen({super.key});
+  const MainNavigationScreen({
+    super.key,
+    this.startScreenType = ScreenType.home,
+  });
+
+  static const routeUrl = '/';
+
+  final ScreenType startScreenType;
 
   @override
   State<MainNavigationScreen> createState() => _MainNavigationScreenState();
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _currentIndex = 0;
+  late int _currentIndex;
 
   // TODO: void 를 넣고 안넣고의 차이는?
   void _onNavigationSelected(int index) async {
@@ -33,6 +42,32 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       clipBehavior: Clip.hardEdge,
       builder: (context) => const WriteScreen(),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = switch (widget.startScreenType) {
+      ScreenType.home => 0,
+      ScreenType.search => 1,
+      ScreenType.activity => 3,
+      ScreenType.profile => 4,
+      ScreenType.settings => 4,
+      ScreenType.settingsPrivacy => 4,
+    };
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.startScreenType == ScreenType.settings ||
+          widget.startScreenType == ScreenType.settingsPrivacy) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => SettingsScreen(
+              isRoutePrivacy:
+                  widget.startScreenType == ScreenType.settingsPrivacy,
+            ),
+          ),
+        );
+      }
+    });
   }
 
   @override

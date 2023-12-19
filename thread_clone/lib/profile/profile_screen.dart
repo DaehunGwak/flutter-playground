@@ -10,7 +10,9 @@ import 'widgets/profile_info_sliver_box.dart';
 import 'widgets/profile_tab_sliver_header.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({
+    super.key,
+  });
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();

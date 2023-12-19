@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:thread_clone/navigation/main_navigation_screen.dart';
+import 'package:go_router/go_router.dart';
+import 'package:thread_clone/router.dart';
 
 void main() {
+  GoRouter.optionURLReflectsImperativeAPIs = true;
   runApp(const ThreadCloneApp());
 }
 
@@ -11,8 +13,8 @@ class ThreadCloneApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return MaterialApp.router(
+      title: 'Threads Clone',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.grey,
@@ -23,7 +25,7 @@ class ThreadCloneApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const MainNavigationScreen(),
+      routerConfig: router,
     );
   }
 }

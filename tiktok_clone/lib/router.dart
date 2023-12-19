@@ -23,14 +23,23 @@ final router = GoRouter(
     ),
     GoRoute(
       path: EmailScreen.routeName,
-      builder: (context, state) => const EmailScreen(),
+      builder: (context, state) {
+        final username = state.extra as String;
+        return EmailScreen(
+          username: username,
+        );
+      },
     ),
     GoRoute(
       path: '/users/:username',
       builder: (context, state) {
         print(state.pathParameters);
         final username = state.pathParameters['username'];
-        return UserProfileScreen(username: username!);
+        final tab = state.uri.queryParameters['show'] ?? '';
+        return UserProfileScreen(
+          username: username!,
+          tab: tab,
+        );
       },
     ),
     GoRoute(

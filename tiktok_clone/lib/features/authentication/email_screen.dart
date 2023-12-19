@@ -5,9 +5,13 @@ import 'package:tiktok_clone/features/authentication/password_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 
 class EmailScreen extends StatefulWidget {
-  const EmailScreen({super.key});
+  const EmailScreen({
+    super.key,
+    required this.username,
+  });
 
   static const routeName = '/signup/email';
+  final String username;
 
   @override
   State<EmailScreen> createState() => _EmailScreenState();
@@ -74,9 +78,9 @@ class _EmailScreenState extends State<EmailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Gaps.v40,
-              const Text(
-                "Create email",
-                style: TextStyle(
+              Text(
+                "What's your email, ${widget.username}",
+                style: const TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
                 ),

@@ -4,8 +4,32 @@ import 'package:thread_clone/constants/sizes.dart';
 import 'package:thread_clone/settings/enums/setting_type.dart';
 import 'package:thread_clone/settings/settings_privacy_screen.dart';
 
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({
+    super.key,
+    this.isRoutePrivacy = false,
+  });
+
+  final bool isRoutePrivacy;
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.isRoutePrivacy) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const SettingsPrivacyScreen(),
+          ),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

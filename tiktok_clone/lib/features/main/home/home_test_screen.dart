@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/common/widgets/video_config/video_notifier_config.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main/home/widgets/video_comments.dart';
 
-import '../../../common/widgets/video_config/video_config.dart';
-
-class HomeTestScreen extends StatelessWidget {
+class HomeTestScreen extends StatefulWidget {
   const HomeTestScreen({super.key});
+
+  @override
+  State<HomeTestScreen> createState() => _HomeTestScreenState();
+}
+
+class _HomeTestScreenState extends State<HomeTestScreen> {
+  bool _autoMute = videoNotifierConfig.autoMute;
 
   void _onCommentsTap(BuildContext context) async {
     await showModalBottomSheet(
@@ -28,6 +34,17 @@ class HomeTestScreen extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    videoNotifierConfig.addListener(() {
+      setState(() {
+        _autoMute = videoNotifierConfig.autoMute;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -44,9 +61,9 @@ class HomeTestScreen extends StatelessWidget {
                 icon: const FaIcon(FontAwesomeIcons.comment),
               ),
               IconButton(
-                onPressed: () => VideoConfigData.of(context).toggleMuted(),
+                onPressed: () => videoNotifierConfig.toggleAutoMute(),
                 icon: FaIcon(
-                  VideoConfigData.of(context).autoMute
+                  _autoMute
                       ? FontAwesomeIcons.volumeOff
                       : FontAwesomeIcons.volumeHigh,
                   color: Colors.black,

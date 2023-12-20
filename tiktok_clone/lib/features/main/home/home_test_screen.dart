@@ -12,7 +12,7 @@ class HomeTestScreen extends StatefulWidget {
 }
 
 class _HomeTestScreenState extends State<HomeTestScreen> {
-  bool _autoMute = videoNotifierConfig.autoMute;
+  bool _autoMute = videoValueNotifierConfig.value;
 
   void _onCommentsTap(BuildContext context) async {
     await showModalBottomSheet(
@@ -37,9 +37,9 @@ class _HomeTestScreenState extends State<HomeTestScreen> {
   void initState() {
     super.initState();
 
-    videoNotifierConfig.addListener(() {
+    videoValueNotifierConfig.addListener(() {
       setState(() {
-        _autoMute = videoNotifierConfig.autoMute;
+        _autoMute = videoValueNotifierConfig.value;
       });
     });
   }
@@ -61,7 +61,10 @@ class _HomeTestScreenState extends State<HomeTestScreen> {
                 icon: const FaIcon(FontAwesomeIcons.comment),
               ),
               IconButton(
-                onPressed: () => videoNotifierConfig.toggleAutoMute(),
+                onPressed: () {
+                  videoValueNotifierConfig.value =
+                      !videoValueNotifierConfig.value;
+                },
                 icon: FaIcon(
                   _autoMute
                       ? FontAwesomeIcons.volumeOff

@@ -11,3 +11,5 @@ class VideoNotifierConfig extends ChangeNotifier {
 }
 
 final videoNotifierConfig = VideoNotifierConfig();
+
+final videoValueNotifierConfig = ValueNotifier(false);

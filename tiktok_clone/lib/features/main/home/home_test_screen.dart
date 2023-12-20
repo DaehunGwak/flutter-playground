@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main/home/widgets/video_comments.dart';
 
+import '../../../common/widgets/video_config/video_config.dart';
+
 class HomeTestScreen extends StatelessWidget {
   const HomeTestScreen({super.key});
 
@@ -22,7 +24,7 @@ class HomeTestScreen extends StatelessWidget {
       // barrierColor: Colors.green.withOpacity(0.5), // NEW: 시트 아닌 영역의 색
       builder: (context) => const VideoComments(),
     );
-    print('bottom sheet closed');
+    debugPrint('bottom sheet closed');
   }
 
   @override
@@ -40,6 +42,15 @@ class HomeTestScreen extends StatelessWidget {
               IconButton(
                 onPressed: () => _onCommentsTap(context),
                 icon: const FaIcon(FontAwesomeIcons.comment),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: FaIcon(
+                  VideoConfig.of(context).autoMute
+                      ? FontAwesomeIcons.volumeOff
+                      : FontAwesomeIcons.volumeHigh,
+                  color: Colors.black,
+                ),
               ),
             ],
           ),

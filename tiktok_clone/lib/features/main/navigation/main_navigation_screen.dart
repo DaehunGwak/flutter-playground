@@ -17,7 +17,7 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
   bool _isBlackTheme = false;
 
   _onTab(int index) {
@@ -25,7 +25,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       _selectedIndex = index;
       _isBlackTheme = _selectedIndex == 0;
     });
-    print('index: $index, isBlackTheme: $_isBlackTheme');
+    debugPrint('index: $index, isBlackTheme: $_isBlackTheme');
   }
 
   @override

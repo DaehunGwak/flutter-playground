@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tiktok_clone/common/widgets/video_config/video_notifier_config.dart';
+import 'package:provider/provider.dart';
+import 'package:tiktok_clone/common/widgets/video_config/video_provider_config.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main/home/widgets/video_comments.dart';
 
@@ -12,8 +13,6 @@ class HomeTestScreen extends StatefulWidget {
 }
 
 class _HomeTestScreenState extends State<HomeTestScreen> {
-  bool _autoMute = videoValueNotifierConfig.value;
-
   void _onCommentsTap(BuildContext context) async {
     await showModalBottomSheet(
       // NEW: bottom sheet 띄우는 법
@@ -36,12 +35,6 @@ class _HomeTestScreenState extends State<HomeTestScreen> {
   @override
   void initState() {
     super.initState();
-
-    videoValueNotifierConfig.addListener(() {
-      setState(() {
-        _autoMute = videoValueNotifierConfig.value;
-      });
-    });
   }
 
   @override
@@ -62,11 +55,10 @@ class _HomeTestScreenState extends State<HomeTestScreen> {
               ),
               IconButton(
                 onPressed: () {
-                  videoValueNotifierConfig.value =
-                      !videoValueNotifierConfig.value;
+                  context.read<VideoProviderConfig>().toggleIsMuted();
                 },
                 icon: FaIcon(
-                  _autoMute
+                  context.watch<VideoProviderConfig>().isMuted
                       ? FontAwesomeIcons.volumeOff
                       : FontAwesomeIcons.volumeHigh,
                   color: Colors.black,

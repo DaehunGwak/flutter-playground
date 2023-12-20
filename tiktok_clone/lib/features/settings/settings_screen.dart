@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -27,9 +28,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(
         children: [
           SwitchListTile.adaptive(
-            value: _isNotification,
-            onChanged: _onNotificationChanged,
-            title: const Text('Enable notification'),
+            value: VideoConfigData.of(context).autoMute,
+            onChanged: (_) => VideoConfigData.of(context).toggleMuted(),
+            title: const Text('Auto Mute'),
+            subtitle: const Text('Videos will be muted by default'),
           ),
           Switch.adaptive(
             value: _isNotification,
@@ -56,41 +58,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: const Text('Enable notification'),
           ),
           ListTile(
-            onTap: () async {
-              final date = await showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2010),
-                lastDate: DateTime(2030),
-              );
-              print(date);
-              final time = await showTimePicker(
-                context: context,
-                initialTime: TimeOfDay.now(),
-              );
-              print(time);
-              final booking = await showDateRangePicker(
-                context: context,
-                initialDateRange: DateTimeRange(
-                  start: DateTime.now(),
-                  end: DateTime.now().add(const Duration(days: 1)),
-                ),
-                firstDate: DateTime(2010),
-                lastDate: DateTime(2030),
-                builder: (context, child) {
-                  return Theme(
-                    data: ThemeData(
-                      appBarTheme: const AppBarTheme(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.black,
-                      ),
-                    ),
-                    child: child!,
-                  );
-                },
-              );
-              print(booking);
-            },
+            onTap: () async => await _showDatePicker(context),
             title: const Text('What is your birthday?'),
           ),
           const AboutListTile(),
@@ -178,5 +146,45 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> _showDatePicker(BuildContext context) async {
+    final date = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2010),
+      lastDate: DateTime(2030),
+    );
+    debugPrint(date.toString());
+
+    if (!mounted) return;
+    final time = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    debugPrint(time.toString());
+
+    if (!mounted) return;
+    final booking = await showDateRangePicker(
+      context: context,
+      initialDateRange: DateTimeRange(
+        start: DateTime.now(),
+        end: DateTime.now().add(const Duration(days: 1)),
+      ),
+      firstDate: DateTime(2010),
+      lastDate: DateTime(2030),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData(
+            appBarTheme: const AppBarTheme(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.black,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    debugPrint(booking.toString());
   }
 }

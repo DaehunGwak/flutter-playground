@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
+import 'common/widgets/video_config/video_config.dart';
 import 'router.dart';
 
 void main() {

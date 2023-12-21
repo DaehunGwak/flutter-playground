@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:thread_clone/constants/gaps.dart';
 import 'package:thread_clone/constants/sizes.dart';
-import 'package:thread_clone/settings/enums/setting_type.dart';
-import 'package:thread_clone/settings/settings_privacy_screen.dart';
+import 'package:thread_clone/settings/view_models/setting_view_model.dart';
+import 'package:thread_clone/settings/views/enums/setting_type.dart';
+import 'package:thread_clone/settings/views/settings_privacy_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
@@ -90,6 +93,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const Divider(
+          thickness: 0.3,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: Sizes.size10),
+          child: SwitchListTile.adaptive(
+            value: context.watch<SettingViewModel>().isDarkMode,
+            onChanged: (value) =>
+                context.read<SettingViewModel>().setDarkMode(value),
+            activeColor:
+                Theme.of(context).colorScheme.onBackground.withOpacity(0.9),
+            activeTrackColor:
+                Theme.of(context).colorScheme.onBackground.withOpacity(0.3),
+            inactiveThumbColor:
+                Theme.of(context).colorScheme.onBackground.withOpacity(0.3),
+            inactiveTrackColor:
+                Theme.of(context).colorScheme.onBackground.withOpacity(0.3),
+            title: const Row(
+              children: [
+                Icon(
+                  Icons.ad_units_rounded,
+                  size: Sizes.size28,
+                ),
+                Gaps.h16,
+                Text('Dark Mode'),
+              ],
+            ),
+          ),
+        ),
         const Divider(
           thickness: 0.3,
         ),

@@ -6,7 +6,7 @@ import 'package:thread_clone/navigation/widget/main_navigaion_destination.dart';
 import 'package:thread_clone/notification/notification_screen.dart';
 import 'package:thread_clone/profile/profile_screen.dart';
 import 'package:thread_clone/search/search_screen.dart';
-import 'package:thread_clone/settings/settings_screen.dart';
+import 'package:thread_clone/settings/views/settings_screen.dart';
 import 'package:thread_clone/timeline/timeline_screen.dart';
 import 'package:thread_clone/write/write_screen.dart';
 

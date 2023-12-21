@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:tiktok_clone/common/widgets/video_config/video_provider_config.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main/home/widgets/video_comments.dart';
 
-class HomeTestScreen extends StatelessWidget {
+class HomeTestScreen extends StatefulWidget {
   const HomeTestScreen({super.key});
 
+  @override
+  State<HomeTestScreen> createState() => _HomeTestScreenState();
+}
+
+class _HomeTestScreenState extends State<HomeTestScreen> {
   void _onCommentsTap(BuildContext context) async {
     await showModalBottomSheet(
       // NEW: bottom sheet 띄우는 법
@@ -22,7 +29,12 @@ class HomeTestScreen extends StatelessWidget {
       // barrierColor: Colors.green.withOpacity(0.5), // NEW: 시트 아닌 영역의 색
       builder: (context) => const VideoComments(),
     );
-    print('bottom sheet closed');
+    debugPrint('bottom sheet closed');
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -40,6 +52,17 @@ class HomeTestScreen extends StatelessWidget {
               IconButton(
                 onPressed: () => _onCommentsTap(context),
                 icon: const FaIcon(FontAwesomeIcons.comment),
+              ),
+              IconButton(
+                onPressed: () {
+                  context.read<VideoProviderConfig>().toggleIsMuted();
+                },
+                icon: FaIcon(
+                  context.watch<VideoProviderConfig>().isMuted
+                      ? FontAwesomeIcons.volumeOff
+                      : FontAwesomeIcons.volumeHigh,
+                  color: Colors.black,
+                ),
               ),
             ],
           ),

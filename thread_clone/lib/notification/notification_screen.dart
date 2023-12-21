@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:thread_clone/constants/sizes.dart';
 import 'package:thread_clone/models/mock/activity_mock_data_util.dart';
 import 'package:thread_clone/notification/widget/activity_list_tile.dart';
-import "../extension/string_extension.dart";
 
 import '../constants/gaps.dart';
+import "../extension/string_extension.dart";
 import '../models/activity.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -42,7 +42,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             children: [
               _buildTitle(),
               Gaps.v10,
-              _buildTabBar(),
+              _buildTabBar(context),
               Gaps.v14,
               Expanded(
                 child: _buildTabBarView(),
@@ -68,7 +68,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     );
   }
 
-  TabBar _buildTabBar() {
+  TabBar _buildTabBar(BuildContext context) {
     return TabBar(
       onTap: _onTabBarTap,
       isScrollable: true,
@@ -79,11 +79,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
       indicatorColor: Colors.transparent,
       indicator: const BoxDecoration(color: Colors.transparent),
       dividerColor: Colors.transparent,
-      labelColor: Colors.white,
+      labelColor: Theme.of(context).colorScheme.background,
       labelStyle: const TextStyle(
         fontWeight: FontWeight.w700,
       ),
-      unselectedLabelColor: Colors.black,
+      unselectedLabelColor: Theme.of(context).colorScheme.onBackground,
       unselectedLabelStyle: const TextStyle(
         fontWeight: FontWeight.w500,
       ),
@@ -94,10 +94,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
             height: Sizes.size36,
             width: Sizes.size96,
             decoration: BoxDecoration(
-              color: (_selectedTabType == type) ? Colors.black : Colors.white,
+              color: (_selectedTabType == type)
+                  ? Theme.of(context).colorScheme.onBackground
+                  : Theme.of(context).colorScheme.background,
               border: Border.all(
                 color: (_selectedTabType == type)
-                    ? Colors.black
+                    ? Theme.of(context).colorScheme.onBackground
                     : Colors.grey.shade300,
               ),
               borderRadius: BorderRadius.circular(Sizes.size8),

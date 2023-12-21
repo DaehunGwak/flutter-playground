@@ -22,21 +22,21 @@ class ProfileInfoSliverBox extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Gaps.v14,
-            _buildListTile(),
+            _buildListTile(context),
             Gaps.v6,
             Text(
               _user.description!,
               style: const TextStyle(fontSize: Sizes.size16),
             ),
             Gaps.v10,
-            _buildFollowers()
+            _buildFollowers(context)
           ],
         ),
       ),
     );
   }
 
-  Widget _buildListTile() {
+  Widget _buildListTile(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       visualDensity: const VisualDensity(
@@ -67,7 +67,8 @@ class ProfileInfoSliverBox extends StatelessWidget {
               horizontal: Sizes.size10,
             ),
             decoration: BoxDecoration(
-              color: Colors.grey.shade100,
+              color:
+                  Theme.of(context).colorScheme.onBackground.withOpacity(0.1),
               borderRadius: BorderRadius.circular(Sizes.size32),
             ),
             child: const Text(
@@ -88,15 +89,15 @@ class ProfileInfoSliverBox extends StatelessWidget {
     );
   }
 
-  Widget _buildFollowers() {
+  Widget _buildFollowers(BuildContext context) {
     return Row(
       children: [
-        _buildCircleAvatars2(),
+        _buildCircleAvatars2(context),
         Gaps.h10,
         Text(
           '${_user.formattedFollowerCount} followers',
           style: TextStyle(
-            color: Colors.grey.shade600,
+            color: Colors.grey.shade500,
             fontSize: Sizes.size16,
           ),
         ),
@@ -104,7 +105,7 @@ class ProfileInfoSliverBox extends StatelessWidget {
     );
   }
 
-  Widget _buildCircleAvatars2() {
+  Widget _buildCircleAvatars2(BuildContext context) {
     return SizedBox(
       width: 42,
       height: 42,
@@ -114,6 +115,7 @@ class ProfileInfoSliverBox extends StatelessWidget {
             Transform.translate(
               offset: const Offset(-5, 4),
               child: _buildCircleAvatar(
+                context,
                 size: Sizes.size12,
                 imageUrl: _user.followerImageUrls.elementAt(0),
               ),
@@ -122,8 +124,9 @@ class ProfileInfoSliverBox extends StatelessWidget {
               offset: const Offset(10, 0),
               child: CircleAvatar(
                 radius: Sizes.size16,
-                backgroundColor: Colors.white,
+                backgroundColor: Theme.of(context).colorScheme.background,
                 child: _buildCircleAvatar(
+                  context,
                   size: Sizes.size12,
                   imageUrl: _user.followerImageUrls.elementAt(1),
                 ),
@@ -135,7 +138,8 @@ class ProfileInfoSliverBox extends StatelessWidget {
     );
   }
 
-  CircleAvatar _buildCircleAvatar({
+  CircleAvatar _buildCircleAvatar(
+    BuildContext context, {
     required double size,
     required String imageUrl,
   }) {
@@ -143,9 +147,9 @@ class ProfileInfoSliverBox extends StatelessWidget {
       radius: size,
       backgroundColor: Colors.grey,
       foregroundImage: NetworkImage(imageUrl),
-      child: const FaIcon(
+      child: FaIcon(
         FontAwesomeIcons.user,
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.background,
       ),
     );
   }

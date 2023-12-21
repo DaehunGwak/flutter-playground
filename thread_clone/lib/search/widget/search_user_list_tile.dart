@@ -115,7 +115,6 @@ class SearchUserListTile extends StatelessWidget {
           'Follow',
           style: TextStyle(
             fontSize: Sizes.size14,
-            color: Colors.black,
           ),
         ),
       ),

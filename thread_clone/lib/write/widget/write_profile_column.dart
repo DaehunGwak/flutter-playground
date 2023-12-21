@@ -29,7 +29,7 @@ class WriteProfileColumn extends StatelessWidget {
         Expanded(
           child: VerticalDivider(
             thickness: 3,
-            color: Colors.grey.shade300,
+            color: Colors.grey.shade400,
           ),
         ),
         Gaps.v10,
@@ -43,7 +43,7 @@ class WriteProfileColumn extends StatelessWidget {
             Container(
               width: Sizes.size20,
               height: Sizes.size20,
-              color: Colors.white.withOpacity(0.5),
+              color: Theme.of(context).colorScheme.background.withOpacity(0.5),
             ),
           ],
         ),

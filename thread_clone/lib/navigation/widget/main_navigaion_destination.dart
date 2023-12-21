@@ -22,6 +22,7 @@ class MainNavigationDestination extends StatelessWidget {
       ),
       selectedIcon: FaIcon(
         selectedIconData ?? iconData,
+        color: Theme.of(context).iconTheme.color,
         size: Sizes.size28,
       ),
       label: 'dummy', // NOTE: if you need label field, please fix it

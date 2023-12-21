@@ -57,11 +57,11 @@ class _WriteScreenState extends State<WriteScreen> {
 
     return Container(
       height: screenSize.height * 0.9,
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.background,
       clipBehavior: Clip.none,
       child: SafeArea(
         child: Scaffold(
-          appBar: _buildAppBar(),
+          appBar: _buildAppBar(context),
           body: Column(
             children: [
               Expanded(
@@ -88,26 +88,30 @@ class _WriteScreenState extends State<WriteScreen> {
     );
   }
 
-  AppBar _buildAppBar() {
+  AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      title: const Text(
+      title: Text(
         'New thread',
-        style: TextStyle(fontSize: Sizes.size20, fontWeight: FontWeight.w700),
+        style: TextStyle(
+          fontSize: Sizes.size20,
+          fontWeight: FontWeight.w700,
+          color: Theme.of(context).colorScheme.onBackground.withOpacity(0.5),
+        ),
       ),
       automaticallyImplyLeading: false,
       toolbarHeight: Sizes.size64,
       leadingWidth: Sizes.size96,
-      backgroundColor: Colors.white,
-      surfaceTintColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
+      surfaceTintColor: Theme.of(context).colorScheme.background,
       elevation: 0,
       leading: Padding(
         padding: const EdgeInsets.only(top: Sizes.size3),
         child: TextButton(
           onPressed: _onCancelPressed,
-          child: const Text(
+          child: Text(
             'Cancel',
             style: TextStyle(
-              color: Colors.black,
+              color: Theme.of(context).colorScheme.onBackground,
               fontSize: Sizes.size16,
               fontWeight: FontWeight.w500,
             ),
@@ -129,7 +133,7 @@ class _WriteScreenState extends State<WriteScreen> {
 
   Widget _buildBottomPostBar(BuildContext context, Size screenSize) {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.background,
       width: screenSize.width,
       child: SingleChildScrollView(
         child: Padding(

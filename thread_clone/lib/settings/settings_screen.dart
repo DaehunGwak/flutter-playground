@@ -41,8 +41,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
-      surfaceTintColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
+      surfaceTintColor: Theme.of(context).colorScheme.background,
       leadingWidth: Sizes.size96,
       toolbarHeight: Sizes.size36,
       leading: Padding(

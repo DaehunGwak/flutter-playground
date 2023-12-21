@@ -100,8 +100,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           selectedIndex: _currentIndex,
           onDestinationSelected: _onNavigationSelected,
           elevation: 0,
-          backgroundColor: Colors.white,
-          indicatorColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.background,
+          indicatorColor: Theme.of(context).colorScheme.background,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
           destinations: const [
             MainNavigationDestination(

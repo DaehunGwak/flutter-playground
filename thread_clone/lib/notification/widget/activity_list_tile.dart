@@ -18,14 +18,14 @@ class ActivityListTile extends StatelessWidget {
     return ListTile(
       titleAlignment: ListTileTitleAlignment.top,
       contentPadding: EdgeInsets.zero,
-      leading: _buildLeading(),
+      leading: _buildLeading(context),
       title: _buildActivityInfo(),
       trailing:
           (activity.type == ActivityType.follows) ? _buildTrailing() : null,
     );
   }
 
-  Widget _buildLeading() {
+  Widget _buildLeading(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
         top: Sizes.size2,
@@ -39,20 +39,20 @@ class ActivityListTile extends StatelessWidget {
           ),
           Transform.translate(
             offset: const Offset(Sizes.size24, Sizes.size24),
-            child: _buildLeadingIcon(),
+            child: _buildLeadingIcon(context),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildLeadingIcon() {
+  Widget _buildLeadingIcon(BuildContext context) {
     return Container(
       width: Sizes.size20,
       height: Sizes.size20,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.background,
       ),
       child: Center(
         child: Container(

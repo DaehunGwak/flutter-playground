@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:tiktok_clone/common/widgets/video_config/video_provider_config.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/main/home/widgets/video_comments.dart';
+import 'package:tiktok_clone/features/main/home/view_models/playback_config_vm.dart';
+import 'package:tiktok_clone/features/main/home/views/widgets/video_comments.dart';
 
 class HomeTestScreen extends StatefulWidget {
   const HomeTestScreen({super.key});
@@ -55,12 +55,23 @@ class _HomeTestScreenState extends State<HomeTestScreen> {
               ),
               IconButton(
                 onPressed: () {
-                  context.read<VideoProviderConfig>().toggleIsMuted();
+                  context.read<PlaybackConfigViewModel>().toggleMuted();
                 },
                 icon: FaIcon(
-                  context.watch<VideoProviderConfig>().isMuted
+                  context.watch<PlaybackConfigViewModel>().muted
                       ? FontAwesomeIcons.volumeOff
                       : FontAwesomeIcons.volumeHigh,
+                  color: Colors.black,
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  context.read<PlaybackConfigViewModel>().toggleAutoplay();
+                },
+                icon: FaIcon(
+                  context.watch<PlaybackConfigViewModel>().autoplay
+                      ? FontAwesomeIcons.play
+                      : FontAwesomeIcons.stop,
                   color: Colors.black,
                 ),
               ),

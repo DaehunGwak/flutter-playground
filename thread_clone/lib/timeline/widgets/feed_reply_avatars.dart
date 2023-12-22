@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../models/feed.dart';
 import '../../constants/sizes.dart';
+import '../../models/feed.dart';
 
 class FeedReplyAvatars extends StatelessWidget {
   final Feed feed;
@@ -20,19 +20,20 @@ class FeedReplyAvatars extends StatelessWidget {
           width: 58,
           height: 42,
         ),
-        if (feed.replyCount == 1) _buildCircleAvatars1(),
-        if (feed.replyCount == 2) _buildCircleAvatars2(),
-        if (feed.replyCount >= 3) _buildCircleAvatars3(),
+        if (feed.replyCount == 1) _buildCircleAvatars1(context),
+        if (feed.replyCount == 2) _buildCircleAvatars2(context),
+        if (feed.replyCount >= 3) _buildCircleAvatars3(context),
       ],
     );
   }
 
-  Widget _buildCircleAvatars1() {
+  Widget _buildCircleAvatars1(BuildContext context) {
     return SizedBox(
       width: 58,
       height: 42,
       child: Center(
         child: _buildCircleAvatar(
+          context,
           size: Sizes.size12,
           imageUrl: feed.replyCandidateUsers.elementAt(0).profileImageUrl,
         ),
@@ -40,7 +41,7 @@ class FeedReplyAvatars extends StatelessWidget {
     );
   }
 
-  Widget _buildCircleAvatars2() {
+  Widget _buildCircleAvatars2(BuildContext context) {
     return SizedBox(
       width: 58,
       height: 42,
@@ -50,6 +51,7 @@ class FeedReplyAvatars extends StatelessWidget {
             Transform.translate(
               offset: const Offset(-5, 4),
               child: _buildCircleAvatar(
+                context,
                 size: Sizes.size12,
                 imageUrl: feed.replyCandidateUsers.elementAt(0).profileImageUrl,
               ),
@@ -58,10 +60,12 @@ class FeedReplyAvatars extends StatelessWidget {
               offset: const Offset(10, 0),
               child: CircleAvatar(
                 radius: Sizes.size16,
-                backgroundColor: Colors.white,
+                backgroundColor: Theme.of(context).colorScheme.background,
                 child: _buildCircleAvatar(
+                  context,
                   size: Sizes.size12,
-                  imageUrl: feed.replyCandidateUsers.elementAt(1).profileImageUrl,
+                  imageUrl:
+                      feed.replyCandidateUsers.elementAt(1).profileImageUrl,
                 ),
               ),
             ),
@@ -71,7 +75,7 @@ class FeedReplyAvatars extends StatelessWidget {
     );
   }
 
-  Widget _buildCircleAvatars3() {
+  Widget _buildCircleAvatars3(BuildContext context) {
     return SizedBox(
       width: 58,
       height: 42,
@@ -81,6 +85,7 @@ class FeedReplyAvatars extends StatelessWidget {
             Transform.translate(
               offset: const Offset(14, -10),
               child: _buildCircleAvatar(
+                context,
                 size: 13,
                 imageUrl: feed.replyCandidateUsers.elementAt(0).profileImageUrl,
               ),
@@ -88,6 +93,7 @@ class FeedReplyAvatars extends StatelessWidget {
             Transform.translate(
               offset: const Offset(-14, 0),
               child: _buildCircleAvatar(
+                context,
                 size: Sizes.size10,
                 imageUrl: feed.replyCandidateUsers.elementAt(1).profileImageUrl,
               ),
@@ -95,6 +101,7 @@ class FeedReplyAvatars extends StatelessWidget {
             Transform.translate(
               offset: const Offset(8, 20),
               child: _buildCircleAvatar(
+                context,
                 size: Sizes.size8,
                 imageUrl: feed.replyCandidateUsers.elementAt(2).profileImageUrl,
               ),
@@ -105,7 +112,8 @@ class FeedReplyAvatars extends StatelessWidget {
     );
   }
 
-  CircleAvatar _buildCircleAvatar({
+  CircleAvatar _buildCircleAvatar(
+    BuildContext context, {
     required double size,
     required String imageUrl,
   }) {
@@ -113,9 +121,9 @@ class FeedReplyAvatars extends StatelessWidget {
       radius: size,
       backgroundColor: Colors.grey,
       foregroundImage: NetworkImage(imageUrl),
-      child: const FaIcon(
+      child: FaIcon(
         FontAwesomeIcons.user,
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.background,
       ),
     );
   }

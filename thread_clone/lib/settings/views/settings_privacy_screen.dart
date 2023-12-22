@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thread_clone/constants/gaps.dart';
 
-import '../constants/sizes.dart';
+import '../../constants/sizes.dart';
 
 class SettingsPrivacyScreen extends StatefulWidget {
   const SettingsPrivacyScreen({super.key});
@@ -24,8 +24,8 @@ class _SettingsPrivacyScreenState extends State<SettingsPrivacyScreen> {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
-      surfaceTintColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
+      surfaceTintColor: Theme.of(context).colorScheme.background,
       leadingWidth: Sizes.size96,
       toolbarHeight: Sizes.size36,
       leading: Padding(
@@ -71,10 +71,14 @@ class _SettingsPrivacyScreenState extends State<SettingsPrivacyScreen> {
         SwitchListTile.adaptive(
           value: _isPrivateProfile,
           onChanged: _togglePrivateProfileState,
-          activeColor: Colors.black,
-          activeTrackColor: Colors.grey,
-          inactiveThumbColor: Colors.grey,
-          inactiveTrackColor: Colors.grey.shade300,
+          activeColor:
+              Theme.of(context).colorScheme.onBackground.withOpacity(0.9),
+          activeTrackColor:
+              Theme.of(context).colorScheme.onBackground.withOpacity(0.3),
+          inactiveThumbColor:
+              Theme.of(context).colorScheme.onBackground.withOpacity(0.3),
+          inactiveTrackColor:
+              Theme.of(context).colorScheme.onBackground.withOpacity(0.3),
           title: const Padding(
             padding: EdgeInsets.symmetric(horizontal: Sizes.size6),
             child: Row(
@@ -147,10 +151,12 @@ class _SettingsPrivacyScreenState extends State<SettingsPrivacyScreen> {
               size: iconSize,
             ),
       title: Text(text),
-      subtitle: (subText.isEmpty) ? null : Padding(
-        padding: const EdgeInsets.only(top: Sizes.size8),
-        child: Text(subText),
-      ),
+      subtitle: (subText.isEmpty)
+          ? null
+          : Padding(
+              padding: const EdgeInsets.only(top: Sizes.size8),
+              child: Text(subText),
+            ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

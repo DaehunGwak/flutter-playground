@@ -27,12 +27,12 @@ class ProfileAvatar extends StatelessWidget {
           ),
           Transform.translate(
             offset: const Offset(28, 26),
-            child: const CircleAvatar(
+            child: CircleAvatar(
               radius: Sizes.size12,
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).colorScheme.background,
               child: FaIcon(
                 FontAwesomeIcons.circlePlus,
-                color: Colors.black,
+                color: Theme.of(context).iconTheme.color,
                 size: 19,
               ),
             ),

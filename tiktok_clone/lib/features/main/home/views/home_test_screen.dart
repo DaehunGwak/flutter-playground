@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main/home/view_models/playback_config_vm.dart';
+import 'package:tiktok_clone/features/main/home/views/video_timeline_screen.dart';
 import 'package:tiktok_clone/features/main/home/views/widgets/video_comments.dart';
 
 class HomeTestScreen extends ConsumerStatefulWidget {
@@ -75,6 +76,7 @@ class HomeTestScreenState extends ConsumerState<HomeTestScreen> {
                   color: Colors.black,
                 ),
               ),
+              const VideoTimelineScreen(),
             ],
           ),
         ),

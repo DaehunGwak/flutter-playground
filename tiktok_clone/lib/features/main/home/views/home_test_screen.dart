@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main/home/view_models/playback_config_vm.dart';
+import 'package:tiktok_clone/features/main/home/views/video_timeline_screen.dart';
 import 'package:tiktok_clone/features/main/home/views/widgets/video_comments.dart';
 
-class HomeTestScreen extends StatefulWidget {
+class HomeTestScreen extends ConsumerStatefulWidget {
   const HomeTestScreen({super.key});
 
   @override
-  State<HomeTestScreen> createState() => _HomeTestScreenState();
+  HomeTestScreenState createState() => HomeTestScreenState();
 }
 
-class _HomeTestScreenState extends State<HomeTestScreen> {
+class HomeTestScreenState extends ConsumerState<HomeTestScreen> {
   void _onCommentsTap(BuildContext context) async {
     await showModalBottomSheet(
       // NEW: bottom sheet 띄우는 법
@@ -55,10 +56,10 @@ class _HomeTestScreenState extends State<HomeTestScreen> {
               ),
               IconButton(
                 onPressed: () {
-                  context.read<PlaybackConfigViewModel>().toggleMuted();
+                  ref.read(playbackConfigProvider.notifier).toggleMuted();
                 },
                 icon: FaIcon(
-                  context.watch<PlaybackConfigViewModel>().muted
+                  ref.watch(playbackConfigProvider).muted
                       ? FontAwesomeIcons.volumeOff
                       : FontAwesomeIcons.volumeHigh,
                   color: Colors.black,
@@ -66,15 +67,16 @@ class _HomeTestScreenState extends State<HomeTestScreen> {
               ),
               IconButton(
                 onPressed: () {
-                  context.read<PlaybackConfigViewModel>().toggleAutoplay();
+                  ref.read(playbackConfigProvider.notifier).toggleAutoplay();
                 },
                 icon: FaIcon(
-                  context.watch<PlaybackConfigViewModel>().autoplay
+                  ref.watch(playbackConfigProvider).autoplay
                       ? FontAwesomeIcons.play
                       : FontAwesomeIcons.stop,
                   color: Colors.black,
                 ),
               ),
+              const VideoTimelineScreen(),
             ],
           ),
         ),

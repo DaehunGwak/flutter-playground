@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thread_clone/router.dart';
 import 'package:thread_clone/settings/repositories/setting_repository.dart';
@@ -15,10 +15,10 @@ void main() async {
   final repository = SettingFileRepository(preferences);
 
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => SettingViewModel(repository),
+    ProviderScope(
+      overrides: [
+        settingProvider.overrideWith(
+          () => SettingViewModel(repository),
         ),
       ],
       child: const ThreadCloneApp(),
@@ -26,15 +26,15 @@ void main() async {
   );
 }
 
-class ThreadCloneApp extends StatelessWidget {
+class ThreadCloneApp extends ConsumerWidget {
   const ThreadCloneApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
       title: 'Threads Clone',
-      themeMode: context.watch<SettingViewModel>().isDarkMode
+      themeMode: ref.watch(settingProvider).isDarkMode
           ? ThemeMode.dark
           : ThemeMode.light,
       theme: ThemeData(

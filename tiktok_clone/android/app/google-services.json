@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "546494764134",
+    "project_id": "ordi-test-tiktok-clone",
+    "storage_bucket": "ordi-test-tiktok-clone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546494764134:android:8c66f21046825725c2c9a7",
+        "android_client_info": {
+          "package_name": "io.ordi.tiktok_clone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvE26_kS4T_2koCOzBTmfceyI--4yklMA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

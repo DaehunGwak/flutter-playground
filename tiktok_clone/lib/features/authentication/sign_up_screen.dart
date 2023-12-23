@@ -14,7 +14,7 @@ class SignUpScreen extends StatelessWidget {
   static const routeUrl = '/';
 
   _onLoginTap(BuildContext context) {
-    context.push(LogInScreen.routeName);
+    context.push(LogInScreen.routeUrl);
   }
 
   _onEmailTap(BuildContext context) {

@@ -15,7 +15,7 @@ final routerProvider = Provider(
     return GoRouter(
       initialLocation: "/home",
       redirect: (context, state) {
-        final isLoggedIn = ref.read(authRepo).isLoggedIn;
+        final isLoggedIn = ref.read(authRepoProvider).isLoggedIn;
         debugPrint(
           "isLoggedIn: $isLoggedIn, state.matchedLocation: ${state.matchedLocation}",
         );

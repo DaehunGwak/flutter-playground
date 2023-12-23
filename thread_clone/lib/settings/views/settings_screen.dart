@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:thread_clone/constants/gaps.dart';
 import 'package:thread_clone/constants/sizes.dart';
 import 'package:thread_clone/settings/view_models/setting_view_model.dart';
 import 'package:thread_clone/settings/views/enums/setting_type.dart';
 import 'package:thread_clone/settings/views/settings_privacy_screen.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({
     super.key,
     this.isRoutePrivacy = false,
@@ -16,10 +16,10 @@ class SettingsScreen extends StatefulWidget {
   final bool isRoutePrivacy;
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  ConsumerState createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   @override
   void initState() {
     super.initState();
@@ -99,9 +99,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         Padding(
           padding: const EdgeInsets.only(left: Sizes.size10),
           child: SwitchListTile.adaptive(
-            value: context.watch<SettingViewModel>().isDarkMode,
+            value: ref.watch(settingProvider).isDarkMode,
             onChanged: (value) =>
-                context.read<SettingViewModel>().setDarkMode(value),
+                ref.read(settingProvider.notifier).setDarkMode(value),
             activeColor:
                 Theme.of(context).colorScheme.onBackground.withOpacity(0.9),
             activeTrackColor:

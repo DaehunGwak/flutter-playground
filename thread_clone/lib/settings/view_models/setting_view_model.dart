@@ -1,21 +1,25 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thread_clone/settings/models/setting.dart';
 import 'package:thread_clone/settings/repositories/setting_repository.dart';
 
-class SettingViewModel extends ChangeNotifier {
+class SettingViewModel extends Notifier<Setting> {
   SettingViewModel(this._settingFileRepository);
 
   final SettingFileRepository _settingFileRepository;
 
-  late final Setting _setting = Setting(
-    isDarkMode: _settingFileRepository.isDarkMode(),
-  );
-
-  bool get isDarkMode => _setting.isDarkMode;
-
   Future<void> setDarkMode(bool value) async {
     await _settingFileRepository.setDarkMode(value);
-    _setting.isDarkMode = value;
-    notifyListeners();
+    state = Setting(isDarkMode: value);
+  }
+
+  @override
+  Setting build() {
+    return Setting(
+      isDarkMode: _settingFileRepository.isDarkMode(),
+    );
   }
 }
+
+final settingProvider = NotifierProvider<SettingViewModel, Setting>(
+  () => throw UnimplementedError(),
+);

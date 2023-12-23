@@ -107,7 +107,7 @@ class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
   }
 
   _onNextTap(BuildContext context) {
-    ref.read(signUpProvider.notifier).signUp();
+    ref.read(signUpProvider.notifier).signUp(context);
     // Navigator.of(context).pushAndRemoveUntil(
     //   MaterialPageRoute(
     //     builder: (context) => const InterestsScreen(),

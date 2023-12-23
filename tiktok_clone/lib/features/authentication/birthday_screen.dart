@@ -1,18 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/view_models/signup_view_model.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
-import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 
-class BirthdayScreen extends StatefulWidget {
+class BirthdayScreen extends ConsumerStatefulWidget {
   const BirthdayScreen({super.key});
 
   @override
-  State<BirthdayScreen> createState() => _BirthdayScreenState();
+  ConsumerState<BirthdayScreen> createState() => _BirthdayScreenState();
 }
 
-class _BirthdayScreenState extends State<BirthdayScreen> {
+class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
   static final _nowDateTime = DateTime.now();
   static final _initialDateTime = DateTime(
     _nowDateTime.year - 12,
@@ -83,8 +84,8 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
               Gaps.v32,
               GestureDetector(
                 onTap: () => _onNextTap(context),
-                child: const FormButton(
-                  disabled: false,
+                child: FormButton(
+                  disabled: ref.watch(signUpProvider).isLoading,
                 ),
               ),
             ],
@@ -106,14 +107,15 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   }
 
   _onNextTap(BuildContext context) {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => const InterestsScreen(),
-      ),
-      (route) {
-        return false;
-      },
-    );
+    ref.read(signUpProvider.notifier).signUp();
+    // Navigator.of(context).pushAndRemoveUntil(
+    //   MaterialPageRoute(
+    //     builder: (context) => const InterestsScreen(),
+    //   ),
+    //   (route) {
+    //     return false;
+    //   },
+    // );
   }
 
   void _onScaffoldTap() {

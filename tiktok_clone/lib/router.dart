@@ -16,11 +16,16 @@ final routerProvider = Provider(
       initialLocation: "/home",
       redirect: (context, state) {
         final isLoggedIn = ref.read(authRepo).isLoggedIn;
-        if (!isLoggedIn &&
-            state.matchedLocation != SignUpScreen.routeUrl &&
-            state.matchedLocation != LogInScreen.routeUrl) {
+        debugPrint(
+          "isLoggedIn: $isLoggedIn, state.matchedLocation: ${state.matchedLocation}",
+        );
+        if ((!isLoggedIn) &&
+            (!state.matchedLocation.startsWith(SignUpScreen.routeUrl)) &&
+            (!state.matchedLocation.startsWith(LogInScreen.routeUrl))) {
+          debugPrint("redirect: SignUpScreen.routeUrl");
           return SignUpScreen.routeUrl;
         }
+        debugPrint("redirect: null");
         return null;
       },
       routes: [

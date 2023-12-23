@@ -31,12 +31,12 @@ void main() async {
   );
 }
 
-class TikTokApp extends StatelessWidget {
+class TikTokApp extends ConsumerWidget {
   const TikTokApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -73,7 +73,7 @@ class TikTokApp extends StatelessWidget {
       // home: InterestsScreen(),
       // home: const MainNavigationScreen(),
       // home: const ActivityScreen(),
-      routerConfig: router,
+      routerConfig: ref.watch(routerProvider),
     );
   }
 }

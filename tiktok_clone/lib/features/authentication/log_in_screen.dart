@@ -9,7 +9,8 @@ import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 class LogInScreen extends StatelessWidget {
   const LogInScreen({super.key});
 
-  static const routeName = '/login';
+  static const routeUrl = '/login';
+  static const routeName = 'login';
 
   void _onSignUpTap(BuildContext context) {
     context.pop();

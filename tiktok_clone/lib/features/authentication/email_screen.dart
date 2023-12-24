@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/password_screen.dart';
+import 'package:tiktok_clone/features/authentication/view_models/signup_view_model.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 
-class EmailScreen extends StatefulWidget {
+class EmailScreen extends ConsumerStatefulWidget {
   const EmailScreen({
     super.key,
     required this.username,
@@ -16,13 +18,42 @@ class EmailScreen extends StatefulWidget {
   final String username;
 
   @override
-  State<EmailScreen> createState() => _EmailScreenState();
+  ConsumerState<EmailScreen> createState() => _EmailScreenState();
 }
 
-class _EmailScreenState extends State<EmailScreen> {
+class _EmailScreenState extends ConsumerState<EmailScreen> {
   final TextEditingController _emailController = TextEditingController();
 
   String _email = "";
+
+  void _onSubmit() {
+    if (!_isEmailValid()) {
+      return;
+    }
+    ref.read(signUpForm.notifier).state = {
+      "email": _email,
+    };
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const PasswordScreen(),
+      ),
+    );
+  }
+
+  bool _isEmailValid() {
+    if (_email.isEmpty) {
+      return false;
+    }
+    final regExp = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+    );
+    return regExp.hasMatch(_email);
+  }
+
+  bool _isEmailEmptyOrValid() {
+    return _email.isEmpty || _isEmailValid();
+  }
 
   @override
   void initState() {
@@ -38,32 +69,6 @@ class _EmailScreenState extends State<EmailScreen> {
   void dispose() {
     _emailController.dispose();
     super.dispose();
-  }
-
-  bool _isEmailEmptyOrValid() {
-    return _email.isEmpty || _isEmailValid();
-  }
-
-  bool _isEmailValid() {
-    if (_email.isEmpty) {
-      return false;
-    }
-    final regExp = RegExp(
-      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-    );
-    return regExp.hasMatch(_email);
-  }
-
-  void _onSubmit() {
-    if (!_isEmailValid()) {
-      return;
-    }
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const PasswordScreen(),
-      ),
-    );
   }
 
   @override

@@ -7,6 +7,7 @@ import 'package:tiktok_clone/features/authentication/repositories/auth_repositor
 import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
 import 'package:tiktok_clone/features/authentication/username_screen.dart';
 import 'package:tiktok_clone/features/main/navigation/main_navigation_screen.dart';
+import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 import 'package:tiktok_clone/features/user/user_profile_screen.dart';
 import 'package:tiktok_clone/features/video/video_recording_screen.dart';
 
@@ -15,12 +16,17 @@ final routerProvider = Provider(
     return GoRouter(
       initialLocation: "/home",
       redirect: (context, state) {
-        final isLoggedIn = ref.read(authRepo).isLoggedIn;
-        if (!isLoggedIn &&
-            state.matchedLocation != SignUpScreen.routeUrl &&
-            state.matchedLocation != LogInScreen.routeUrl) {
+        final isLoggedIn = ref.read(authRepoProvider).isLoggedIn;
+        debugPrint(
+          "isLoggedIn: $isLoggedIn, state.matchedLocation: ${state.matchedLocation}",
+        );
+        if ((!isLoggedIn) &&
+            (!state.matchedLocation.startsWith(SignUpScreen.routeUrl)) &&
+            (!state.matchedLocation.startsWith(LogInScreen.routeUrl))) {
+          debugPrint("redirect: SignUpScreen.routeUrl");
           return SignUpScreen.routeUrl;
         }
+        debugPrint("redirect: null");
         return null;
       },
       routes: [
@@ -63,6 +69,11 @@ final routerProvider = Provider(
         GoRoute(
           path: LogInScreen.routeUrl,
           builder: (context, state) => const LogInScreen(),
+        ),
+        GoRoute(
+          name: InterestsScreen.routeName,
+          path: InterestsScreen.routeUrl,
+          builder: (context, state) => const InterestsScreen(),
         ),
         GoRoute(
           path: '/users/:username',

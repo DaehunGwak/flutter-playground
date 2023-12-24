@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/log_in_screen.dart';
 import 'package:tiktok_clone/features/authentication/username_screen.dart';
+import 'package:tiktok_clone/features/authentication/view_models/social_auth_view_model.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends ConsumerWidget {
   const SignUpScreen({super.key});
 
   static const routeName = 'signUp';
@@ -22,7 +24,7 @@ class SignUpScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SafeArea(
         // os 에서 기본적으로 상위 가려지는 구간 레이어를 비켜 내려갈 수 있음
@@ -55,6 +57,15 @@ class SignUpScreen extends StatelessWidget {
                 child: const AuthButton(
                   text: 'Use email & password',
                   icon: FaIcon(FontAwesomeIcons.user),
+                ),
+              ),
+              Gaps.v12,
+              GestureDetector(
+                onTap: () =>
+                    ref.read(socialAuthProvider.notifier).githubSignIn(context),
+                child: const AuthButton(
+                  text: 'Continue with GitHub',
+                  icon: FaIcon(FontAwesomeIcons.github),
                 ),
               ),
               Gaps.v12,

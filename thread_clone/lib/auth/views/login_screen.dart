@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:thread_clone/auth/view_models/login_view_model.dart';
 import 'package:thread_clone/auth/views/signup_screen.dart';
 import 'package:thread_clone/auth/views/widget/form_button.dart';
 import 'package:thread_clone/constants/gaps.dart';
@@ -75,6 +76,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         child: Column(
           children: [
             TextFormField(
+              onChanged: (value) {
+                ref.read(loginForm)['email'] = value;
+              },
               keyboardType: TextInputType.emailAddress,
               cursorColor: Theme.of(context).colorScheme.onBackground,
               decoration: InputDecoration(
@@ -95,6 +99,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
             Gaps.v12,
             TextFormField(
+              onChanged: (value) {
+                ref.read(loginForm)['password'] = value;
+              },
               keyboardType: TextInputType.text,
               obscureText: true,
               cursorColor: Theme.of(context).colorScheme.onBackground,
@@ -115,9 +122,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
             ),
             Gaps.v12,
-            const FormButton(
-              text: 'Log in',
-              disabled: false,
+            GestureDetector(
+              onTap: () {
+                ref.read(loginProvider.notifier).emailLogin(context);
+              },
+              child: FormButton(
+                text: 'Log in',
+                disabled: ref.watch(loginProvider).isLoading,
+              ),
             ),
             Gaps.v20,
             const Text(

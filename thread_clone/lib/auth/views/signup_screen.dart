@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thread_clone/auth/view_models/signup_view_model.dart';
 import 'package:thread_clone/auth/views/widget/form_button.dart';
 import 'package:thread_clone/constants/gaps.dart';
 import 'package:thread_clone/constants/sizes.dart';
@@ -38,6 +39,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
         child: Column(
           children: [
             TextFormField(
+              onChanged: (value) {
+                debugPrint('signup: email: $value');
+                ref.read(signUpForm)['email'] = value;
+              },
               keyboardType: TextInputType.emailAddress,
               cursorColor: Theme.of(context).colorScheme.onBackground,
               decoration: InputDecoration(
@@ -58,6 +63,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             ),
             Gaps.v12,
             TextFormField(
+              onChanged: (value) {
+                debugPrint('signup: pw: $value');
+                ref.read(signUpForm)['password'] = value;
+              },
               keyboardType: TextInputType.text,
               obscureText: true,
               cursorColor: Theme.of(context).colorScheme.onBackground,
@@ -78,9 +87,12 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               ),
             ),
             Gaps.v12,
-            const FormButton(
-              text: 'Sign up',
-              disabled: false,
+            GestureDetector(
+              onTap: () => ref.read(signUpProvider.notifier).signUp(context),
+              child: FormButton(
+                text: 'Sign up',
+                disabled: ref.watch(signUpProvider).isLoading,
+              ),
             ),
           ],
         ),

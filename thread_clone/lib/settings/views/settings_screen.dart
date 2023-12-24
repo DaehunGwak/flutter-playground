@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:thread_clone/auth/repositories/firebase_auth_repository.dart';
+import 'package:thread_clone/auth/views/login_screen.dart';
 import 'package:thread_clone/constants/gaps.dart';
 import 'package:thread_clone/constants/sizes.dart';
 import 'package:thread_clone/settings/view_models/setting_view_model.dart';
@@ -166,7 +169,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   ),
                 ),
                 IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () {
+                    ref.read(firebaseAuthRepoProvider).signOut();
+                    context.go(LoginScreen.routeUrl);
+                  },
                   icon: const Text('Yes'),
                 ),
               ],

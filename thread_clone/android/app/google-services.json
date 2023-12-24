@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "720725296279",
+    "project_id": "ordi-threads-clone",
+    "storage_bucket": "ordi-threads-clone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720725296279:android:e722c62d0ae5abbeae15d2",
+        "android_client_info": {
+          "package_name": "io.ordi.thread_clone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdeKf8lqjjZ39fKgLGzj-pRE1vXrm8xpo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

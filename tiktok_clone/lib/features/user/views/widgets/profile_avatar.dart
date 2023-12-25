@@ -53,7 +53,8 @@ class ProfileAvatar extends ConsumerWidget {
                       'https://firebasestorage.googleapis.com/v0/b/'
                       'ordi-test-tiktok-clone.appspot.com/o/avatars%2F'
                       '$uid'
-                      '?alt=media&token=8e3bb537-5267-4609-8609-a6f86bd69dbe',
+                      '?alt=media&token=8e3bb537-5267-4609-8609-a6f86bd69dbe'
+                      'timestamp=${DateTime.now()}',
                     )
                   : null,
               child: Text(name),

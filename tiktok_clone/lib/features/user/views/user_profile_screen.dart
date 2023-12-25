@@ -3,9 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/settings/settings_screen.dart';
-import 'package:tiktok_clone/features/user/widgets/persistent_tabbar.dart';
+import 'package:tiktok_clone/features/user/views/widgets/persistent_tabbar.dart';
 
-import '../util/mock_util.dart';
+import '../../util/mock_util.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({

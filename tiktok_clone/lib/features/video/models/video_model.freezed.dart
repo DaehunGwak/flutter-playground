@@ -14,6 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+VideoModel _$VideoModelFromJson(Map<String, dynamic> json) {
+  return _VideoModel.fromJson(json);
+}
+
 /// @nodoc
 mixin _$VideoModel {
   String get title => throw _privateConstructorUsedError;
@@ -21,10 +25,12 @@ mixin _$VideoModel {
   String get fileUrl => throw _privateConstructorUsedError;
   String get thumbnailUrl => throw _privateConstructorUsedError;
   String get creatorUid => throw _privateConstructorUsedError;
+  String get creatorName => throw _privateConstructorUsedError;
   int get likes => throw _privateConstructorUsedError;
   int get comments => throw _privateConstructorUsedError;
   int get createdAt => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $VideoModelCopyWith<VideoModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -42,6 +48,7 @@ abstract class $VideoModelCopyWith<$Res> {
       String fileUrl,
       String thumbnailUrl,
       String creatorUid,
+      String creatorName,
       int likes,
       int comments,
       int createdAt});
@@ -65,6 +72,7 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
     Object? fileUrl = null,
     Object? thumbnailUrl = null,
     Object? creatorUid = null,
+    Object? creatorName = null,
     Object? likes = null,
     Object? comments = null,
     Object? createdAt = null,
@@ -89,6 +97,10 @@ class _$VideoModelCopyWithImpl<$Res, $Val extends VideoModel>
       creatorUid: null == creatorUid
           ? _value.creatorUid
           : creatorUid // ignore: cast_nullable_to_non_nullable
+              as String,
+      creatorName: null == creatorName
+          ? _value.creatorName
+          : creatorName // ignore: cast_nullable_to_non_nullable
               as String,
       likes: null == likes
           ? _value.likes
@@ -120,6 +132,7 @@ abstract class _$$VideoModelImplCopyWith<$Res>
       String fileUrl,
       String thumbnailUrl,
       String creatorUid,
+      String creatorName,
       int likes,
       int comments,
       int createdAt});
@@ -141,6 +154,7 @@ class __$$VideoModelImplCopyWithImpl<$Res>
     Object? fileUrl = null,
     Object? thumbnailUrl = null,
     Object? creatorUid = null,
+    Object? creatorName = null,
     Object? likes = null,
     Object? comments = null,
     Object? createdAt = null,
@@ -166,6 +180,10 @@ class __$$VideoModelImplCopyWithImpl<$Res>
           ? _value.creatorUid
           : creatorUid // ignore: cast_nullable_to_non_nullable
               as String,
+      creatorName: null == creatorName
+          ? _value.creatorName
+          : creatorName // ignore: cast_nullable_to_non_nullable
+              as String,
       likes: null == likes
           ? _value.likes
           : likes // ignore: cast_nullable_to_non_nullable
@@ -183,7 +201,7 @@ class __$$VideoModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$VideoModelImpl implements _VideoModel {
   const _$VideoModelImpl(
       {required this.title,
@@ -191,9 +209,13 @@ class _$VideoModelImpl implements _VideoModel {
       required this.fileUrl,
       required this.thumbnailUrl,
       required this.creatorUid,
+      required this.creatorName,
       required this.likes,
       required this.comments,
       required this.createdAt});
+
+  factory _$VideoModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VideoModelImplFromJson(json);
 
   @override
   final String title;
@@ -206,6 +228,8 @@ class _$VideoModelImpl implements _VideoModel {
   @override
   final String creatorUid;
   @override
+  final String creatorName;
+  @override
   final int likes;
   @override
   final int comments;
@@ -214,7 +238,7 @@ class _$VideoModelImpl implements _VideoModel {
 
   @override
   String toString() {
-    return 'VideoModel(title: $title, description: $description, fileUrl: $fileUrl, thumbnailUrl: $thumbnailUrl, creatorUid: $creatorUid, likes: $likes, comments: $comments, createdAt: $createdAt)';
+    return 'VideoModel(title: $title, description: $description, fileUrl: $fileUrl, thumbnailUrl: $thumbnailUrl, creatorUid: $creatorUid, creatorName: $creatorName, likes: $likes, comments: $comments, createdAt: $createdAt)';
   }
 
   @override
@@ -230,6 +254,8 @@ class _$VideoModelImpl implements _VideoModel {
                 other.thumbnailUrl == thumbnailUrl) &&
             (identical(other.creatorUid, creatorUid) ||
                 other.creatorUid == creatorUid) &&
+            (identical(other.creatorName, creatorName) ||
+                other.creatorName == creatorName) &&
             (identical(other.likes, likes) || other.likes == likes) &&
             (identical(other.comments, comments) ||
                 other.comments == comments) &&
@@ -237,15 +263,23 @@ class _$VideoModelImpl implements _VideoModel {
                 other.createdAt == createdAt));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, title, description, fileUrl,
-      thumbnailUrl, creatorUid, likes, comments, createdAt);
+      thumbnailUrl, creatorUid, creatorName, likes, comments, createdAt);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$VideoModelImplCopyWith<_$VideoModelImpl> get copyWith =>
       __$$VideoModelImplCopyWithImpl<_$VideoModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$VideoModelImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _VideoModel implements VideoModel {
@@ -255,9 +289,13 @@ abstract class _VideoModel implements VideoModel {
       required final String fileUrl,
       required final String thumbnailUrl,
       required final String creatorUid,
+      required final String creatorName,
       required final int likes,
       required final int comments,
       required final int createdAt}) = _$VideoModelImpl;
+
+  factory _VideoModel.fromJson(Map<String, dynamic> json) =
+      _$VideoModelImpl.fromJson;
 
   @override
   String get title;
@@ -269,6 +307,8 @@ abstract class _VideoModel implements VideoModel {
   String get thumbnailUrl;
   @override
   String get creatorUid;
+  @override
+  String get creatorName;
   @override
   int get likes;
   @override

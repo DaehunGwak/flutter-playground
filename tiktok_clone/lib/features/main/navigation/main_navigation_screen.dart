@@ -6,8 +6,7 @@ import 'package:tiktok_clone/features/main/discover/discover_screen.dart';
 import 'package:tiktok_clone/features/main/home/views/home_test_screen.dart';
 import 'package:tiktok_clone/features/main/navigation/widgets/navigation_tab.dart';
 import 'package:tiktok_clone/features/main/navigation/widgets/post_video_button.dart';
-
-import '../../user/user_profile_screen.dart';
+import 'package:tiktok_clone/features/user/views/user_profile_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});

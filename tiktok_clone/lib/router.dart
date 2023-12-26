@@ -8,7 +8,7 @@ import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
 import 'package:tiktok_clone/features/authentication/username_screen.dart';
 import 'package:tiktok_clone/features/main/navigation/main_navigation_screen.dart';
 import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
-import 'package:tiktok_clone/features/user/user_profile_screen.dart';
+import 'package:tiktok_clone/features/user/views/user_profile_screen.dart';
 import 'package:tiktok_clone/features/video/video_recording_screen.dart';
 
 final routerProvider = Provider(

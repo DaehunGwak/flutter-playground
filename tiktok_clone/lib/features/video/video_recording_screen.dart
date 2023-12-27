@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -224,6 +225,15 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                               mediaSize.aspectRatio),
                       alignment: Alignment.topCenter,
                       child: CameraPreview(_cameraController),
+                    ),
+                  ),
+                  Positioned(
+                    top: Sizes.size48,
+                    left: Sizes.size12,
+                    child: IconButton(
+                      onPressed: () => context.pop(),
+                      color: Colors.white,
+                      icon: const Icon(FontAwesomeIcons.x),
                     ),
                   ),
                   Positioned(

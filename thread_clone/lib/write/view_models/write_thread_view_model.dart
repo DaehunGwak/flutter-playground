@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thread_clone/auth/repositories/firebase_auth_repository.dart';
+import 'package:thread_clone/timeline/view_models/timeline_feed_view_model.dart';
 import 'package:thread_clone/write/models/thread_model.dart';
 import 'package:thread_clone/write/repositories/write_thread_firestore_repository.dart';
 import 'package:thread_clone/write/repositories/write_thread_storage_repository.dart';
@@ -40,7 +41,7 @@ class WriteThreadViewModel extends AsyncNotifier<void> {
     });
 
     if (!state.hasError) {
-      // TODO: timeline reload
+      await ref.read(timelineFeedViewModel.notifier).reload();
     }
   }
 }

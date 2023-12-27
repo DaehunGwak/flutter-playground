@@ -27,9 +27,13 @@ class FeedWidget extends StatelessWidget {
       child: Stack(
         children: [
           IntrinsicHeight(
-            child: Container(color: Colors.red, width: 10,),
+            child: Container(
+              color: Colors.red,
+              width: 10,
+            ),
           ),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,

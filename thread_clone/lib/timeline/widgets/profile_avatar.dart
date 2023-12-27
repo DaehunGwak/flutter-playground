@@ -19,7 +19,7 @@ class ProfileAvatar extends StatelessWidget {
           CircleAvatar(
             radius: Sizes.size24,
             backgroundColor: Colors.grey,
-            foregroundImage: NetworkImage(imageUrl),
+            foregroundImage: imageUrl.isEmpty ? null : NetworkImage(imageUrl),
             child: const FaIcon(
               FontAwesomeIcons.user,
               color: Colors.white,

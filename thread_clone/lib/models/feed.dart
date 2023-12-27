@@ -1,3 +1,5 @@
+import 'package:thread_clone/write/models/thread_model.dart';
+
 import 'user.dart';
 
 class Feed {
@@ -18,6 +20,18 @@ class Feed {
     this.likeCount = 0,
     required this.createdDateTime,
   });
+
+  factory Feed.fromThread(ThreadModel thread) => Feed(
+        createdUser: User(
+          nickname: thread.userName,
+          profileImageUrl: '',
+          confirmed: false,
+        ),
+        contentImageUrls: thread.imageUrls,
+        contentDescription: thread.content,
+        createdDateTime:
+            DateTime.fromMillisecondsSinceEpoch(thread.createdTime),
+      );
 
   String get formattedPassedTime {
     final passedDuration = Duration(

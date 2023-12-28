@@ -17,14 +17,17 @@ class FeedImagesWidget extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Gaps.h80,
           for (var imageUrl in feed.contentImageUrls)
             Padding(
               padding: const EdgeInsets.only(right: Sizes.size12),
               child: Container(
-                height: 210,
-                width: 280,
+                constraints: const BoxConstraints(
+                  minHeight: 210,
+                  maxHeight: 210,
+                ),
                 clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
                   color: Colors.grey,

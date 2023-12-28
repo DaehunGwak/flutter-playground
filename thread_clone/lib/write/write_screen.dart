@@ -3,21 +3,23 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thread_clone/constants/gaps.dart';
 import 'package:thread_clone/constants/sizes.dart';
 import 'package:thread_clone/models/mock/write_mock_data_util.dart';
+import 'package:thread_clone/write/view_models/write_thread_view_model.dart';
 import 'package:thread_clone/write/write_photo_screen.dart';
 
 import 'widget/write_profile_column.dart';
 
-class WriteScreen extends StatefulWidget {
+class WriteScreen extends ConsumerStatefulWidget {
   const WriteScreen({super.key});
 
   @override
-  State<WriteScreen> createState() => _WriteScreenState();
+  ConsumerState<WriteScreen> createState() => _WriteScreenState();
 }
 
-class _WriteScreenState extends State<WriteScreen> {
+class _WriteScreenState extends ConsumerState<WriteScreen> {
   final username = WriteMockDataUtil.username();
   final profileImageUrl = WriteMockDataUtil.profileImageUrl();
 
@@ -61,7 +63,7 @@ class _WriteScreenState extends State<WriteScreen> {
       clipBehavior: Clip.none,
       child: SafeArea(
         child: Scaffold(
-          appBar: _buildAppBar(context),
+          appBar: _buildAppBar(),
           body: Column(
             children: [
               Expanded(
@@ -80,7 +82,7 @@ class _WriteScreenState extends State<WriteScreen> {
                   ),
                 ),
               ),
-              _buildBottomPostBar(context, screenSize),
+              _buildBottomPostBar(screenSize),
             ],
           ),
         ),
@@ -88,7 +90,7 @@ class _WriteScreenState extends State<WriteScreen> {
     );
   }
 
-  AppBar _buildAppBar(BuildContext context) {
+  AppBar _buildAppBar() {
     return AppBar(
       title: Text(
         'New thread',
@@ -131,7 +133,22 @@ class _WriteScreenState extends State<WriteScreen> {
     Navigator.of(context).pop();
   }
 
-  Widget _buildBottomPostBar(BuildContext context, Size screenSize) {
+  Future<void> _onThreadPost() async {
+    if (ref.read(writeThreadViewModel).isLoading) {
+      return;
+    }
+
+    await ref.read(writeThreadViewModel.notifier).addThread(
+          content: _textEditingController.value.text,
+          images: _xFiles.map((e) => File(e.path)).toList(),
+        );
+
+    if (!ref.read(writeThreadViewModel).hasError && context.mounted) {
+      Navigator.of(context).pop();
+    }
+  }
+
+  Widget _buildBottomPostBar(Size screenSize) {
     return Container(
       color: Theme.of(context).colorScheme.background,
       width: screenSize.width,
@@ -149,15 +166,23 @@ class _WriteScreenState extends State<WriteScreen> {
                   color: Colors.grey,
                 ),
               ),
-              AnimatedOpacity(
-                opacity: _isPostActive ? 1 : 0.4,
-                duration: const Duration(milliseconds: 300),
-                child: const Text(
-                  'Post',
-                  style: TextStyle(
-                    fontSize: Sizes.size20,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.blue,
+              if (ref.watch(writeThreadViewModel).isLoading)
+                const CircularProgressIndicator.adaptive(),
+              GestureDetector(
+                onTap: _onThreadPost,
+                child: AnimatedOpacity(
+                  opacity: (_isPostActive &&
+                          !ref.watch(writeThreadViewModel).isLoading)
+                      ? 1
+                      : 0.4,
+                  duration: const Duration(milliseconds: 300),
+                  child: const Text(
+                    'Post',
+                    style: TextStyle(
+                      fontSize: Sizes.size20,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.blue,
+                    ),
                   ),
                 ),
               ),

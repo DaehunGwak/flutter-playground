@@ -101,7 +101,7 @@ class SearchUserListTile extends StatelessWidget {
 
   Padding _buildTrailing() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Sizes.size4),
+      padding: const EdgeInsets.only(right: Sizes.size4),
       child: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: Sizes.size28,

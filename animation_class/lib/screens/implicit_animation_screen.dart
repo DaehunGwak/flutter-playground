@@ -29,19 +29,17 @@ class _ImplicitAnimationScreenState extends State<ImplicitAnimationScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AnimatedAlign(
-              alignment:
-                  _visible ? Alignment.centerLeft : Alignment.centerRight,
-              duration: const Duration(milliseconds: 500),
-              child: AnimatedOpacity(
-                duration: const Duration(
-                  milliseconds: 500,
-                ),
-                opacity: _visible ? 1 : 0.1,
-                child: Container(
-                  width: size.width * 0.8,
-                  height: size.width * 0.8,
-                  color: Colors.amber,
+            AnimatedRotation(
+              duration: const Duration(seconds: 2),
+              turns: _visible ? 0 : 0.25,
+              curve: Curves.elasticOut,
+              child: AnimatedContainer(
+                duration: const Duration(seconds: 2),
+                width: _visible ? size.width : size.width * 0.8,
+                height: _visible ? size.width : size.width * 0.8,
+                decoration: BoxDecoration(
+                  color: _visible ? Colors.redAccent : Colors.amber,
+                  borderRadius: BorderRadius.circular(_visible ? 100 : 0),
                 ),
               ),
             ),

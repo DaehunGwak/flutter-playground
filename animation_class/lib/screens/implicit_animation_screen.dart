@@ -29,19 +29,21 @@ class _ImplicitAnimationScreenState extends State<ImplicitAnimationScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AnimatedRotation(
-              duration: const Duration(seconds: 2),
-              turns: _visible ? 0 : 0.25,
-              curve: Curves.elasticOut,
-              child: AnimatedContainer(
-                duration: const Duration(seconds: 2),
-                width: _visible ? size.width : size.width * 0.8,
-                height: _visible ? size.width : size.width * 0.8,
-                decoration: BoxDecoration(
-                  color: _visible ? Colors.redAccent : Colors.amber,
-                  borderRadius: BorderRadius.circular(_visible ? 100 : 0),
-                ),
+            TweenAnimationBuilder(
+              // tween: Tween(begin: 10.0, end: 20.0),
+              tween: ColorTween(
+                begin: Colors.blue,
+                end: Colors.red,
               ),
+              duration: const Duration(seconds: 10),
+              curve: Curves.bounceInOut,
+              builder: (context, value, child) {
+                return Image.network(
+                  "https://storage.googleapis.com/cms-storage-bucket/d406c736e7c4c57f5f61.png",
+                  color: value,
+                  colorBlendMode: BlendMode.difference,
+                );
+              },
             ),
             const SizedBox(
               height: 10,

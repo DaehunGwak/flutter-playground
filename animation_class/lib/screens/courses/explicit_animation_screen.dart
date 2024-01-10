@@ -16,8 +16,13 @@ class _ExplicitAnimationScreenState extends State<ExplicitAnimationScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController = AnimationController(
     vsync: this,
-    duration: const Duration(seconds: 10),
+    duration: const Duration(seconds: 3),
   );
+
+  late final Animation<Color?> _colorAnimation = ColorTween(
+    begin: Colors.greenAccent,
+    end: Colors.blueAccent,
+  ).animate(_animationController);
 
   void _play() {
     _animationController.forward();
@@ -47,15 +52,12 @@ class _ExplicitAnimationScreenState extends State<ExplicitAnimationScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AnimatedBuilder(
-              animation: _animationController,
+              animation: _colorAnimation,
               builder: (context, child) {
-                return Opacity(
-                  opacity: _animationController.value,
-                  child: Container(
-                    color: Colors.amber,
-                    width: 400,
-                    height: 400,
-                  ),
+                return Container(
+                  color: _colorAnimation.value,
+                  width: 400,
+                  height: 400,
                 );
               },
             ),

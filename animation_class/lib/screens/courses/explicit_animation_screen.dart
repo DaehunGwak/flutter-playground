@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class ExplicitAnimationScreen extends StatefulWidget {
@@ -16,13 +18,30 @@ class _ExplicitAnimationScreenState extends State<ExplicitAnimationScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController = AnimationController(
     vsync: this,
+    duration: const Duration(seconds: 10),
   );
 
-  int count = 0;
+  void _play() {
+    _animationController.forward();
+  }
+
+  void _pause() {
+    _animationController.stop();
+  }
+
+  void _rewind() {
+    _animationController.reverse();
+  }
 
   @override
   void initState() {
     super.initState();
+    Timer.periodic(
+      const Duration(milliseconds: 100),
+      (timer) {
+        debugPrint(_animationController.value.toString());
+      },
+    );
   }
 
   @override
@@ -30,6 +49,36 @@ class _ExplicitAnimationScreenState extends State<ExplicitAnimationScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text('Explicit Animation'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '${_animationController.value}',
+              style: const TextStyle(
+                fontSize: 58,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: _play,
+                  child: const Text('play'),
+                ),
+                ElevatedButton(
+                  onPressed: _pause,
+                  child: const Text('pause'),
+                ),
+                ElevatedButton(
+                  onPressed: _rewind,
+                  child: const Text('rewind'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

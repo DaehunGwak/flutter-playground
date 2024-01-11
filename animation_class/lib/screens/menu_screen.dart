@@ -1,3 +1,4 @@
+import 'package:animation_class/screens/challenges/challenge_explicit_animation.dart';
 import 'package:animation_class/screens/challenges/challenge_implicit_animation.dart';
 import 'package:animation_class/screens/courses/explicit_animation_screen.dart';
 import 'package:animation_class/screens/courses/implicit_animation_screen.dart';
@@ -50,6 +51,13 @@ class MenuScreen extends StatelessWidget {
                   const ChallengeImplicitAnimationScreen(),
                 ),
                 child: const Text('Implicit Animation'),
+              ),
+              ElevatedButton(
+                onPressed: () => _pushScreen(
+                  context,
+                  const ChallengeExplicitAnimationScreen(),
+                ),
+                child: const Text('Explicit Animation'),
               ),
             ],
           ),

@@ -18,9 +18,21 @@ class _ExplicitAnimationScreenState extends State<ExplicitAnimationScreen>
     vsync: this,
     duration: const Duration(seconds: 2),
     reverseDuration: const Duration(seconds: 1),
-  )..addListener(
+  )
+    ..addListener(
       () {
         _valueNotifier.value = _animationController.value;
+      },
+    )
+    ..addStatusListener(
+      (status) {
+        debugPrint(status.toString());
+        if (status == AnimationStatus.completed) {
+          _animationController.reverse();
+        }
+        if (status == AnimationStatus.dismissed) {
+          _animationController.forward();
+        }
       },
     );
 
@@ -63,7 +75,7 @@ class _ExplicitAnimationScreenState extends State<ExplicitAnimationScreen>
   }
 
   void _repeat() {
-    _animationController.repeat();
+    _animationController.repeat(reverse: true);
   }
 
   void _forward() {

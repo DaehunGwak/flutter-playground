@@ -62,15 +62,19 @@ class _ExplicitAnimationScreenState extends State<ExplicitAnimationScreen>
     _animationController.value = value;
   }
 
-  void _play() {
+  void _repeat() {
+    _animationController.repeat();
+  }
+
+  void _forward() {
     _animationController.forward();
   }
 
-  void _pause() {
+  void _stop() {
     _animationController.stop();
   }
 
-  void _rewind() {
+  void _reverse() {
     _animationController.reverse();
   }
 
@@ -118,16 +122,20 @@ class _ExplicitAnimationScreenState extends State<ExplicitAnimationScreen>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: _play,
-                  child: const Text('play'),
+                  onPressed: _repeat,
+                  child: const Text('repeat'),
                 ),
                 ElevatedButton(
-                  onPressed: _pause,
-                  child: const Text('pause'),
+                  onPressed: _forward,
+                  child: const Text('forward'),
                 ),
                 ElevatedButton(
-                  onPressed: _rewind,
-                  child: const Text('rewind'),
+                  onPressed: _stop,
+                  child: const Text('stop'),
+                ),
+                ElevatedButton(
+                  onPressed: _reverse,
+                  child: const Text('reverse'),
                 ),
               ],
             ),
@@ -138,7 +146,7 @@ class _ExplicitAnimationScreenState extends State<ExplicitAnimationScreen>
               valueListenable: _valueNotifier,
               builder: (context, value, child) {
                 return Slider(
-                  value: _valueNotifier.value,
+                  value: value,
                   onChanged: _onChanged,
                 );
               },

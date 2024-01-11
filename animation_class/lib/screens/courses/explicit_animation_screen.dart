@@ -18,7 +18,11 @@ class _ExplicitAnimationScreenState extends State<ExplicitAnimationScreen>
     vsync: this,
     duration: const Duration(seconds: 2),
     reverseDuration: const Duration(seconds: 1),
-  );
+  )..addListener(
+      () {
+        _valueNotifier.value = _animationController.value;
+      },
+    );
 
   late final Animation<Decoration> _decoration = DecorationTween(
     begin: BoxDecoration(
@@ -51,6 +55,12 @@ class _ExplicitAnimationScreenState extends State<ExplicitAnimationScreen>
     begin: Offset.zero,
     end: const Offset(0.1, 0.1),
   ).animate(_curved);
+
+  final ValueNotifier<double> _valueNotifier = ValueNotifier(0);
+
+  void _onChanged(double value) {
+    _animationController.value = value;
+  }
 
   void _play() {
     _animationController.forward();
@@ -120,6 +130,18 @@ class _ExplicitAnimationScreenState extends State<ExplicitAnimationScreen>
                   child: const Text('rewind'),
                 ),
               ],
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            ValueListenableBuilder(
+              valueListenable: _valueNotifier,
+              builder: (context, value, child) {
+                return Slider(
+                  value: _valueNotifier.value,
+                  onChanged: _onChanged,
+                );
+              },
             ),
           ],
         ),

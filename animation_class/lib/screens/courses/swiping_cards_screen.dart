@@ -31,25 +31,31 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
     end: 1,
   );
 
+  final _cardLimit = 5;
+  int _index = 0;
+
   void _onHorizontalDragUpdate(DragUpdateDetails details) {
     _positionController.value += details.delta.dx;
   }
 
-  void _onHorizontalDragEnd(DragEndDetails details) {
+  Future<void> _onHorizontalDragEnd(DragEndDetails details) async {
     final bound = size.width - 150;
     final dropPosition = size.width + 100;
 
     if (_positionController.value.abs() >= bound) {
-      _positionController.animateTo(
+      await _positionController.animateTo(
         (_positionController.value > 0) ? dropPosition : -dropPosition,
       );
-      return;
+      setState(() {
+        _positionController.value = 0;
+        _index++;
+      });
+    } else {
+      await _positionController.animateTo(
+        0,
+        curve: Curves.easeOut,
+      );
     }
-
-    _positionController.animateTo(
-      0,
-      curve: Curves.easeOut,
-    );
   }
 
   @override
@@ -76,50 +82,62 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
 
           return Stack(
             children: [
-              Center(
-                child: GestureDetector(
-                  child: Transform.scale(
-                    scale: scale,
-                    child: Material(
-                      elevation: 10,
-                      color: Colors.blue.shade100,
-                      child: SizedBox(
-                        width: size.width * 0.8,
-                        height: size.height * 0.5,
-                        child: const Center(
-                          child: Text("Front 2"),
-                        ),
+              const Center(
+                child: Text('done!'),
+              ),
+              if (_index + 1 < _cardLimit)
+                Center(
+                  child: GestureDetector(
+                    child: Transform.scale(
+                      scale: min(scale, 1.0),
+                      child: CardWidget(text: "Front ${_index + 1}"),
+                    ),
+                  ),
+                ),
+              if (_index < _cardLimit)
+                Center(
+                  child: GestureDetector(
+                    onHorizontalDragUpdate: _onHorizontalDragUpdate,
+                    onHorizontalDragEnd: _onHorizontalDragEnd,
+                    child: Transform.translate(
+                      offset: Offset(_positionController.value, 0),
+                      child: Transform.rotate(
+                        angle: angle * pi / 180,
+                        child: CardWidget(text: "Front $_index"),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Center(
-                child: GestureDetector(
-                  onHorizontalDragUpdate: _onHorizontalDragUpdate,
-                  onHorizontalDragEnd: _onHorizontalDragEnd,
-                  child: Transform.translate(
-                    offset: Offset(_positionController.value, 0),
-                    child: Transform.rotate(
-                      angle: angle * pi / 180,
-                      child: Material(
-                        elevation: 10,
-                        color: Colors.red.shade100,
-                        child: SizedBox(
-                          width: size.width * 0.8,
-                          height: size.height * 0.5,
-                          child: const Center(
-                            child: Text("Front"),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+class CardWidget extends StatelessWidget {
+  const CardWidget({
+    super.key,
+    required this.text,
+  });
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    return Material(
+      elevation: 10,
+      borderRadius: BorderRadius.circular(30),
+      clipBehavior: Clip.hardEdge,
+      child: SizedBox(
+        width: size.width * 0.8,
+        height: size.height * 0.5,
+        child: Center(
+          child: Text(text),
+        ),
       ),
     );
   }

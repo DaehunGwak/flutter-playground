@@ -16,8 +16,8 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
   late final AnimationController _positionController = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 300),
-    upperBound: size.width,
-    lowerBound: -size.width,
+    upperBound: size.width + 100,
+    lowerBound: -(size.width + 100),
     value: 0,
   );
 
@@ -31,9 +31,19 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
   }
 
   void _onHorizontalDragEnd(DragEndDetails details) {
+    final bound = size.width - 150;
+    final dropPosition = size.width + 100;
+
+    if (_positionController.value.abs() >= bound) {
+      _positionController.animateTo(
+        (_positionController.value > 0) ? dropPosition : -dropPosition,
+      );
+      return;
+    }
+
     _positionController.animateTo(
       0,
-      curve: Curves.bounceOut,
+      curve: Curves.easeOut,
     );
   }
 

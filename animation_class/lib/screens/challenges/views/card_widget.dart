@@ -7,9 +7,11 @@ class CardWidget extends StatefulWidget {
   const CardWidget({
     super.key,
     required this.model,
+    this.isBack = false,
   });
 
   final CardModel model;
+  final bool isBack;
 
   @override
   State<CardWidget> createState() => _CardWidgetState();
@@ -28,7 +30,8 @@ class _CardWidgetState extends State<CardWidget> {
   @override
   void initState() {
     super.initState();
-    _isBack = false;
+    _isBack = widget.isBack;
+    debugPrint("init: $_isBack, ${widget.isBack}");
   }
 
   Widget _transitionBuilder(Widget widget, Animation<double> animation) {
@@ -42,8 +45,8 @@ class _CardWidgetState extends State<CardWidget> {
       child: widget,
       builder: (_, widget) {
         final isBack = _isBack
-            ? widget!.key == const ValueKey(false)
-            : widget!.key != const ValueKey(false);
+            ? widget!.key == ValueKey("${super.widget.key}-${false}")
+            : widget!.key != ValueKey("${super.widget.key}-${false}");
 
         final value = isBack ? min(rotate.value, pi / 2) : rotate.value;
 
@@ -60,7 +63,7 @@ class _CardWidgetState extends State<CardWidget> {
     final size = MediaQuery.of(context).size;
 
     return Material(
-      key: ValueKey(isBack),
+      key: ValueKey("${widget.key}-$isBack"),
       elevation: 10,
       borderRadius: BorderRadius.circular(30),
       clipBehavior: Clip.hardEdge,

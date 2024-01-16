@@ -3,6 +3,11 @@ class CardModel {
 
   final String question;
   final String answer;
+
+  @override
+  String toString() {
+    return 'CardModel{question: $question, answer: $answer}';
+  }
 }
 
 class CardModelFactory {

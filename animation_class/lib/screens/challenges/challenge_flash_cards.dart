@@ -132,6 +132,9 @@ class _FlashCardsAppScreenState extends State<FlashCardsAppScreen>
                         child: Transform.scale(
                           scale: min(scale, 1.0),
                           child: CardWidget(
+                            key: ValueKey(
+                              "${_cardModels.elementAt(_index + 1)}-fake",
+                            ),
                             model: _cardModels.elementAt(_index + 1),
                           ),
                         ),
@@ -147,6 +150,9 @@ class _FlashCardsAppScreenState extends State<FlashCardsAppScreen>
                           child: Transform.rotate(
                             angle: angle * pi / 180,
                             child: CardWidget(
+                              key: ValueKey(
+                                "${_cardModels.elementAt(_index)}",
+                              ),
                               model: _cardModels.elementAt(_index),
                             ),
                           ),

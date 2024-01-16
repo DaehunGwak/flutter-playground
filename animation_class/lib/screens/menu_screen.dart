@@ -3,6 +3,7 @@ import 'package:animation_class/screens/challenges/challenge_implicit_animation.
 import 'package:animation_class/screens/courses/apple_watch_screen.dart';
 import 'package:animation_class/screens/courses/explicit_animation_screen.dart';
 import 'package:animation_class/screens/courses/implicit_animation_screen.dart';
+import 'package:animation_class/screens/courses/swiping_cards_screen.dart';
 import 'package:flutter/material.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -45,6 +46,13 @@ class MenuScreen extends StatelessWidget {
                   const AppleWatchScreen(),
                 ),
                 child: const Text('Apple Watch (CustomPainter)'),
+              ),
+              ElevatedButton(
+                onPressed: () => _pushScreen(
+                  context,
+                  const SwipingCardsScreen(),
+                ),
+                child: const Text('Swiping Cards'),
               ),
               const Divider(),
               const Text(

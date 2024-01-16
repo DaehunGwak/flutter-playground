@@ -26,6 +26,11 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
     end: 15,
   );
 
+  late final Tween<double> _scaleTween = Tween(
+    begin: 0.8,
+    end: 1,
+  );
+
   void _onHorizontalDragUpdate(DragUpdateDetails details) {
     _positionController.value += details.delta.dx;
   }
@@ -48,6 +53,12 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
   }
 
   @override
+  void dispose() {
+    _positionController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -59,8 +70,30 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
           final angle = _rotationTween.transform(
             (_positionController.value + size.width / 2) / size.width,
           );
+          final scale = _scaleTween.transform(
+            _positionController.value.abs() / size.width,
+          );
+
           return Stack(
             children: [
+              Center(
+                child: GestureDetector(
+                  child: Transform.scale(
+                    scale: scale,
+                    child: Material(
+                      elevation: 10,
+                      color: Colors.blue.shade100,
+                      child: SizedBox(
+                        width: size.width * 0.8,
+                        height: size.height * 0.5,
+                        child: const Center(
+                          child: Text("Front 2"),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               Center(
                 child: GestureDetector(
                   onHorizontalDragUpdate: _onHorizontalDragUpdate,

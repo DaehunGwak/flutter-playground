@@ -1,7 +1,9 @@
 import 'package:animation_class/screens/challenges/challenge_explicit_animation.dart';
+import 'package:animation_class/screens/challenges/challenge_flash_cards.dart';
 import 'package:animation_class/screens/challenges/challenge_implicit_animation.dart';
 import 'package:animation_class/screens/courses/apple_watch_screen.dart';
 import 'package:animation_class/screens/courses/explicit_animation_screen.dart';
+import 'package:animation_class/screens/courses/flip_card_screen.dart';
 import 'package:animation_class/screens/courses/implicit_animation_screen.dart';
 import 'package:animation_class/screens/courses/swiping_cards_screen.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +56,13 @@ class MenuScreen extends StatelessWidget {
                 ),
                 child: const Text('Swiping Cards'),
               ),
+              ElevatedButton(
+                onPressed: () => _pushScreen(
+                  context,
+                  const FlipCardScreen(),
+                ),
+                child: const Text('Flip Card'),
+              ),
               const Divider(),
               const Text(
                 "Challenges",
@@ -74,6 +83,13 @@ class MenuScreen extends StatelessWidget {
                   const ChallengeExplicitAnimationScreen(),
                 ),
                 child: const Text('Explicit Animation'),
+              ),
+              ElevatedButton(
+                onPressed: () => _pushScreen(
+                  context,
+                  const FlashCardsAppScreen(),
+                ),
+                child: const Text('Flashcards App'),
               ),
             ],
           ),

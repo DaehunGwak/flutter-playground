@@ -162,6 +162,8 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
         ),
         Text(
           tracks[index].title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(
             fontSize: 26,
             fontWeight: FontWeight.w600,

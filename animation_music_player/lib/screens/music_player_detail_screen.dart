@@ -1,4 +1,5 @@
 import 'package:animation_music_player/models/movie_model.dart';
+import 'package:animation_music_player/utils/string_format.dart';
 import 'package:flutter/material.dart';
 
 class MusicPlayerDetailScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _progressController = AnimationController(
     vsync: this,
-    duration: const Duration(seconds: 5),
+    duration: widget.track.runtime,
   )..repeat(reverse: true);
 
   @override
@@ -75,16 +76,51 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
 
   Widget _buildProgressBar() {
     final size = MediaQuery.of(context).size;
+
     return AnimatedBuilder(
       animation: _progressController,
       builder: (context, child) {
-        return CustomPaint(
-          size: Size(
-            size.width - 80,
-            5,
-          ),
-          painter: ProgressBarPainter(
-            progress: _progressController.value,
+        final nowRuntime = widget.track.runtime * _progressController.value;
+        final lastedRuntime = widget.track.runtime - nowRuntime;
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: Column(
+            children: [
+              CustomPaint(
+                size: Size(
+                  size.width - 80,
+                  5,
+                ),
+                painter: ProgressBarPainter(
+                  progress: _progressController.value,
+                ),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    formattedTime(nowRuntime),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey.shade500,
+                    ),
+                  ),
+                  Text(
+                    formattedTime(lastedRuntime),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey.shade500,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         );
       },

@@ -31,8 +31,8 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
   void _onTrackImageTap(int index) {
     Navigator.of(context).push(
       PageRouteBuilder(
-        transitionDuration: const Duration(seconds: 1),
-        reverseTransitionDuration: const Duration(seconds: 1),
+        transitionDuration: const Duration(milliseconds: 500),
+        reverseTransitionDuration: const Duration(milliseconds: 500),
         pageBuilder: (context, animation, secondaryAnimation) {
           return FadeTransition(
             opacity: animation,

@@ -1,4 +1,4 @@
-import 'package:animation_music_player/models/movie_model.dart';
+import 'package:animation_music_player/models/track_model.dart';
 import 'package:animation_music_player/utils/string_format.dart';
 import 'package:flutter/material.dart';
 

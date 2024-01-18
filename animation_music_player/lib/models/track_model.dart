@@ -14,10 +14,10 @@ class TrackModel {
   String createTag() => "$artist-$title";
 }
 
-class MusicModelFactory {
-  MusicModelFactory._();
+class TrackModelFactory {
+  TrackModelFactory._();
 
-  static List<TrackModel> createMusics() {
+  static List<TrackModel> createTracks() {
     return [
       TrackModel(
         title: 'Glitter',

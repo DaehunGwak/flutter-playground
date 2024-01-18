@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:animation_music_player/models/movie_model.dart';
+import 'package:animation_music_player/models/track_model.dart';
 import 'package:animation_music_player/screens/music_player_detail_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +12,7 @@ class MusicPlayerScreen extends StatefulWidget {
 }
 
 class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
-  static List<TrackModel> tracks = MusicModelFactory.createMusics();
+  static List<TrackModel> tracks = TrackModelFactory.createTracks();
 
   final PageController _pageController = PageController(
     viewportFraction: 0.8,

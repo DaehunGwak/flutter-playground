@@ -14,7 +14,19 @@ class MusicPlayerDetailScreen extends StatefulWidget {
       _MusicPlayerDetailScreenState();
 }
 
-class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen> {
+class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _progressController = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 5),
+  )..repeat(reverse: true);
+
+  @override
+  void dispose() {
+    _progressController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,25 +75,32 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen> {
 
   Widget _buildProgressBar() {
     final size = MediaQuery.of(context).size;
-    return CustomPaint(
-      size: Size(
-        size.width - 80,
-        5,
-      ),
-      painter: ProgressBarPainter(
-        progressValue: 180,
-      ),
+    return AnimatedBuilder(
+      animation: _progressController,
+      builder: (context, child) {
+        return CustomPaint(
+          size: Size(
+            size.width - 80,
+            5,
+          ),
+          painter: ProgressBarPainter(
+            progress: _progressController.value,
+          ),
+        );
+      },
     );
   }
 }
 
 class ProgressBarPainter extends CustomPainter {
-  ProgressBarPainter({required this.progressValue});
+  ProgressBarPainter({required this.progress});
 
-  final double progressValue;
+  final double progress;
 
   @override
   void paint(Canvas canvas, Size size) {
+    final progressWidth = size.width * progress;
+
     // background bar
     final backgroundBarPaint = Paint()
       ..color = Colors.grey.shade300
@@ -102,7 +121,7 @@ class ProgressBarPainter extends CustomPainter {
     final progressBarRRect = RRect.fromLTRBR(
       0,
       0,
-      progressValue,
+      progressWidth,
       size.height,
       const Radius.circular(10),
     );
@@ -113,7 +132,7 @@ class ProgressBarPainter extends CustomPainter {
       ..color = Colors.grey.shade500
       ..style = PaintingStyle.fill;
     canvas.drawCircle(
-      Offset(progressValue, size.height / 2),
+      Offset(progressWidth, size.height / 2),
       10,
       thumbPaint,
     );
@@ -121,6 +140,6 @@ class ProgressBarPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
+    return true;
   }
 }

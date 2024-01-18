@@ -42,7 +42,7 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
             const SizedBox(
               height: 50,
             ),
-            _buildProgressBar(),
+            _buildProgress(),
           ],
         ),
       ),
@@ -74,56 +74,64 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     );
   }
 
-  Widget _buildProgressBar() {
+  Widget _buildProgress() {
     final size = MediaQuery.of(context).size;
 
     return AnimatedBuilder(
       animation: _progressController,
       builder: (context, child) {
-        final nowRuntime = widget.track.runtime * _progressController.value;
-        final lastedRuntime = widget.track.runtime - nowRuntime;
-
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Column(
             children: [
-              CustomPaint(
-                size: Size(
-                  size.width - 80,
-                  5,
-                ),
-                painter: ProgressBarPainter(
-                  progress: _progressController.value,
-                ),
-              ),
+              _buildProgressBar(size),
               const SizedBox(
                 height: 12,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    formattedTime(nowRuntime),
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.grey.shade500,
-                    ),
-                  ),
-                  Text(
-                    formattedTime(lastedRuntime),
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.grey.shade500,
-                    ),
-                  ),
-                ],
-              ),
+              _buildProgressTime(),
             ],
           ),
         );
       },
+    );
+  }
+
+  Widget _buildProgressBar(Size size) {
+    return CustomPaint(
+      size: Size(
+        size.width - 80,
+        5,
+      ),
+      painter: ProgressBarPainter(
+        progress: _progressController.value,
+      ),
+    );
+  }
+
+  Widget _buildProgressTime() {
+    final nowRuntime = widget.track.runtime * _progressController.value;
+    final lastedRuntime = widget.track.runtime - nowRuntime;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          formattedTime(nowRuntime),
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.grey.shade500,
+          ),
+        ),
+        Text(
+          formattedTime(lastedRuntime),
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.grey.shade500,
+          ),
+        ),
+      ],
     );
   }
 }

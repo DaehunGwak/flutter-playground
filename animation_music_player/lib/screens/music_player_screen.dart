@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:animation_music_player/models/movie_model.dart';
+import 'package:animation_music_player/screens/music_player_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class MusicPlayerScreen extends StatefulWidget {
@@ -25,6 +26,16 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
     setState(() {
       _currentPage = newPage;
     });
+  }
+
+  void _onTrackImageTap(int index) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => MusicPlayerDetailScreen(
+          track: tracks[index],
+        ),
+      ),
+    );
   }
 
   @override
@@ -109,22 +120,28 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
     );
   }
 
-  Container _buildTrackImage(int index) {
-    return Container(
-      height: 350,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.4),
-            blurRadius: 10,
-            spreadRadius: 2,
-            offset: const Offset(0, 8),
-          )
-        ],
-        image: DecorationImage(
-          image: NetworkImage(tracks[index].imageUrl),
-          fit: BoxFit.cover,
+  Widget _buildTrackImage(int index) {
+    return GestureDetector(
+      onTap: () => _onTrackImageTap(index),
+      child: Hero(
+        tag: tracks[index].createTag(),
+        child: Container(
+          height: 350,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.4),
+                blurRadius: 10,
+                spreadRadius: 2,
+                offset: const Offset(0, 8),
+              )
+            ],
+            image: DecorationImage(
+              image: NetworkImage(tracks[index].imageUrl),
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
       ),
     );

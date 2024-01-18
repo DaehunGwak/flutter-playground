@@ -8,6 +8,8 @@ class TrackModel {
   final String title;
   final String artist;
   final String imageUrl;
+
+  String createTag() => "$artist-$title";
 }
 
 class MusicModelFactory {

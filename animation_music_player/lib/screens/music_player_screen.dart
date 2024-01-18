@@ -17,12 +17,31 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
     viewportFraction: 0.8,
   );
 
+  final ValueNotifier<double> _scroll = ValueNotifier(0.0);
+
   int _currentPage = 0;
 
   void _onPageChanged(int newPage) {
     setState(() {
       _currentPage = newPage;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController.addListener(() {
+      if (_pageController.page == null) {
+        return;
+      }
+      _scroll.value = _pageController.page!;
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -72,49 +91,71 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              height: 350,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.4),
-                    blurRadius: 10,
-                    spreadRadius: 2,
-                    offset: const Offset(0, 8),
-                  )
-                ],
-                image: DecorationImage(
-                  image: NetworkImage(tracks[index].imageUrl),
-                  fit: BoxFit.cover,
-                ),
-              ),
+            ValueListenableBuilder(
+              valueListenable: _scroll,
+              builder: (context, value, child) {
+                final difference = (value - index).abs();
+                final scale = 1 - difference * 0.15;
+                return Transform.scale(
+                  scale: scale,
+                  child: _buildTrackImage(index),
+                );
+              },
             ),
-            const SizedBox(
-              height: 30,
-            ),
-            Text(
-              tracks[index].title,
-              style: const TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Text(
-              tracks[index].artist,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-                color: Colors.white,
-              ),
-            ),
+            _buildTrackText(index),
           ],
         );
       },
+    );
+  }
+
+  Container _buildTrackImage(int index) {
+    return Container(
+      height: 350,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.4),
+            blurRadius: 10,
+            spreadRadius: 2,
+            offset: const Offset(0, 8),
+          )
+        ],
+        image: DecorationImage(
+          image: NetworkImage(tracks[index].imageUrl),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTrackText(int index) {
+    return Column(
+      children: [
+        const SizedBox(
+          height: 30,
+        ),
+        Text(
+          tracks[index].title,
+          style: const TextStyle(
+            fontSize: 26,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Text(
+          tracks[index].artist,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: Colors.white,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:animation_music_player/models/track_model.dart';
 import 'package:animation_music_player/utils/string_format.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class MusicPlayerDetailScreen extends StatefulWidget {
   const MusicPlayerDetailScreen({
@@ -32,6 +33,33 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     end: const Offset(-0.5, 0),
   ).animate(_marqueeController);
 
+  late final AnimationController _playPauseController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 500),
+  );
+
+  late final AnimationController _playPauseLottieController =
+      AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 500),
+  )..forward();
+
+  void _onPlayPauseTap() {
+    if (_playPauseController.isCompleted) {
+      _playPauseController.reverse();
+      return;
+    }
+    _playPauseController.forward();
+  }
+
+  void _onPlayPauseLottieTap() {
+    if (_playPauseLottieController.isCompleted) {
+      _playPauseLottieController.reverse();
+      return;
+    }
+    _playPauseLottieController.forward();
+  }
+
   @override
   void dispose() {
     _marqueeController.dispose();
@@ -56,6 +84,10 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
               height: 30,
             ),
             _buildTrackText(),
+            const SizedBox(
+              height: 30,
+            ),
+            _buildPlayButtonRow(),
           ],
         ),
       ),
@@ -99,7 +131,7 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
             children: [
               _buildProgressBar(size),
               const SizedBox(
-                height: 12,
+                height: 8,
               ),
               _buildProgressTime(),
             ],
@@ -184,6 +216,34 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
           ),
         ],
       ),
+    );
+  }
+
+  Row _buildPlayButtonRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // IconButton(
+        //   onPressed: _onPlayPauseTap,
+        //   icon: AnimatedIcon(
+        //     icon: AnimatedIcons.pause_play,
+        //     progress: _playPauseController,
+        //     size: 60,
+        //   ),
+        // ),
+        IconButton(
+          onPressed: _onPlayPauseLottieTap,
+          icon: LottieBuilder.asset(
+            "assets/lottie/play-lottie.json",
+            controller: _playPauseLottieController,
+            onLoaded: (composition) {
+              _playPauseLottieController.duration = composition.duration;
+            },
+            width: 60,
+            height: 60,
+          ),
+        ),
+      ],
     );
   }
 }

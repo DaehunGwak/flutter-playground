@@ -18,6 +18,8 @@ class MusicPlayerDetailScreen extends StatefulWidget {
 
 class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     with TickerProviderStateMixin {
+  late final size = MediaQuery.of(context).size;
+
   late final AnimationController _progressController = AnimationController(
     vsync: this,
     duration: widget.track.runtime,
@@ -44,6 +46,10 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     duration: const Duration(milliseconds: 500),
   )..forward();
 
+  bool _dragging = false;
+
+  final ValueNotifier<double> _volume = ValueNotifier(0);
+
   void _onPlayPauseTap() {
     if (_playPauseController.isCompleted) {
       _playPauseController.reverse();
@@ -60,6 +66,21 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     _playPauseLottieController.forward();
   }
 
+  void _toggleDragging() {
+    setState(() {
+      _dragging = !_dragging;
+    });
+  }
+
+  void _onVolumeDragUpdate(DragUpdateDetails details) {
+    final result = _volume.value + details.delta.dx;
+    _volume.value = result.clamp(0, size.width - 80);
+  }
+
+  void _toggleMenu() {
+    // Open Menu
+  }
+
   @override
   void dispose() {
     _marqueeController.dispose();
@@ -70,25 +91,38 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _buildTrackImage(),
-            const SizedBox(
-              height: 50,
-            ),
-            _buildProgress(),
-            const SizedBox(
-              height: 30,
-            ),
-            _buildTrackText(),
-            const SizedBox(
-              height: 30,
-            ),
-            _buildPlayButtonRow(),
-          ],
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: _toggleMenu,
+            icon: const Icon(Icons.menu),
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buildTrackImage(),
+              const SizedBox(
+                height: 50,
+              ),
+              _buildProgress(),
+              const SizedBox(
+                height: 20,
+              ),
+              _buildTrackText(),
+              const SizedBox(
+                height: 25,
+              ),
+              _buildPlayButtonRow(),
+              const SizedBox(
+                height: 30,
+              ),
+              _buildVolumeBar()
+            ],
+          ),
         ),
       ),
     );
@@ -120,8 +154,6 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
   }
 
   Widget _buildProgress() {
-    final size = MediaQuery.of(context).size;
-
     return AnimatedBuilder(
       animation: _progressController,
       builder: (context, child) {
@@ -203,14 +235,14 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
             ),
           ),
           const SizedBox(
-            height: 10,
+            height: 5,
           ),
           Text(
             widget.track.artist,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.w400,
             ),
           ),
@@ -244,6 +276,32 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
           ),
         ),
       ],
+    );
+  }
+
+  GestureDetector _buildVolumeBar() {
+    return GestureDetector(
+      onHorizontalDragStart: (_) => _toggleDragging(),
+      onHorizontalDragEnd: (_) => _toggleDragging(),
+      onHorizontalDragUpdate: _onVolumeDragUpdate,
+      child: AnimatedScale(
+        scale: _dragging ? 1.1 : 1.0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          clipBehavior: Clip.hardEdge,
+          child: ValueListenableBuilder(
+            valueListenable: _volume,
+            builder: (context, value, child) => CustomPaint(
+              size: Size(size.width - 80, 30),
+              painter: VolumePainter(_volume.value),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -292,6 +350,38 @@ class ProgressBarPainter extends CustomPainter {
       10,
       thumbPaint,
     );
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
+class VolumePainter extends CustomPainter {
+  VolumePainter(this.volume);
+
+  final double volume;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final backgroundPaint = Paint()..color = Colors.grey.shade300;
+    final backgroundRect = Rect.fromLTWH(
+      0,
+      0,
+      size.width,
+      size.height,
+    );
+    canvas.drawRect(backgroundRect, backgroundPaint);
+
+    final volumePaint = Paint()..color = Colors.grey.shade500;
+    final volumeRect = Rect.fromLTWH(
+      0,
+      0,
+      volume.clamp(0, size.width),
+      size.height,
+    );
+    canvas.drawRect(volumeRect, volumePaint);
   }
 
   @override

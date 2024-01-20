@@ -16,26 +16,26 @@ class _WalletScreenState extends State<WalletScreen> {
         title: const Text('Wallet'),
       ),
       body: Center(
-        child: Animate(
-          effects: [
-            FadeEffect(
-              begin: 0,
-              end: 1,
+        child: const Text(
+          'Hello!',
+          style: TextStyle(fontSize: 66),
+        )
+            .animate()
+            .fadeIn(
               duration: 500.ms,
-              curve: Curves.easeInCubic,
-            ),
-            ScaleEffect(
+            )
+            .scale(
               alignment: Alignment.center,
               begin: Offset.zero,
               end: const Offset(1, 1),
-              duration: 1.seconds,
+              duration: 5.seconds,
             )
-          ],
-          child: const Text(
-            'Hello!',
-            style: TextStyle(fontSize: 66),
-          ),
-        ),
+            .then(delay: 5.seconds)
+            .slideX(
+              begin: 0,
+              end: -10,
+              duration: 5.seconds,
+            ),
       ),
     );
   }

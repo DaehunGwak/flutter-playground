@@ -1,5 +1,6 @@
 import 'package:animation_wallet/views/widgets/credit_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key});
@@ -15,12 +16,20 @@ class _WalletScreenState extends State<WalletScreen> {
       appBar: AppBar(
         title: const Text('Wallet'),
       ),
-      body: const Column(
+      body: Column(
         children: [
-          CreditCard(backgroundColor: Colors.purple),
-          CreditCard(backgroundColor: Colors.black),
-          CreditCard(backgroundColor: Colors.blue),
-        ],
+          const CreditCard(backgroundColor: Colors.purple),
+          const CreditCard(backgroundColor: Colors.black),
+          const CreditCard(backgroundColor: Colors.blue),
+        ]
+            .animate(
+              interval: 500.ms,
+            )
+            .fadeIn(begin: 0)
+            .slideX(
+              begin: -1,
+              end: 0,
+            ),
       ),
     );
   }

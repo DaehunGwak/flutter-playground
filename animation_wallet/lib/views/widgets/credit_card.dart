@@ -4,39 +4,51 @@ class CreditCard extends StatelessWidget {
   const CreditCard({
     super.key,
     required this.backgroundColor,
+    required this.isExpanded,
   });
 
   final Color backgroundColor;
+  final bool isExpanded;
+
+  void _onTap() {
+    debugPrint("tap card: $backgroundColor");
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(
-        horizontal: 30,
-        vertical: 10,
-      ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 30,
-        vertical: 40,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: backgroundColor,
-      ),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 100,
+    return AbsorbPointer(
+      absorbing: !isExpanded,
+      child: GestureDetector(
+        onTap: _onTap,
+        child: Container(
+          width: double.infinity,
+          margin: const EdgeInsets.symmetric(
+            horizontal: 30,
+            vertical: 10,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 30,
+            vertical: 40,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: backgroundColor,
+          ),
+          child: Column(
             children: [
-              _buildCardText(),
-              _buildCardLogo(),
+              const SizedBox(
+                height: 100,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildCardText(),
+                  _buildCardLogo(),
+                ],
+              )
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

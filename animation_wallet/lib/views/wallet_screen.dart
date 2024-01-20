@@ -35,7 +35,10 @@ class _WalletScreenState extends State<WalletScreen> {
         onVerticalDragEnd: (_) => _onShrink(),
         child: Column(
           children: [
-            const CreditCard(backgroundColor: Colors.purple)
+            CreditCard(
+              backgroundColor: Colors.purple,
+              isExpanded: _isExpanded,
+            )
                 .animate(
                   target: _isExpanded ? 0 : 1,
                   delay: 1.5.seconds,
@@ -43,7 +46,10 @@ class _WalletScreenState extends State<WalletScreen> {
                 .flipV(
                   end: 0.1,
                 ),
-            const CreditCard(backgroundColor: Colors.black)
+            CreditCard(
+              backgroundColor: Colors.black,
+              isExpanded: _isExpanded,
+            )
                 .animate(
                   target: _isExpanded ? 0 : 1,
                   delay: 1.5.seconds,
@@ -54,7 +60,10 @@ class _WalletScreenState extends State<WalletScreen> {
                 .slideY(
                   end: -0.8,
                 ),
-            const CreditCard(backgroundColor: Colors.blue)
+            CreditCard(
+              backgroundColor: Colors.blue,
+              isExpanded: _isExpanded,
+            )
                 .animate(
                   target: _isExpanded ? 0 : 1,
                   delay: 1.5.seconds,

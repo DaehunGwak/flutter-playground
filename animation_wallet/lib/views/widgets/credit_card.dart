@@ -57,7 +57,7 @@ class CreditCard extends StatelessWidget {
                       _buildCardText(),
                       _buildCardLogo(),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

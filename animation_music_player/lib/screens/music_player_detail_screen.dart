@@ -46,6 +46,11 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     duration: const Duration(milliseconds: 500),
   )..forward();
 
+  late final AnimationController _menuController = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 5),
+  );
+
   bool _dragging = false;
 
   final ValueNotifier<double> _volume = ValueNotifier(0);
@@ -77,8 +82,12 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     _volume.value = result.clamp(0, size.width - 80);
   }
 
-  void _toggleMenu() {
-    // Open Menu
+  void _openMenu() {
+    _menuController.forward();
+  }
+
+  void _closeMenu() {
+    _menuController.reverse();
   }
 
   @override
@@ -90,11 +99,20 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
 
   @override
   Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        _buildPlayer(),
+        _buildMenu(),
+      ],
+    );
+  }
+
+  Scaffold _buildPlayer() {
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: _toggleMenu,
+            onPressed: _openMenu,
             icon: const Icon(Icons.menu),
           ),
         ],
@@ -121,6 +139,92 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
                 height: 30,
               ),
               _buildVolumeBar()
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  final List<Map<String, dynamic>> _menus = [
+    {
+      "icon": Icons.person,
+      "text": "Profile",
+    },
+    {
+      "icon": Icons.notifications,
+      "text": "Notifications",
+    },
+    {
+      "icon": Icons.settings,
+      "text": "Settings",
+    },
+  ];
+
+  Scaffold _buildMenu() {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        leading: IconButton(
+          onPressed: _closeMenu,
+          icon: const Icon(Icons.close),
+        ),
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              for (var menu in _menus) ...[
+                Row(
+                  children: [
+                    Icon(
+                      menu["icon"],
+                      color: Colors.grey.shade200,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      menu["text"],
+                      style: TextStyle(
+                        color: Colors.grey.shade200,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+              ],
+              const Spacer(),
+              Row(
+                children: [
+                  Icon(
+                    Icons.logout,
+                    color: Colors.red.shade400,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "Log out",
+                    style: TextStyle(
+                      color: Colors.red.shade400,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),

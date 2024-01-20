@@ -35,11 +35,6 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     end: const Offset(-0.5, 0),
   ).animate(_marqueeController);
 
-  late final AnimationController _playPauseController = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 500),
-  );
-
   late final AnimationController _playPauseLottieController =
       AnimationController(
     vsync: this,
@@ -51,17 +46,39 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
     duration: const Duration(seconds: 5),
   );
 
+  late final Curve _menuCurve = Curves.easeInOutCubic;
+
+  late final Animation<double> _screenScale = Tween(
+    begin: 1.0,
+    end: 0.7,
+  ).animate(
+    CurvedAnimation(
+      parent: _menuController,
+      curve: Interval(
+        0.0,
+        0.5,
+        curve: _menuCurve,
+      ),
+    ),
+  );
+
+  late final Animation<Offset> _screenOffset = Tween(
+    begin: Offset.zero,
+    end: const Offset(0.5, 0),
+  ).animate(
+    CurvedAnimation(
+      parent: _menuController,
+      curve: Interval(
+        0.5,
+        1.0,
+        curve: _menuCurve,
+      ),
+    ),
+  );
+
   bool _dragging = false;
 
   final ValueNotifier<double> _volume = ValueNotifier(0);
-
-  void _onPlayPauseTap() {
-    if (_playPauseController.isCompleted) {
-      _playPauseController.reverse();
-      return;
-    }
-    _playPauseController.forward();
-  }
 
   void _onPlayPauseLottieTap() {
     if (_playPauseLottieController.isCompleted) {
@@ -101,8 +118,14 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        _buildPlayer(),
         _buildMenu(),
+        SlideTransition(
+          position: _screenOffset,
+          child: ScaleTransition(
+            scale: _screenScale,
+            child: _buildPlayer(),
+          ),
+        ),
       ],
     );
   }
@@ -138,7 +161,7 @@ class _MusicPlayerDetailScreenState extends State<MusicPlayerDetailScreen>
               const SizedBox(
                 height: 30,
               ),
-              _buildVolumeBar()
+              _buildVolumeBar(),
             ],
           ),
         ),

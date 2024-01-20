@@ -2,6 +2,12 @@ import 'package:animation_wallet/views/widgets/credit_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
+final List<Color> colors = [
+  Colors.purple,
+  Colors.black,
+  Colors.blue,
+];
+
 class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key});
 
@@ -35,45 +41,21 @@ class _WalletScreenState extends State<WalletScreen> {
         onVerticalDragEnd: (_) => _onShrink(),
         child: Column(
           children: [
-            CreditCard(
-              backgroundColor: Colors.purple,
-              isExpanded: _isExpanded,
-            )
-                .animate(
-                  target: _isExpanded ? 0 : 1,
-                  delay: 1.5.seconds,
-                )
-                .flipV(
-                  end: 0.1,
-                ),
-            CreditCard(
-              backgroundColor: Colors.black,
-              isExpanded: _isExpanded,
-            )
-                .animate(
-                  target: _isExpanded ? 0 : 1,
-                  delay: 1.5.seconds,
-                )
-                .flipV(
-                  end: 0.1,
-                )
-                .slideY(
-                  end: -0.8,
-                ),
-            CreditCard(
-              backgroundColor: Colors.blue,
-              isExpanded: _isExpanded,
-            )
-                .animate(
-                  target: _isExpanded ? 0 : 1,
-                  delay: 1.5.seconds,
-                )
-                .flipV(
-                  end: 0.1,
-                )
-                .slideY(
-                  end: -0.8 * 2,
-                ),
+            for (var i = 0; i < colors.length; i++)
+              CreditCard(
+                index: i,
+                isExpanded: _isExpanded,
+              )
+                  .animate(
+                    target: _isExpanded ? 0 : 1,
+                    delay: 1.5.seconds,
+                  )
+                  .flipV(
+                    end: 0.1,
+                  )
+                  .slideY(
+                    end: -0.8 * i,
+                  ),
           ]
               .animate(
                 interval: 500.ms,

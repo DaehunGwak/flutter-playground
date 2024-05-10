@@ -1,10 +1,10 @@
-import 'package:ch2_get_it/get_it/models.dart';
+import 'package:ch2_get_it/config/dependency.dart';
 import 'package:flutter/material.dart';
 
 import 'get_it/get_it_counter_screen.dart';
 
 void main() {
-  setUpGetItModels();
+  configureDependencies();
   runApp(const MyApp());
 }
 

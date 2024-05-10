@@ -1,12 +1,6 @@
-import 'package:get_it/get_it.dart';
+import 'package:injectable/injectable.dart';
 
-final GetIt locator = GetIt.instance;
-
-void setUpGetItModels() {
-  locator.registerSingleton<GetItCounterModel>(GetItCounterModel());
-  locator.registerSingleton(GetItCounterModeModel());
-}
-
+@singleton
 class GetItCounterModel {
   int _counter = 0;
 
@@ -21,6 +15,7 @@ class GetItCounterModel {
   }
 }
 
+@singleton
 class GetItCounterModeModel {
   GetItCounterMode _mode = GetItCounterMode.plus;
 

@@ -1,3 +1,4 @@
+import 'package:ch2_get_it/config/dependency.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -1,10 +1,24 @@
+import 'package:ch2_provider/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'screen.dart';
 
 void main() {
-  runApp(const CounterApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider(
+          create: (context) => CounterModeModel(),
+        ),
+        Provider(
+          create: (context) => CounterModel(),
+        ),
+      ],
+      child: const CounterApp(),
+    ),
+  );
 }
 
 class CounterApp extends StatefulWidget {

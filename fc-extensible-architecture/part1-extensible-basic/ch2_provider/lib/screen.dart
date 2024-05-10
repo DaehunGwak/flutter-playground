@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'model.dart';
-
-// TODO: Provider 를 사용하여 카운터 앱이 동작하도록 변경하세요.
-// - 단, Screen 내에 변수는 없어야 한다. (ex. counterModel)
 
 class CounterScreen extends StatefulWidget {
   const CounterScreen({super.key});
@@ -14,18 +12,18 @@ class CounterScreen extends StatefulWidget {
 }
 
 class _CounterScreenState extends State<CounterScreen> {
-  CounterModel counterModel = CounterModel();
-  CounterModeModel counterModeModel = CounterModeModel();
-
   @override
   Widget build(BuildContext context) {
+    final CounterModel counterModel = context.read<CounterModel>();
+    final CounterModeModel modeModel = context.read<CounterModeModel>();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('provider'),
         actions: [
           IconButton(
-            onPressed: onChangedMode,
+            onPressed: () => onChangedMode(modeModel),
             icon: const Icon(CupertinoIcons.arrow_2_squarepath),
           ),
         ],
@@ -45,21 +43,21 @@ class _CounterScreenState extends State<CounterScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: execute,
-        child: Icon(counterModeModel.counterMode.icon),
+        onPressed: () => execute(counterModel, modeModel),
+        child: Icon(modeModel.counterMode.icon),
       ),
     );
   }
 
-  void onChangedMode() {
+  void onChangedMode(CounterModeModel modeModel) {
     setState(() {
-      counterModeModel.toggleMode();
+      modeModel.toggleMode();
     });
   }
 
-  void execute() {
+  void execute(CounterModel counterModel, CounterModeModel modeModel) {
     setState(() {
-      switch (counterModeModel.counterMode) {
+      switch (modeModel.counterMode) {
         case CounterMode.plus:
           counterModel.increment();
         case CounterMode.minus:

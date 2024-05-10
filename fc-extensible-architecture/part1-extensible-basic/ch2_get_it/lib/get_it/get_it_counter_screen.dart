@@ -1,22 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// TODO: GetIt 을 사용하여 카운터 앱이 동작하도록 변경하세요.
-// - 단, Screen 내에 변수는 없어야 한다. (ex. counter)
-
-enum CounterMode {
-  plus,
-  minus;
-
-  CounterMode next() {
-    switch (this) {
-      case CounterMode.plus:
-        return CounterMode.minus;
-      case CounterMode.minus:
-        return CounterMode.plus;
-    }
-  }
-}
+import 'models.dart';
 
 class GetItCounterScreen extends StatefulWidget {
   const GetItCounterScreen({super.key});
@@ -26,18 +11,18 @@ class GetItCounterScreen extends StatefulWidget {
 }
 
 class _GetItCounterScreenState extends State<GetItCounterScreen> {
-  int counter = 0;
-  CounterMode counterMode = CounterMode.plus;
-
   @override
   Widget build(BuildContext context) {
+    final counterModel = locator<GetItCounterModel>();
+    final modeModel = locator<GetItCounterModeModel>();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('get_it'),
         actions: [
           IconButton(
-            onPressed: onChangedMode,
+            onPressed: () => onChangedMode(modeModel),
             icon: const Icon(CupertinoIcons.arrow_2_squarepath),
           ),
         ],
@@ -50,43 +35,43 @@ class _GetItCounterScreenState extends State<GetItCounterScreen> {
               'You have pushed the button this many times:',
             ),
             Text(
-              counter.toString(),
+              counterModel.counter.toString(),
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: execute,
-        child: Icon(counterMode.icon),
+        onPressed: () => execute(counterModel, modeModel.mode),
+        child: Icon(modeModel.mode.icon),
       ),
     );
   }
 
-  void onChangedMode() {
+  void onChangedMode(GetItCounterModeModel modeModel) {
     setState(() {
-      counterMode = counterMode.next();
+      modeModel.toggle();
     });
   }
 
-  void execute() {
+  void execute(GetItCounterModel counterModel, GetItCounterMode mode) {
     setState(() {
-      switch (counterMode) {
-        case CounterMode.plus:
-          counter++;
-        case CounterMode.minus:
-          counter--;
+      switch (mode) {
+        case GetItCounterMode.plus:
+          counterModel.increase();
+        case GetItCounterMode.minus:
+          counterModel.decrease();
       }
     });
   }
 }
 
-extension on CounterMode {
+extension on GetItCounterMode {
   IconData get icon {
     switch (this) {
-      case CounterMode.plus:
+      case GetItCounterMode.plus:
         return CupertinoIcons.add;
-      case CounterMode.minus:
+      case GetItCounterMode.minus:
         return CupertinoIcons.minus;
     }
   }

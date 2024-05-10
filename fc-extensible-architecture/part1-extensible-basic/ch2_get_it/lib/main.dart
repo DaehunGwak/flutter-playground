@@ -1,8 +1,10 @@
+import 'package:ch2_get_it/get_it/models.dart';
 import 'package:flutter/material.dart';
 
 import 'get_it/get_it_counter_screen.dart';
 
 void main() {
+  setUpGetItModels();
   runApp(const MyApp());
 }
 

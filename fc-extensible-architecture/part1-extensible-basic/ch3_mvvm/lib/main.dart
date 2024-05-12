@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'controller.dart';
+import 'view_model.dart';
 import 'model.dart';
 import 'view.dart';
 
@@ -31,8 +31,10 @@ class _CounterAppState extends State<CounterApp> {
         useMaterial3: true,
       ),
       home: CounterView(
-        counterController: CounterController(CounterModel()),
-        counterModeController: CounterModeController(CounterModeModel()),
+        counterViewModel: CounterViewModel(
+          counterModel: CounterModel(),
+          counterModeModel: CounterModeModel(),
+        ),
       ),
     );
   }

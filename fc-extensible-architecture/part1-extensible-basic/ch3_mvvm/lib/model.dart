@@ -12,26 +12,32 @@ enum CounterMode {
   }
 }
 
+// TODO: field 자체를 ValueNotifier 로 바꿔서 연쇄적으로 일으킬수도 있을 듯
 class CounterModel {
-  int _counter = 0;
+  final int _counter;
+
+  CounterModel({int counter = 0}): _counter = counter;
 
   int get counter => _counter;
 
-  void increment() {
-    _counter++;
+  CounterModel increment() {
+    return CounterModel(counter: _counter + 1);
   }
 
-  void decrement() {
-    _counter--;
+  CounterModel decrement() {
+    return CounterModel(counter: _counter - 1);
   }
 }
 
 class CounterModeModel {
-  CounterMode _counterMode = CounterMode.plus;
+  final CounterMode _counterMode;
+
+  CounterModeModel({CounterMode counterMode = CounterMode.plus})
+      : _counterMode = counterMode;
 
   CounterMode get counterMode => _counterMode;
 
-  void toggleMode() {
-    _counterMode = _counterMode.next();
+  CounterModeModel toggleMode() {
+    return CounterModeModel(counterMode: _counterMode.next());
   }
 }

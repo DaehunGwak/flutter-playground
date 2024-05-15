@@ -17,6 +17,27 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  ch5_modularization_domain:
+    dependency: "direct main"
+    description:
+      path: domain
+      relative: true
+    source: path
+    version: "1.0.0+1"
+  ch5_modularization_presentation:
+    dependency: "direct main"
+    description:
+      path: presentation
+      relative: true
+    source: path
+    version: "1.0.0+1"
+  ch5_modularization_ui:
+    dependency: "direct main"
+    description:
+      path: ui
+      relative: true
+    source: path
+    version: "1.0.0+1"
   characters:
     dependency: transitive
     description:

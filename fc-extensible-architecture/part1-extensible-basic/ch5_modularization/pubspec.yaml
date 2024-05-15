@@ -36,6 +36,13 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
 
+  ch5_modularization_domain:
+    path: ./domain
+  ch5_modularization_presentation:
+    path: ./presentation
+  ch5_modularization_ui:
+    path: ./ui
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

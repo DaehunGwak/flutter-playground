@@ -1,4 +1,4 @@
-import 'package:ch5_modularization/domain/domain.dart';
+import 'package:ch5_modularization_domain/domain.dart';
 import 'package:flutter/foundation.dart';
 
 class CounterViewModel {

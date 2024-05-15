@@ -1,5 +1,5 @@
-import 'package:ch5_modularization/domain/domain.dart';
-import 'package:ch5_modularization/presentation/presentation.dart';
+import 'package:ch5_modularization_domain/domain.dart';
+import 'package:ch5_modularization_presentation/presentation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

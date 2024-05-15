@@ -2,36 +2,44 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+abstract class ChatEvent {}
 
-  @override
-  State<ChatScreen> createState() => _ChatScreenState();
+class AddChatEvent extends ChatEvent {
+  final ChatItem item;
+
+  AddChatEvent({
+    required this.item,
+  });
 }
 
-class _ChatScreenState extends State<ChatScreen> {
-  final StreamController<List<ChatItem>> streamController = StreamController();
-  final Stream<int> stream =
+class ChatBloc {
+  final List<ChatItem> _items = [];
+  final StreamController<ChatEvent> _eventController = StreamController();
+  final StreamController<List<ChatItem>> _stateController = StreamController();
+  final Stream<int> _stream =
       Stream<int>.periodic(const Duration(seconds: 5), (count) => count)
           .take(5);
-  final List<ChatItem> items = [];
 
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      startAutoMessage();
+  Sink<ChatEvent> get eventSink => _eventController.sink;
+
+  Stream<List<ChatItem>> get stateStream => _stateController.stream;
+
+  ChatBloc() {
+    _eventController.stream.listen((event) {
+      if (event is AddChatEvent) {
+        _items.add((event.item));
+      }
+      _stateController.sink.add(_items);
     });
-    super.initState();
   }
 
-  @override
   void dispose() {
-    streamController.close();
-    super.dispose();
+    _stateController.close();
+    _eventController.close();
   }
 
   void startAutoMessage() {
-    stream.listen((count) {
+    _stream.listen((count) {
       if (count == 5) {
         return;
       }
@@ -49,10 +57,34 @@ class _ChatScreenState extends State<ChatScreen> {
         message: message,
         isMe: false,
       );
-
-      items.add(item);
-      streamController.sink.add(items);
+      final AddChatEvent event = AddChatEvent(item: item);
+      eventSink.add(event);
     });
+  }
+}
+
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  final ChatBloc chatBloc = ChatBloc();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      chatBloc.startAutoMessage();
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    chatBloc.dispose();
+    super.dispose();
   }
 
   @override
@@ -63,8 +95,7 @@ class _ChatScreenState extends State<ChatScreen> {
         title: const Text('Stream'),
       ),
       body: StreamBuilder<List<ChatItem>>(
-        initialData: items,
-        stream: streamController.stream,
+        stream: chatBloc.stateStream,
         builder: (context, snapshot) {
           final List<ChatItem> items = snapshot.data ?? [];
           return ListView.separated(
@@ -92,12 +123,9 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       bottomNavigationBar: ChatBottomNavigationBar(
         onSend: (message) {
-          final ChatItem item = ChatItem(
-            message: message,
-          );
-
-          items.add(item);
-          streamController.sink.add(items);
+          final ChatItem item = ChatItem(message: message);
+          final AddChatEvent event = AddChatEvent(item: item);
+          chatBloc.eventSink.add(event);
         },
       ),
     );

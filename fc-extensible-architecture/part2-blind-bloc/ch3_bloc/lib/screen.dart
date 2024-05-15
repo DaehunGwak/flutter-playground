@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
 abstract class ChatEvent {}
@@ -12,30 +13,14 @@ class AddChatEvent extends ChatEvent {
   });
 }
 
-class ChatBloc {
-  final List<ChatItem> _items = [];
-  final StreamController<ChatEvent> _eventController = StreamController();
-  final StreamController<List<ChatItem>> _stateController = StreamController();
+class ChatBloc extends Bloc<ChatEvent, List<ChatItem>> {
   final Stream<int> _stream =
       Stream<int>.periodic(const Duration(seconds: 5), (count) => count)
           .take(5);
 
-  Sink<ChatEvent> get eventSink => _eventController.sink;
 
-  Stream<List<ChatItem>> get stateStream => _stateController.stream;
-
-  ChatBloc() {
-    _eventController.stream.listen((event) {
-      if (event is AddChatEvent) {
-        _items.add((event.item));
-      }
-      _stateController.sink.add(_items);
-    });
-  }
-
-  void dispose() {
-    _stateController.close();
-    _eventController.close();
+  ChatBloc(): super([]) {
+    on<AddChatEvent>((event, emit) => emit([...state, event.item]));
   }
 
   void startAutoMessage() {
@@ -58,7 +43,7 @@ class ChatBloc {
         isMe: false,
       );
       final AddChatEvent event = AddChatEvent(item: item);
-      eventSink.add(event);
+      add(event);
     });
   }
 }
@@ -83,7 +68,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void dispose() {
-    chatBloc.dispose();
+    chatBloc.close();
     super.dispose();
   }
 
@@ -95,7 +80,7 @@ class _ChatScreenState extends State<ChatScreen> {
         title: const Text('Stream'),
       ),
       body: StreamBuilder<List<ChatItem>>(
-        stream: chatBloc.stateStream,
+        stream: chatBloc.stream,
         builder: (context, snapshot) {
           final List<ChatItem> items = snapshot.data ?? [];
           return ListView.separated(
@@ -125,7 +110,7 @@ class _ChatScreenState extends State<ChatScreen> {
         onSend: (message) {
           final ChatItem item = ChatItem(message: message);
           final AddChatEvent event = AddChatEvent(item: item);
-          chatBloc.eventSink.add(event);
+          chatBloc.add(event);
         },
       ),
     );

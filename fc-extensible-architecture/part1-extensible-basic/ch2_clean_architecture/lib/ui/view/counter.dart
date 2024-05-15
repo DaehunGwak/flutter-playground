@@ -1,8 +1,7 @@
+import 'package:ch2_clean_architecture/presentation/presentation.dart';
+import 'package:ch2_clean_architecture/domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'model.dart';
-import 'view_model.dart';
 
 // TODO: MVVM 패턴을 Clean Architecture 로 변경하여 카운터 앱이 동작하도록 변경하세요.
 

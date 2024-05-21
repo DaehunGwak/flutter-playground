@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'screen.dart';
 
@@ -28,7 +29,10 @@ class _ChatAppState extends State<ChatApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const ChatScreen(),
+      home: BlocProvider(
+        create: (context) => ChatBloc(),
+        child: const ChatScreen(),
+      )
     );
   }
 }

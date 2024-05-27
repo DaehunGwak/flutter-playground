@@ -1,0 +1,14 @@
+name: core_theme
+description: core theme package.
+publish_to: none
+
+environment:
+  sdk: 3.4.0
+  flutter: 3.22.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_lints: 3.0.1

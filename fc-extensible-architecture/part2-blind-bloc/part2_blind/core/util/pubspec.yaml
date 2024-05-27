@@ -1,0 +1,19 @@
+name: core_util
+description: core util package.
+publish_to: none
+
+environment:
+  sdk: 3.4.0
+  flutter: 3.22.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  custom_refresh_indicator: 3.1.0
+  flutter_svg: 2.0.10+1
+  intl: 0.18.1
+  shimmer: 3.0.0
+
+dev_dependencies:
+  flutter_lints: 3.0.1

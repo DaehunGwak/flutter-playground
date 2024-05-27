@@ -22,6 +22,3 @@ dependencies:
     path: ../../tool/clind/network
   tool_clind_theme:
     path: ../../tool/clind/theme
-
-dev_dependencies:
-  flutter_lints: 3.0.1

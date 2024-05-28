@@ -10,6 +10,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
+        bottom: false,
         child: Container(
           clipBehavior: Clip.none,
           child: const Column(

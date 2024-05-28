@@ -1,5 +1,5 @@
-import 'package:assign_9_ui_clone/views/features/profile/profile_image.dart';
-import 'package:assign_9_ui_clone/views/features/schedule/schedule_add_button.dart';
+import 'package:assign_9_ui_clone/views/entities/profile/profile_image.dart';
+import 'package:assign_9_ui_clone/views/entities/schedule/schedule_add_button.dart';
 import 'package:assign_9_ui_clone/views/shared/sizes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
-import 'package:assign_9_ui_clone/views/features/day/day_text.dart';
-import 'package:assign_9_ui_clone/views/features/day/today_text.dart';
+import 'package:assign_9_ui_clone/views/entities/day/day_text.dart';
+import 'package:assign_9_ui_clone/views/entities/day/today_text.dart';
 import 'package:assign_9_ui_clone/views/shared/gaps.dart';
 import 'package:assign_9_ui_clone/views/shared/sizes.dart';
 import 'package:flutter/cupertino.dart';

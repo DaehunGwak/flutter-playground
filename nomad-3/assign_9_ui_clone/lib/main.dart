@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "Schedule Clone",
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData(
         colorScheme: darkColorScheme,

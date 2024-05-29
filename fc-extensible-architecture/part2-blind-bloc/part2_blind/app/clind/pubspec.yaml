@@ -1,0 +1,25 @@
+name: clind
+description: A new Flutter project.
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: 3.4.0
+  flutter: 3.22.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  core_util:
+    path: ../../core/util
+
+  tool_clind_component:
+    path: ../../tool/clind/component
+  tool_clind_network:
+    path: ../../tool/clind/network
+  tool_clind_theme:
+    path: ../../tool/clind/theme
+

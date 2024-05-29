@@ -1,5 +1,5 @@
-name: ui
-description: clind ui package
+name: di
+description: clind di package
 publish_to: none
 
 environment:
@@ -13,5 +13,3 @@ dependencies:
     path: ../data
   presentation:
     path: ../presentation
-  di:
-    path: ../di

@@ -1,3 +1,4 @@
+import 'package:day_11_pomodoro/views/widgets/timer_body.dart';
 import 'package:flutter/material.dart';
 
 class TimerPage extends StatelessWidget {
@@ -5,8 +6,6 @@ class TimerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(Theme.of(context).textTheme.titleLarge);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -14,6 +13,7 @@ class TimerPage extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
+      body: const TimerBody(),
     );
   }
 }

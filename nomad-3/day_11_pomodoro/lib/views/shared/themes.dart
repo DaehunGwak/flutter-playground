@@ -5,8 +5,7 @@ final lightTheme = ThemeData(
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.teal,
     foregroundColor: Colors.white,
-    centerTitle: false,
-    titleSpacing: 24.0,
+    centerTitle: true,
   ),
   colorScheme: ColorScheme.fromSeed(
     seedColor: Colors.teal,
@@ -16,8 +15,8 @@ final lightTheme = ThemeData(
   textTheme: const TextTheme(
     titleLarge: TextStyle(
       inherit: true,
-      fontSize: 32.0,
-      fontWeight: FontWeight.w700,
+      fontSize: 42.0,
+      fontWeight: FontWeight.w800,
     ),
   ),
   useMaterial3: true,

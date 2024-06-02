@@ -1,30 +1,22 @@
+import 'package:day_13_movieflix/views/shared/themes.dart';
 import 'package:flutter/material.dart';
 
+import 'views/pages/home_page.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(const MovieflixApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MovieflixApp extends StatelessWidget {
+  const MovieflixApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(),
+      title: 'Movieflix',
+      theme: Themes.light,
+      home: const HomePage(),
     );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }

@@ -51,7 +51,7 @@ class MovieDetailMetaWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
                 Text(
-                  'Storyline',
+                  '스토리',
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     color: Theme.of(context).colorScheme.surface,
                   ),

@@ -6,11 +6,11 @@ import 'package:http/http.dart' as http;
 import '../models/movie_meta.dart';
 
 abstract class MovieApiRepository {
-  static const String _baseUrl = 'https://movies-api.nomadcoders.workers.dev';
-  static const String _popularPath = 'popular';
-  static const String _nowPlaying = 'now-playing';
-  static const String _comingSoon = 'coming-soon';
-  static const String _detail = 'movie?id=';
+  static const String _baseUrl = 'https://tmdb-reverse-proxy-api.vercel.app';
+  static const String _popularPath = 'v3/movies/popular';
+  static const String _nowPlaying = 'v3/movies/now-playing';
+  static const String _comingSoon = 'v3/movies/coming-soon';
+  static const String _detail = 'v3/movies/';
 
   static const String _resultsField = 'results';
 

@@ -51,7 +51,7 @@ class MovieDetailMetaWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
                 Text(
-                  '스토리',
+                  '줄거리',
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     color: Theme.of(context).colorScheme.surface,
                   ),
@@ -87,7 +87,7 @@ class MovieDetailMetaWidget extends StatelessWidget {
                       backgroundColor: const Color(0xFFF8D849),
                       textStyle: Theme.of(context).textTheme.bodyLarge,
                     ),
-                    child: const Text('Buy Ticket'),
+                    child: const Text('티켓 구매'),
                   ),
                 ),
               ),

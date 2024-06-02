@@ -1,4 +1,5 @@
 import 'package:day_13_movieflix/repositories/movie_api_repository.dart';
+import 'package:day_13_movieflix/views/entities/movie_like_button.dart';
 import 'package:day_13_movieflix/views/widgets/movie_detail_meta_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -25,12 +26,18 @@ class DetailPage extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(
-          'Back to list',
+          '뒤로가기',
           style: Theme.of(context)
               .textTheme
               .bodyLarge!
               .copyWith(color: Theme.of(context).colorScheme.surface),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: MovieLikeButton(movieId: id),
+          ),
+        ],
         centerTitle: false,
         iconTheme: IconThemeData(
           color: Theme.of(context).colorScheme.surface,

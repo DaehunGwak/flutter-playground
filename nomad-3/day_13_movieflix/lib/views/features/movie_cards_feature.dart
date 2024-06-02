@@ -1,3 +1,4 @@
+import 'package:day_13_movieflix/views/entities/movie_like_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/movie_meta.dart';
@@ -58,11 +59,17 @@ class MovieCardsFeature extends StatelessWidget {
                           .primary
                           .withOpacity(0.3),
                       borderRadius: BorderRadius.circular(15),
+                      image: DecorationImage(
+                        fit: BoxFit.fitHeight,
+                        image: NetworkImage(movies[index].imageUrl!,),
+                      )
                     ),
-                    child: Image.network(
-                      movies[index].imageUrl!,
-                      height: imageHeight,
-                      fit: BoxFit.fitHeight,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        MovieLikeButton(movieId: movies[index].id),
+                      ],
                     ),
                   ),
                 ),

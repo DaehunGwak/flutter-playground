@@ -11,4 +11,8 @@ abstract class AuthRoutes {
       ),
     );
   }
+
+  static void pop(BuildContext context) {
+    return Navigator.pop(context);
+  }
 }

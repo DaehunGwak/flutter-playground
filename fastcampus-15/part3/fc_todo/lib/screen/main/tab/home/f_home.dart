@@ -1,4 +1,5 @@
 import 'package:fast_app_base/common/common.dart';
+import 'package:fast_app_base/common/widget/constant_widget.dart';
 import 'package:fast_app_base/common/widget/round_button_theme.dart';
 import 'package:fast_app_base/common/widget/w_round_button.dart';
 import 'package:fast_app_base/screen/dialog/d_message.dart';
@@ -28,7 +29,7 @@ class HomeFragment extends StatelessWidget {
               )
             ],
           ),
-          const EmptyExpanded(),
+          spacer,
           RoundButton(
             text: 'Snackbar 보이기',
             onTap: () => showSnackbar(context),
@@ -52,7 +53,7 @@ class HomeFragment extends StatelessWidget {
             onTap: () => openDrawer(context),
             theme: RoundButtonTheme.blink,
           ),
-          const EmptyExpanded()
+          spacer
         ],
       ),
     );

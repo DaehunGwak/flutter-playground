@@ -19,6 +19,8 @@ class App extends StatefulWidget {
 }
 
 class AppState extends State<App> with Nav, WidgetsBindingObserver {
+
+
   @override
   GlobalKey<NavigatorState> get navigatorKey => App.navigatorKey;
 

@@ -126,9 +126,9 @@ class CustomTheme {
     inverseSurface: AppColors.inverseSurface,
     onInverseSurface: AppColors.onInverseSurface,
     inversePrimary: AppColors.inversePrimary,
-    background: AppColors.background,
-    onBackground: AppColors.onBackground,
-    surfaceVariant: AppColors.surfaceVariant,
+    background: AppColors.background, // TODO: deprecated
+    onBackground: AppColors.onBackground, // TODO: deprecated
+    surfaceVariant: AppColors.surfaceVariant, // TODO: deprecated
   );
 
   CustomTheme._();

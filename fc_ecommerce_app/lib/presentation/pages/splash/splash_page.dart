@@ -21,7 +21,7 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
     Timer(
       Duration(seconds: 2),
-      () => context.go(RoutePath.home),
+      () => context.go(RoutePath.main),
     );
   }
 

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/theme/constant/app_icons.dart';
 import '../../routes/route_path.dart';
 
 // TODO: 로그인 bloc
@@ -28,9 +29,9 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: SvgPicture.asset('assets/svg/main_logo.svg'),
+        child: SvgPicture.asset(AppIcons.mainLogo),
       ),
-      backgroundColor: Color(0xFF5F0080), // TODO: 하드코딩 된 값 변경
+      backgroundColor: Theme.of(context).colorScheme.primary,
     );
   }
 }

@@ -14,7 +14,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: RoutePath.main,
       name: 'main',
-      builder: (context, state) => MainScreenView(),
+      builder: (context, state) => MainScreen(),
     ),
   ],
   initialLocation: RoutePath.splash,

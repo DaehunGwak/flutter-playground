@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/theme/custom/custom_theme.dart';
 import '../../cubit/bottom_nav_cubit.dart';
+import '../../cubit/mall_type_cubit.dart';
 
 class DefaultAppBar extends StatelessWidget {
   const DefaultAppBar({
@@ -12,21 +15,27 @@ class DefaultAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
-      color: Theme.of(context).colorScheme.primary,
-      child: AppBar(
-        title: Text(
-          nav.toName,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+    return BlocBuilder<MallTypeCubit, MallType>(
+      builder: (_, state) {
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+          color: state.isMarket
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.surface,
+          child: AppBar(
+            title: Text(
+              nav.toName,
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: state.isMarket
+                        ? Theme.of(context).colorScheme.surface
+                        : Theme.of(context).colorScheme.contentPrimary,
+                  ),
+            ),
+            backgroundColor: Colors.transparent,
+            centerTitle: true,
           ),
-        ),
-        backgroundColor: Colors.transparent,
-        centerTitle: true,
-      ),
+        );
+      },
     );
   }
 }

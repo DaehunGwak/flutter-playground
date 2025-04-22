@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/theme/custom/custom_app_bar.dart';
+
 enum MallType {
   market,
   beauty,
@@ -17,6 +19,12 @@ extension MAllTypeX on MallType {
         MallType.beauty => '뷰티패캠',
       };
 
+  CustomAppBarTheme get theme => switch (this) {
+        MallType.market => CustomAppBarTheme.market,
+        MallType.beauty => CustomAppBarTheme.beauty,
+      };
+
   bool get isMarket => this == MallType.market;
+
   bool get isBeauty => this == MallType.beauty;
 }

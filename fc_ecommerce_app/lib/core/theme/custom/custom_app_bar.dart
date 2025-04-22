@@ -14,6 +14,8 @@ class CustomAppBarTheme {
 
   static final int animationDuration = 400;
 
+  static final double tabBarRadius = 30;
+
   static final CustomAppBarTheme market = CustomAppBarTheme(
     systemUiOverlayStyle: SystemUiOverlayStyle.light,
     backgroundColor: AppColors.primary,

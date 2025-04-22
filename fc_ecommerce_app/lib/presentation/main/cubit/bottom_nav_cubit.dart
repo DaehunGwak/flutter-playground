@@ -7,6 +7,7 @@ enum BottomNav {
   category,
   search,
   user,
+  ;
 }
 
 class BottomNavCubit extends Cubit<BottomNav> {
@@ -15,6 +16,8 @@ class BottomNavCubit extends Cubit<BottomNav> {
   void changeIndex(int index) => emit(BottomNav.values[index]);
 }
 
+/// 왜 enum 타입에 직접 만들지 않고 extension 을 이용해 만들까?
+///
 extension BottomNavX on BottomNav {
   String get icon {
     return switch (this) {

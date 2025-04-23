@@ -22,12 +22,13 @@ class _DisplayApi implements DisplayApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<List<MenuDto>> getMenusByMallType(String mallType) async {
+  Future<ResponseWrapper<List<MenuDto>>> getMenusByMallType(
+      String mallType) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<MenuDto>>(Options(
+    final _options = _setStreamType<ResponseWrapper<List<MenuDto>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -43,12 +44,18 @@ class _DisplayApi implements DisplayApi {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<MenuDto> _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ResponseWrapper<List<MenuDto>> _value;
     try {
-      _value = _result.data!
-          .map((dynamic i) => MenuDto.fromJson(i as Map<String, dynamic>))
-          .toList();
+      _value = ResponseWrapper<List<MenuDto>>.fromJson(
+        _result.data!,
+        (json) => json is List<dynamic>
+            ? json
+                .map<MenuDto>(
+                    (i) => MenuDto.fromJson(i as Map<String, dynamic>))
+                .toList()
+            : List.empty(),
+      );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

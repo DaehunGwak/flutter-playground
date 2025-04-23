@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'core/theme/theme_data.dart';
+import 'data/data_source/mock/display/display_mock_api.dart';
 import 'presentation/routes/routes.dart';
 
-void main() {
+void main() async {
+  final data = await DisplayMockApi().getMenusByMallType('market');
+  debugPrint(data.toString());
+
   runApp(const MainApp());
 }
 

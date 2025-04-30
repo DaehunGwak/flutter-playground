@@ -8,4 +8,9 @@ class ErrorResponse {
     this.code = '0500',
     this.message = '',
   });
+
+  @override
+  String toString() {
+    return 'ErrorResponse{status: $status, code: $code, message: $message}';
+  }
 }

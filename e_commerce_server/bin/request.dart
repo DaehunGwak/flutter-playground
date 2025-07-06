@@ -1,5 +1,12 @@
 part of 'server.dart';
 
+// CORS Settings
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Origin, Content-Type',
+};
+
 var menuHandler = (Request request, String mallType) {
   List<Map<String, dynamic>> data;
 
@@ -20,6 +27,7 @@ var menuHandler = (Request request, String mallType) {
       jsonEncode(result),
       headers: {
         HttpHeaders.contentTypeHeader: ContentType.json.toString(),
+        ...corsHeaders,
       }
   );
 };
@@ -43,6 +51,7 @@ var viewModuleHandler = (Request request, String tabId, String page) {
       jsonEncode(result),
       headers: {
         HttpHeaders.contentTypeHeader: ContentType.json.toString(),
+        ...corsHeaders,
       }
   );
 };

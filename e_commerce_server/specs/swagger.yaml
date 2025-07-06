@@ -1,0 +1,150 @@
+openapi: 3.0.0
+info:
+  description: "API system"
+  version: "1.0.10"
+  title: "Market API Spec"
+servers:
+  - url: http://localhost:8080
+    description: Local server
+
+tags:
+  - name: "Menu"
+    description: "Menu information"
+  - name: "ViewModule"
+    description: "ViewModule information"
+
+paths:
+  /api/menus/{mallType}:
+    get:
+      tags:
+        - "Menu"
+      summary: "Get menu list"
+      parameters:
+        - in: path
+          name: mallType
+          required: true
+          schema:
+            type: string
+          description: Mall 종류
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              example:
+                status: 'SUCCESS'
+                code: '0000'
+                message: '성공'
+                data: [
+                  {"tabId": 10001, "title": "F-추천"},
+                ]
+
+  /api/view-modules/{tabId}/{page}:
+    get:
+      tags:
+        - "ViewModule"
+      summary: "Get viewModule list"
+      parameters:
+        - in: path
+          name: tabId
+          required: true
+          schema:
+            type: string
+          description: tab Id
+        - in: path
+          name: page
+          required: true
+          schema:
+            type: string
+          description: current data page
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              example:
+                status: 'SUCCESS'
+                code: '0000'
+                message: '성공'
+                data: [
+                  {
+                    type: 'scroll_view_module',
+                    title: '이 상품 어때요?',
+                    subtitle: 'Good!',
+                    imageUrl: 'url',
+                    time: 100000,
+                    product: [],
+                    tabs: [],
+                  },
+                ]
+
+
+components:
+  schemas:
+    Result:
+      type: "object"
+      properties:
+        status:
+          type: string
+        code:
+          type: string
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/MenuDto'
+              - $ref: '#/components/schemas/ViewModuleDto'
+    MenuDto:
+      type: "object"
+      properties:
+        tabId:
+          type: integer
+        title:
+          type: string
+
+    ProductInfoDto:
+      type: "object"
+      properties:
+        productId:
+          type: string
+        title:
+          type: string
+        subtitle:
+          type: string
+        imageUrl:
+          type: string
+        price:
+          type: integer
+        originalPrice:
+          type: integer
+        discountRate:
+          type: integer
+        reviewCount:
+          type: integer
+    ViewModuleDto:
+      type: "object"
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        subtitle:
+          type: string
+        imageUrl:
+          type: string
+        time:
+          type: integer
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductInfoDto'
+        tabs:
+          type: array
+          items:
+            type: string

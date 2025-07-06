@@ -1,0 +1,6 @@
+### /api/menus/<mallType>
+GET http://localhost:8080/api/menus/market
+
+### /api/view_modules/<tabId>/<page>
+GET http://localhost:8080/api/view_modules/1001/0
+

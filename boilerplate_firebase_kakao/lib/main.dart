@@ -1,9 +1,11 @@
-import 'package:boilerplate_firebase_kakao/presentation/pages/user/user_page.dart';
 import 'package:flutter/material.dart';
 
 import 'core/theme/theme_data.dart';
+import 'injection.dart';
+import 'presentation/pages/user/user_page.dart';
 
-void main() {
+void main() async {
+  await configureDependencies();
   runApp(const MyApp());
 }
 

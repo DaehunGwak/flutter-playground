@@ -1,6 +1,9 @@
+import 'package:injectable/injectable.dart';
+
 import '../../repository/user.repository.dart';
 import '../base/remote.usecase.dart';
 
+@singleton
 class UserUsecase {
   final UserRepository _userRepository;
 

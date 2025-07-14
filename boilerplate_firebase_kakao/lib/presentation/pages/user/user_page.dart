@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/theme/constant/app_colors.dart';
 import '../../../core/theme/constant/app_icons.dart';
 import '../../../core/theme/custom/custom_font_weight.dart';
 import '../../../core/theme/custom/custom_theme.dart';
+import '../../../core/utils/constant.dart';
+import '../../bloc/user_bloc/user_bloc.dart';
 
 class UserPage extends StatelessWidget {
   const UserPage({super.key});
@@ -12,43 +15,52 @@ class UserPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: 60,
-        ),
-        child: Column(
-          children: [
-            Text(
-              '''간편하게 로그인하고\n패캠마켓의\n다양한 서비스를 이용해보세요.''',
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineSmall
-                  ?.copyWith(
-                    color: Theme.of(context).colorScheme.contentPrimary,
-                  )
-                  .regular,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 24),
-            SizedBox(
-              height: 48,
-              child: TextButton(
-                //TODO 로그인 이벤트 호출
-                onPressed: null,
-                style: const ButtonStyle(
-                  padding: WidgetStatePropertyAll<EdgeInsetsGeometry>(
-                    EdgeInsets.zero,
-                  ),
+      child: BlocBuilder<UserBloc, UserState>(
+        builder: (context, state) {
+          switch (state.status) {
+            case Status.initial:
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 60),
+                child: Column(
+                  children: [
+                    Text(
+                      '''간편하게 로그인하고\n패캠마켓의\n다양한 서비스를 이용해보세요.''',
+                      style: Theme.of(context).textTheme.headlineSmall
+                          ?.copyWith(
+                            color: Theme.of(context).colorScheme.contentPrimary,
+                          )
+                          .regular,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 24),
+                    SizedBox(
+                      height: 48,
+                      child: TextButton(
+                        onPressed: () =>
+                            context.read<UserBloc>().add(UserLogin()),
+                        style: const ButtonStyle(
+                          padding: WidgetStatePropertyAll<EdgeInsetsGeometry>(
+                            EdgeInsets.zero,
+                          ),
+                        ),
+                        child: Image.asset(
+                          AppIcons.kakaoLogin,
+                          width: double.infinity,
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                child: Image.asset(
-                  AppIcons.kakaoLogin,
-                  width: double.infinity,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-            ),
-          ],
-        ),
+              );
+            case Status.loading:
+              return Center(child: CircularProgressIndicator());
+            case Status.success:
+              return UserProfile();
+            case Status.error:
+              return Center(child: Text(state.error.message ?? 'error'));
+          }
+        },
       ),
     );
   }
@@ -59,6 +71,8 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<UserBloc>().state.user;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 32),
@@ -66,42 +80,32 @@ class UserProfile extends StatelessWidget {
           children: [
             ClipOval(
               child: Image.network(
-                //TODO 유저 프로필 이미지
-                '',
+                user?.kakaoAccount?.profile?.profileImageUrl ?? '',
                 width: 110,
                 height: 110,
               ),
             ),
-            const SizedBox(
-              height: 24,
-            ),
+            const SizedBox(height: 24),
             Text(
-              //TODO 유저 이름
-              '무명의 사용자',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(
-                    color: AppColors.black,
-                  )
-                  .regular,
+              user?.kakaoAccount?.profile?.nickname ?? '무명의 사용자',
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(color: AppColors.black).regular,
             ),
-            const SizedBox(
-              height: 24,
-            ),
+            const SizedBox(height: 24),
             Container(
               width: double.infinity,
               child: ElevatedButton(
-                //TODO 로그아웃 이벤트 호출
-                onPressed: null,
+                onPressed: () => context.read<UserBloc>().add(UserLogout()),
                 style: ButtonStyle(
                   backgroundColor: WidgetStatePropertyAll<Color>(
                     Theme.of(context).primaryColor,
                   ),
                   shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(8.0)),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(8.0),
+                      ),
                     ),
                   ),
                 ),
@@ -109,12 +113,8 @@ class UserProfile extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 12.0),
                   child: Text(
                     '로그아웃',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall
-                        ?.copyWith(
-                          color: AppColors.white,
-                        )
+                    style: Theme.of(context).textTheme.titleSmall
+                        ?.copyWith(color: AppColors.white)
                         .regular,
                   ),
                 ),

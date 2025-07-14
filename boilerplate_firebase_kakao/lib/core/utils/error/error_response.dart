@@ -3,7 +3,7 @@ class ErrorResponse {
   final String? code;
   final String? message;
 
-  ErrorResponse({
+  const ErrorResponse({
     this.status = 'UNKNOWN ERROR',
     this.code = '0500',
     this.message = '',

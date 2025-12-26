@@ -1,0 +1,15 @@
+name: di
+description: clind di package
+publish_to: none
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+  flutter: 3.22.0
+
+dependencies:
+  domain:
+    path: ../domain
+  data:
+    path: ../data
+  presentation:
+    path: ../presentation
